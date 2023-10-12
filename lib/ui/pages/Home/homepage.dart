@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
+import 'package:proyecto_pension2/ui/pages/Home/homeEditar.dart';
+import 'package:proyecto_pension2/ui/pages/Home/homeHabitacion.dart';
+import 'package:proyecto_pension2/ui/pages/Login/iniciosesion.dart';
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
@@ -10,6 +13,7 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   int posicion = 0;
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
 
   final ventanas = [
     const Center(
@@ -35,14 +39,52 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text(
-          "MI PENSION",
-          style: TextStyle(fontWeight: FontWeight.w700, color: Colors.white),
+      key: _scaffoldKey,
+      drawer: Drawer(
+        child: ListView(
+          children: [
+            ListTile(
+              leading: const Icon(Icons.support),
+              title: const Text('Soporte técnico'),
+              onTap: () {
+                // Acción para soporte técnico
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.edit),
+              title: const Text('Editar datos'),
+              onTap: () {
+                // Navegar a la pantalla de edición al presionar "Editar datos"
+                Navigator.of(context).push(
+                  MaterialPageRoute(builder: (context) => const HomeEditar()),
+                );
+              },
+            ),
+            ListTile(
+        leading: const Icon(Icons.hotel),
+        title: const Text('Habitación'),
+        onTap: () {
+          // Navegar a la pantalla de gestión de habitaciones (HomeHabitacion)
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => const HomeHabitacion()),
+          );
+        },
+      ),
+            ListTile(
+              leading: const Icon(Icons.exit_to_app),
+              title: const Text('Cerrar sesión'),
+              onTap: () {
+                // Navegar a la pantalla de inicio de sesión al cerrar sesión
+                Navigator.of(context).pushAndRemoveUntil(
+                  MaterialPageRoute(builder: (context) => const LoginPage()),
+                  (Route<dynamic> route) => false,
+                );
+              },
+            ),
+            
+          ],
         ),
-        centerTitle: true,
-        automaticallyImplyLeading: false,
-        backgroundColor: Colors.blue,
       ),
       body: ventanas[posicion],
       bottomNavigationBar: Container(
@@ -50,13 +92,23 @@ class _HomeState extends State<Home> {
         child: GNav(
           selectedIndex: posicion,
           onTabChange: (index) {
-            setState(() => posicion = index);
+            setState(() {
+              if (index == 1) {
+                // Abrir la pantalla de búsqueda
+                // ...
+                return;
+              }
+              posicion = index;
+              if (posicion == 2) {
+                _scaffoldKey.currentState?.openDrawer();
+              }
+            });
           },
           color: Colors.blue,
           tabBackgroundColor: Colors.blue,
           tabBorderRadius: 10,
           padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-          tabs: const[
+          tabs: const [
             ButtonIcons(
               icon: Icons.home,
               iconActiveColor: Colors.white,
@@ -64,10 +116,10 @@ class _HomeState extends State<Home> {
               text: "Inicio",
             ),
             ButtonIcons(
-              icon: Icons.chat,
+              icon: Icons.search,
               iconActiveColor: Colors.white,
               textColor: Colors.white,
-              text: "Chat",
+              text: "Buscar",
             ),
             ButtonIcons(
               icon: Icons.settings_outlined,
@@ -83,82 +135,17 @@ class _HomeState extends State<Home> {
 }
 
 class ButtonIcons extends GButton {
-  const ButtonIcons({super.key, 
+  const ButtonIcons({
+    Key? key,
     required IconData icon,
     required Color iconActiveColor,
     required Color textColor,
     required String text,
   }) : super(
+          key: key,
           icon: icon,
           iconActiveColor: iconActiveColor,
           textColor: textColor,
           text: text,
         );
 }
-
-
-// import 'package:flutter/material.dart';
-
-// void main() {
-//   runApp(const MyApp());
-// }
-
-// class MyApp extends StatelessWidget {
-//   const MyApp({super.key});
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return MaterialApp(
-//       title: 'Material App',
-//       home: Scaffold(
-//         drawer: Drawer(
-//           child: Container(
-//             color: Colors.blue,
-//             child: Column(
-//               children: [
-//                 Container(
-//                   width: MediaQuery.sizeOf(context).width*0.4,
-//                   height: MediaQuery.sizeOf(context).height*0.2,
-//                   margin: const EdgeInsets.only(top: 50, bottom: 20),
-//                 child:  Image.network("https://cdn-icons-png.flaticon.com/512/1384/1384095.png"),
-//                 ),
-//                 const Text("Pensionado", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),),
-//                 Container(
-//                   margin: const EdgeInsets.only(top: 30),
-//                   padding: const EdgeInsets.all(20),
-//                   width: double.infinity,
-//                   color: Colors.grey[600],
-//                    alignment: Alignment.center,
-//                   child: const Text("Editar Datos"),
-//                 ),
-//                 Container(
-//                   margin: const EdgeInsets.only(top: 1),
-//                   padding: const EdgeInsets.all(20),
-//                   width: double.infinity,
-//                   color: Colors.grey[600],
-//                   alignment: Alignment.center,
-//                   child: const Text("Habitacion"),
-//                 ),
-//                 Expanded(child: Container()),
-//                 Container(
-//                   margin: const EdgeInsets.only(top: 1),
-//                   padding: const EdgeInsets.all(20),
-//                   width: double.infinity,
-//                   color: Colors.grey[800],
-//                   alignment: Alignment.center,
-//                   child: const Text("Cerrar sesion", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),),
-//                 )
-//                 ],
-//             ),
-//           ),
-//         ),
-//         appBar: AppBar(
-//           title: const Text('Drawer')
-//         ),
-//         body: const Center(
-//           child: Text('Hola mundo!')
-//         )
-//       )
-//     );
-//   }
-// }

@@ -69,7 +69,7 @@ class RegistroUsuarioPropietario extends StatelessWidget {
              const SizedBox(height: 20),
 
             // Botón de inicio de sesión
-            Container(
+            SizedBox(
               width: 300,
               child: ElevatedButton(
                 onPressed: () {
