@@ -64,7 +64,7 @@ class LoginPage extends StatelessWidget {
                       Get.toNamed("/registroUsuarioNormal");
                     },
                     style: ButtonStyle(
-                    foregroundColor: MaterialStateProperty.all(Color.fromARGB(255, 255, 255, 255))
+                    foregroundColor: MaterialStateProperty.all(const Color.fromARGB(255, 255, 255, 255))
                   ),
                     child: const Text("Registrarse")
                   ),
