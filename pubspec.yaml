@@ -31,12 +31,12 @@ dependencies:
   cupertino_icons: ^1.0.2
   flutter:
     sdk: flutter
-    google_maps_flutter: ^latest_version
-    google_maps_webservice: ^latest_version
+
   get: ^4.6.6
   google_nav_bar: ^5.0.6
 
 dev_dependencies:
+
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
