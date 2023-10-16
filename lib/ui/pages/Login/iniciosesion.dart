@@ -48,7 +48,7 @@ class LoginPage extends StatelessWidget {
                   TextButton(
                     onPressed: () {
                       // Navegar a la pantalla de menú de opciones de registro
-                      Get.toNamed(const MenuOpcionesRegistro() as String); // Reemplaza por la ruta correcta
+                      Get.toNamed("/registroUsuarioNormal"); // Reemplaza por la ruta correcta
                     },
                     style: ButtonStyle(
                       foregroundColor: MaterialStateProperty.all(Colors.white),
