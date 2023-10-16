@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
+import 'package:proyecto_pension2/ui/pages/Home/habitacionCrud.dart';
 import 'package:proyecto_pension2/ui/pages/Home/homeEditar.dart';
 import 'package:proyecto_pension2/ui/pages/Home/homeHabitacion.dart';
+import 'package:proyecto_pension2/ui/pages/Home/homeSoporte.dart';
 import 'package:proyecto_pension2/ui/pages/Login/iniciosesion.dart';
+
+
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
@@ -13,76 +17,58 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   int posicion = 0;
-  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>(); // Agregado
 
   final ventanas = [
-    const Center(
-      child: Text(
-        "HOME",
-        style: TextStyle(fontSize: 24),
-      ),
-    ),
-    const Center(
-      child: Text(
-        "CHATS",
-        style: TextStyle(fontSize: 24),
-      ),
-    ),
-    const Center(
-      child: Text(
-        "CONFIGURACION",
-        style: TextStyle(fontSize: 24),
-      ),
-    ),
+    const Center(child: Habitaciones()),
+    const Center(child: Text("CHATS", style: TextStyle(fontSize: 24),)),
+    const Center(child: Text("CONFIGURACION", style: TextStyle(fontSize: 24),)),
   ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      key: _scaffoldKey,
+      key: _scaffoldKey, // Agregado
       drawer: Drawer(
         child: ListView(
           children: [
             ListTile(
               leading: const Icon(Icons.support),
               title: const Text('Soporte técnico'),
-              onTap: () {
-                // Acción para soporte técnico
+              onTap: () {Navigator.of(context).push(
+                  MaterialPageRoute(builder: (context) => SoporteTecnico()),
+                );
               },
             ),
             ListTile(
               leading: const Icon(Icons.edit),
               title: const Text('Editar datos'),
               onTap: () {
-                // Navegar a la pantalla de edición al presionar "Editar datos"
                 Navigator.of(context).push(
                   MaterialPageRoute(builder: (context) => const HomeEditar()),
                 );
               },
             ),
             ListTile(
-        leading: const Icon(Icons.hotel),
-        title: const Text('Habitación'),
-        onTap: () {
-          // Navegar a la pantalla de gestión de habitaciones (HomeHabitacion)
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => const HomeHabitacion()),
-          );
-        },
-      ),
+              leading: const Icon(Icons.hotel),
+              title: const Text('Habitación'),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) =>  Habitacion()),
+                );
+              },
+            ),
             ListTile(
               leading: const Icon(Icons.exit_to_app),
               title: const Text('Cerrar sesión'),
               onTap: () {
-                // Navegar a la pantalla de inicio de sesión al cerrar sesión
                 Navigator.of(context).pushAndRemoveUntil(
                   MaterialPageRoute(builder: (context) => const LoginPage()),
                   (Route<dynamic> route) => false,
                 );
               },
             ),
-            
           ],
         ),
       ),
@@ -94,13 +80,13 @@ class _HomeState extends State<Home> {
           onTabChange: (index) {
             setState(() {
               if (index == 1) {
-                // Abrir la pantalla de búsqueda
+                // Acción al hacer clic en "Buscar"
                 // ...
                 return;
               }
               posicion = index;
               if (posicion == 2) {
-                _scaffoldKey.currentState?.openDrawer();
+                _scaffoldKey.currentState?.openDrawer(); // Abrir Drawer en la pestaña de Configuración
               }
             });
           },

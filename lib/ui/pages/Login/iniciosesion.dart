@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:proyecto_pension2/ui/pages/Login/opcionUsuario.dart';
 import 'package:proyecto_pension2/ui/pages/Login/widgetCajaTexto.dart';
-
 
 
 class LoginPage extends StatelessWidget {
@@ -14,29 +14,20 @@ class LoginPage extends StatelessWidget {
       body: Center(
         child: Container(
           decoration: const BoxDecoration(
-            image: DecorationImage(image: AssetImage("assets/image/Habitacion.jpg"), fit: BoxFit.cover)
+            image: DecorationImage(image: AssetImage("assets/Images/Habitacion.jpg"), fit: BoxFit.cover),
           ),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              // Image.asset('assets/logo.png', width: 100, height: 100),
-              Image.asset("assets/image/Logo.png", width: 200, height: 200,),
-              
-              //const SizedBox(height: 10),
+              Image.asset("assets/Images/Logo.png", width: 200, height: 200,),
               const Text(
                 "Iniciar Sesión",
-                style: TextStyle(fontSize: 24, color: Color.fromARGB(255, 0, 0, 0), fontWeight: FontWeight.bold),
+                style: TextStyle(fontSize: 24, color: Colors.white, fontWeight: FontWeight.bold),
               ),
-        
               const SizedBox(height: 20),
-        
-              // Campos de texto para el nombre de usuario y la contraseña
               const CajaTexto(titulo: "Nombre de usuario", oscuro: false),
               const CajaTexto(titulo: "Contraseña", oscuro: true),
-        
               const SizedBox(height: 20),
-        
-              // Botón de inicio de sesión
               SizedBox(
                 width: 200,
                 child: ElevatedButton(
@@ -45,30 +36,25 @@ class LoginPage extends StatelessWidget {
                     Get.toNamed("/home");
                   },
                   style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all(Colors.white)
+                    backgroundColor: MaterialStateProperty.all(Colors.white),
                   ),
                   child: const Text("Iniciar Sesión", style: TextStyle(color: Colors.black),),
                 ),
               ),
-        
               const SizedBox(height: 20),
-        
-              // Opciones de registro
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
-                verticalDirection: VerticalDirection.down,
                 children: [
                   TextButton(
                     onPressed: () {
-                      // Navegar a la pantalla de registro de usuario normal
-                      Get.toNamed("/registroUsuarioNormal");
+                      // Navegar a la pantalla de menú de opciones de registro
+                      Get.to(MenuOpcionesRegistro()); // Reemplaza por la ruta correcta
                     },
                     style: ButtonStyle(
-                    foregroundColor: MaterialStateProperty.all(const Color.fromARGB(255, 255, 255, 255))
+                      foregroundColor: MaterialStateProperty.all(Colors.white),
+                    ),
+                    child: const Text("Registrarse"),
                   ),
-                    child: const Text("Registrarse")
-                  ),
-                 
                 ],
               ),
             ],

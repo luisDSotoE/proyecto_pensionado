@@ -13,7 +13,7 @@ class RegistroUsuarioNormal extends StatelessWidget {
         body: Container(
           height: MediaQuery.of(context).size.height,
           width: MediaQuery.of(context).size.width,
-          decoration: const BoxDecoration(image: DecorationImage(image: AssetImage("assets/image/Casa.jpg"), fit: BoxFit.cover)),
+          decoration: const BoxDecoration(image: DecorationImage(image: AssetImage("assets/Images/Casa.jpg"), fit: BoxFit.cover)),
           child: SingleChildScrollView(
             child: Center(
                 child: Column(
@@ -24,7 +24,7 @@ class RegistroUsuarioNormal extends StatelessWidget {
                     SizedBox(
                       width: 200.0,
                       height: 200.0,
-                      child: Image.asset("assets/image/Logo.png", width: 100, height: 100,),
+                      child: Image.asset("assets/Images/Logo.png", width: 100, height: 100,),
                     
                     ),
                     
@@ -38,11 +38,9 @@ class RegistroUsuarioNormal extends StatelessWidget {
                     
                     // Campos de texto para el nombre de usuario y la contraseña
                     const CajaTexto(titulo: "Nombre de usuario"),
-                    const CajaTexto(titulo: "Apellido de usuario"),
                     const CajaTexto(titulo: "Cedula", tipo: TextInputType.number),
                     const CajaTexto(titulo: "Numero de telefono", tipo: TextInputType.number,),
                     const CajaTexto(titulo: "Contraseña", oscuro: true),
-                    const CajaTexto(titulo: "Confirmar", oscuro: true),
                       
                     const SizedBox(height: 20),
                     
@@ -52,7 +50,6 @@ class RegistroUsuarioNormal extends StatelessWidget {
                       child: ElevatedButton(
                         onPressed: () {
                           // Aquí puedes agregar la lógica para el inicio de sesión
-                          ("Se registro");
                         },
                         style: ButtonStyle(
                           backgroundColor: MaterialStateProperty.all(Colors.white)
@@ -70,3 +67,4 @@ class RegistroUsuarioNormal extends StatelessWidget {
       );
   }
 }
+

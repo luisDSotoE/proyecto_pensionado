@@ -1,131 +1,98 @@
-
 import 'package:flutter/material.dart';
-
-class Habitacion {
-  String? fotoUrl;
-  String? direccion;
-  double? mensualidad;
-  String? descripcion;
-
-  Habitacion({this.fotoUrl, this.direccion, this.mensualidad, this.descripcion});
-}
+import 'package:photo_view/photo_view.dart';
 
 
-class HomeHabitacion extends StatefulWidget {
-  const HomeHabitacion({super.key});
-
-  @override
-  // ignore: library_private_types_in_public_api
-  _HomeHabitacionState createState() => _HomeHabitacionState();
-}
-
-class _HomeHabitacionState extends State<HomeHabitacion> {
-  List<Habitacion> habitaciones = [];
+class Habitaciones extends StatelessWidget {
+  const Habitaciones({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Gestión de Habitaciones'),
-      ),
-      body: ListView.builder(
-        itemCount: habitaciones.length,
-        itemBuilder: (context, index) {
-          return ListTile(
-            // leading: CircleAvatar(
-            //   backgroundImage: habitaciones[index].fotoUrl != null
-            //       ? NetworkImage(habitaciones[index].fotoUrl!)
-            //       : const AssetImage('assets/default_image.png'), // Puedes reemplazar con tu imagen predeterminada
-            // ),
-            title: Text('Dirección: ${habitaciones[index].direccion ?? 'N/A'}'),
-            subtitle: Text('Mensualidad: \$${habitaciones[index].mensualidad?.toStringAsFixed(2) ?? 'N/A'}'),
-            trailing: IconButton(
-              icon: const Icon(Icons.delete),
-              onPressed: () {
-                // Acción para eliminar la habitación
-                setState(() {
-                  habitaciones.removeAt(index);
-                });
-              },
-            ),
+    return ListHabitaciones();
+  }
+}
+
+class ListHabitaciones extends StatelessWidget {
+  final List<Map<String, dynamic>> products = [
+    {
+      'Titulo': "Habitacion 1",
+      'Descripcion': "Habitacion con mirada hacia la ciudad",
+      'Imagen': "assets/images/Habitacion.jpg"
+    },
+    {
+      'Titulo': "Habitacion 2",
+      'Descripcion': "Pension con bonita estructura",
+      'Imagen': "assets/images/Casa.jpg"
+    },
+  ];
+
+  ListHabitaciones({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: const BoxDecoration(
+          image: DecorationImage(
+              image: AssetImage("assets/Images/Home.jpg"), fit: BoxFit.cover)),
+      child: ListView.builder(
+        itemCount: products.length,
+        itemBuilder: (BuildContext context, int index) {
+          final product = products[index];
+          return GestureDetector(
+            onTap: () {
+              Navigator.push(context, MaterialPageRoute(builder: (context) {
+                return Photo(product: product);
+              }));
+            },
+            child: Card(
+                elevation: 5,
+                margin: const EdgeInsets.all(10),
+                child: Column(
+                  children: <Widget>[
+                    Image.asset(
+                      product['Imagen'],
+                      height: 150,
+                      width: 150,
+                      fit: BoxFit.cover,
+                    ),
+                    ListTile(
+                      title: Text(product['Titulo']),
+                      subtitle: Text(product['Descripcion']),
+                    ),
+                  ],
+                )),
           );
         },
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          // Acción para agregar una nueva habitación
-          _agregarHabitacion(context);
-        },
-        child: const Icon(Icons.add),
-      ),
     );
   }
-
-  void _agregarHabitacion(BuildContext context) async {
-    Habitacion nuevaHabitacion = await Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => const AgregarHabitacionScreen()),
-    );
-
-    setState(() {
-      habitaciones.add(nuevaHabitacion);
-    });
-    }
 }
 
-class AgregarHabitacionScreen extends StatefulWidget {
-  const AgregarHabitacionScreen({super.key});
+class Photo extends StatelessWidget {
+  const Photo({super.key, required this.product});
 
-  @override
-  // ignore: library_private_types_in_public_api
-  _AgregarHabitacionScreenState createState() => _AgregarHabitacionScreenState();
-}
-
-class _AgregarHabitacionScreenState extends State<AgregarHabitacionScreen> {
-  TextEditingController direccionController = TextEditingController();
-  TextEditingController mensualidadController = TextEditingController();
-  TextEditingController descripcionController = TextEditingController();
+  final Map<String, dynamic> product;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Agregar Habitación'),
+        title: Text(product['Titulo'],
+            style: const TextStyle(color: Colors.white)),
+        backgroundColor: Colors.black,
+        iconTheme: const IconThemeData(color: Colors.white),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          children: [
-            TextField(
-              controller: direccionController,
-              decoration: const InputDecoration(labelText: 'Dirección'),
-            ),
-            TextField(
-              controller: mensualidadController,
-              decoration: const InputDecoration(labelText: 'Mensualidad'),
-              keyboardType: TextInputType.number,
-            ),
-            TextField(
-              controller: descripcionController,
-              decoration: const InputDecoration(labelText: 'Descripción'),
-            ),
-            const SizedBox(height: 20.0),
-            ElevatedButton(
+      body: PhotoView(imageProvider: AssetImage(product['Imagen'])),
+      bottomNavigationBar: BottomAppBar(
+        color: Colors.transparent,
+        elevation: 0,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: <Widget>[
+            IconButton(
+              icon: const Icon(Icons.arrow_back, color: Colors.white),
               onPressed: () {
-                // Acción para guardar la habitación
-                String direccion = direccionController.text;
-                double? mensualidad = double.tryParse(mensualidadController.text);
-                String descripcion = descripcionController.text;
-
-                Habitacion habitacion = Habitacion(
-                  direccion: direccion,
-                  mensualidad: mensualidad,
-                  descripcion: descripcion,
-                );
-
-                Navigator.pop(context, habitacion);
+                Navigator.of(context).pop(); // Regresar a la pantalla anterior (ListHabitaciones)
               },
-              child: const Text('Guardar'),
             ),
           ],
         ),
