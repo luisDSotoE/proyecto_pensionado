@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:proyecto_pension2/ui/pages/Login/opcionUsuario.dart';
 import 'package:proyecto_pension2/ui/pages/Login/widgetCajaTexto.dart';
-
 
 
 class LoginPage extends StatelessWidget {
@@ -12,67 +12,53 @@ class LoginPage extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.blue,
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            // Image.asset('assets/logo.png', width: 100, height: 100),
-            Container(
-              width: 200.0,
-              height: 200.0,
-              child: Image.asset("assets/Images/Logo.jpeg", width: 100, height: 100,),
-
-            ),
-            
-            const SizedBox(height: 20),
-            const Text(
-              "Iniciar Sesión",
-              style: TextStyle(fontSize: 24, color: Colors.white, fontWeight: FontWeight.bold),
-            ),
-
-            const SizedBox(height: 20),
-
-            // Campos de texto para el nombre de usuario y la contraseña
-            const CajaTexto(titulo: "Nombre de usuario", oscuro: false),
-            const CajaTexto(titulo: "Contraseña", oscuro: true),
-
-            const SizedBox(height: 20),
-
-            // Botón de inicio de sesión
-            Container(
-              width: 200,
-              child: ElevatedButton(
-                onPressed: () {
-                  // Aquí puedes agregar la lógica para el inicio de sesión
-                  Get.toNamed("/home");
-                },
-                style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all(Colors.white)
-                ),
-                child: const Text("Iniciar Sesión", style: TextStyle(color: Colors.blue),),
+        child: Container(
+          decoration: const BoxDecoration(
+            image: DecorationImage(image: AssetImage("assets/image/Habitacion.jpg"), fit: BoxFit.cover),
+          ),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Image.asset("assets/image/Logo.png", width: 200, height: 200,),
+              const Text(
+                "Iniciar Sesión",
+                style: TextStyle(fontSize: 24, color: Colors.white, fontWeight: FontWeight.bold),
               ),
-            ),
-
-            const SizedBox(height: 20),
-
-            // Opciones de registro
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              verticalDirection: VerticalDirection.down,
-              children: [
-                TextButton(
+              const SizedBox(height: 20),
+              const CajaTexto(titulo: "Nombre de usuario", oscuro: false),
+              const CajaTexto(titulo: "Contraseña", oscuro: true),
+              const SizedBox(height: 20),
+              SizedBox(
+                width: 200,
+                child: ElevatedButton(
                   onPressed: () {
-                    // Navegar a la pantalla de registro de usuario normal
-                    Get.toNamed("/registroUsuarioNormal");
+                    // Aquí puedes agregar la lógica para el inicio de sesión
+                    Get.toNamed("/home");
                   },
-                  child: Text("Registrarse"),
                   style: ButtonStyle(
-                  foregroundColor: MaterialStateProperty.all(Colors.white)
-                )
+                    backgroundColor: MaterialStateProperty.all(Colors.white),
+                  ),
+                  child: const Text("Iniciar Sesión", style: TextStyle(color: Colors.black),),
                 ),
-               
-              ],
-            ),
-          ],
+              ),
+              const SizedBox(height: 20),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  TextButton(
+                    onPressed: () {
+                      // Navegar a la pantalla de menú de opciones de registro
+                      Get.toNamed(const MenuOpcionesRegistro() as String); // Reemplaza por la ruta correcta
+                    },
+                    style: ButtonStyle(
+                      foregroundColor: MaterialStateProperty.all(Colors.white),
+                    ),
+                    child: const Text("Registrarse"),
+                  ),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );

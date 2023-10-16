@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:proyecto_pension2/ui/pages/Login/widgetCajaTexto.dart';
 
 class RegistroUsuarioPropietario extends StatelessWidget {
   const RegistroUsuarioPropietario({super.key});
@@ -6,83 +7,53 @@ class RegistroUsuarioPropietario extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
-      backgroundColor: Colors.blue,
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            //Imagen
-
-            const Text("Registro Propietario", style: TextStyle(fontSize: 24, color: Colors.white) ),
-          
-          const SizedBox(height: 20,),
-
-          Container(
-            width: 300, 
-            padding: const EdgeInsets.all(10),
-            child: TextFormField(
-              decoration: const InputDecoration(
-                labelText: "Nombre de usuario",
-                fillColor: Colors.white,
-                filled: true,
-              ),
+      extendBodyBehindAppBar: true,
+      appBar: AppBar(backgroundColor: Colors.transparent, elevation: 0),
+      body: Container(
+        height: MediaQuery.of(context).size.height,
+        width: MediaQuery.of(context).size.width,
+        decoration: const BoxDecoration(
+          image: DecorationImage(image: AssetImage("assets/image/Casa.jpg"), fit: BoxFit.cover),
+        ),
+        child: SingleChildScrollView(
+          child: Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                SizedBox(
+                  width: 200.0,
+                  height: 200.0,
+                  child: Image.asset("assets/image/Logo.png", width: 100, height: 100),
+                ),
+                const SizedBox(height: 20),
+                const Text(
+                  "Registro Propietario",
+                  style: TextStyle(fontSize: 24, color: Colors.white),
+                ),
+                const SizedBox(height: 20),
+                const CajaTexto(titulo: "Nombre de usuario"),
+                const CajaTexto(titulo: "Cedula", tipo: TextInputType.number),
+                const CajaTexto(titulo: "Numero de telefono", tipo: TextInputType.number),
+                const CajaTexto(titulo: "Contraseña", oscuro: true),
+                const SizedBox(height: 20),
+                SizedBox(
+                  width: 200,
+                  child: ElevatedButton(
+                    onPressed: () {
+                      // Aquí puedes agregar la lógica para el inicio de sesión
+                    },
+                    style: ButtonStyle(
+                      backgroundColor: MaterialStateProperty.all(Colors.white),
+                    ),
+                    child: const Text(
+                      "Registrarse",
+                      style: TextStyle(color: Colors.white),
+                    ),
+                  ),
+                ),
+              ],
             ),
           ),
-          Container(
-            width: 300,
-            padding: const EdgeInsets.all(10),
-            child: TextFormField(
-              keyboardType: TextInputType.number,
-              decoration: const InputDecoration(
-                labelText: "Cedula",
-                fillColor: Colors.white,
-                filled: true,
-              ),
-            ),
-          ),
-          Container(
-              width: 300,
-              padding: const EdgeInsets.all(10),
-              child: TextFormField(
-                keyboardType: TextInputType.number,
-                decoration: const InputDecoration(
-                  labelText: "Numero de telefono",
-                  fillColor: Colors.white,
-                  filled: true,
-                ),
-              ),
-            ),
-            Container(
-              width: 300,
-              padding: const EdgeInsets.all(10),
-              child: TextFormField(
-                obscureText: true,
-                decoration: const InputDecoration(
-                  labelText: "Contraseña",
-                  fillColor: Colors.white,
-                  filled: true,
-                ),
-              ),
-            ),
-
-             const SizedBox(height: 20),
-
-            // Botón de inicio de sesión
-            Container(
-              width: 300,
-              child: ElevatedButton(
-                onPressed: () {
-                  // Aquí puedes agregar la lógica para el inicio de sesión
-                },
-                style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all(Colors.white)
-                ),
-                child: const Text("Registrarse", style: TextStyle(color: Colors.blue),),
-              ),
-            ),
-          
-          ],
         ),
       ),
     );
