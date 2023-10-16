@@ -16,12 +16,12 @@ class ListHabitaciones extends StatelessWidget {
     {
       'Titulo': "Habitacion 1",
       'Descripcion': "Habitacion con mirada hacia la ciudad",
-      'Imagen': "assets/images/Habitacion.jpg"
+      'Imagen': "assets/image/Habitacion.jpg"
     },
     {
       'Titulo': "Habitacion 2",
       'Descripcion': "Pension con bonita estructura",
-      'Imagen': "assets/images/Casa.jpg"
+      'Imagen': "assets/image/Casa.jpg"
     },
   ];
 
