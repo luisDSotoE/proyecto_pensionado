@@ -32,7 +32,7 @@ class ListHabitaciones extends StatelessWidget {
     return Container(
       decoration: const BoxDecoration(
           image: DecorationImage(
-              image: AssetImage("assets/Images/Home.jpg"), fit: BoxFit.cover)),
+              image: AssetImage("assets/image/Home.jpg"), fit: BoxFit.cover)),
       child: ListView.builder(
         itemCount: products.length,
         itemBuilder: (BuildContext context, int index) {

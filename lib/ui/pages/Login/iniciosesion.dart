@@ -14,12 +14,12 @@ class LoginPage extends StatelessWidget {
       body: Center(
         child: Container(
           decoration: const BoxDecoration(
-            image: DecorationImage(image: AssetImage("assets/Images/Habitacion.jpg"), fit: BoxFit.cover),
+            image: DecorationImage(image: AssetImage("assets/image/Habitacion.jpg"), fit: BoxFit.cover),
           ),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Image.asset("assets/Images/Logo.png", width: 200, height: 200,),
+              Image.asset("assets/image/Logo.png", width: 200, height: 200,),
               const Text(
                 "Iniciar Sesión",
                 style: TextStyle(fontSize: 24, color: Colors.white, fontWeight: FontWeight.bold),
@@ -48,7 +48,7 @@ class LoginPage extends StatelessWidget {
                   TextButton(
                     onPressed: () {
                       // Navegar a la pantalla de menú de opciones de registro
-                      Get.to(MenuOpcionesRegistro()); // Reemplaza por la ruta correcta
+                      Get.toNamed(const MenuOpcionesRegistro() as String); // Reemplaza por la ruta correcta
                     },
                     style: ButtonStyle(
                       foregroundColor: MaterialStateProperty.all(Colors.white),

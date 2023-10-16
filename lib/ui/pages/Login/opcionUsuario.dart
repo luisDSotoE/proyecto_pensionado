@@ -18,7 +18,7 @@ class MenuOpcionesRegistro extends StatelessWidget {
         height: MediaQuery.of(context).size.height,
         width: MediaQuery.of(context).size.width,
         decoration: const BoxDecoration(
-          image: DecorationImage(image: AssetImage("assets/Images/Casa.jpg"), fit: BoxFit.cover),
+          image: DecorationImage(image: AssetImage("assets/image/Casa.jpg"), fit: BoxFit.cover),
         ),
         child: SingleChildScrollView(
           child: Center(
@@ -28,7 +28,7 @@ class MenuOpcionesRegistro extends StatelessWidget {
                 SizedBox(
                   width: 200.0,
                   height: 200.0,
-                  child: Image.asset("assets/Images/Logo.png", width: 100, height: 100),
+                  child: Image.asset("assets/image/Logo.png", width: 100, height: 100),
                 ),
                 const SizedBox(height: 20),
                 const Text(

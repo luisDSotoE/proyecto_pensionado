@@ -13,7 +13,7 @@ class RegistroUsuarioPropietario extends StatelessWidget {
         height: MediaQuery.of(context).size.height,
         width: MediaQuery.of(context).size.width,
         decoration: const BoxDecoration(
-          image: DecorationImage(image: AssetImage("assets/Images/Casa.jpg"), fit: BoxFit.cover),
+          image: DecorationImage(image: AssetImage("assets/image/Casa.jpg"), fit: BoxFit.cover),
         ),
         child: SingleChildScrollView(
           child: Center(
@@ -23,7 +23,7 @@ class RegistroUsuarioPropietario extends StatelessWidget {
                 SizedBox(
                   width: 200.0,
                   height: 200.0,
-                  child: Image.asset("assets/Images/Logo.png", width: 100, height: 100),
+                  child: Image.asset("assets/image/Logo.png", width: 100, height: 100),
                 ),
                 const SizedBox(height: 20),
                 const Text(
@@ -31,10 +31,10 @@ class RegistroUsuarioPropietario extends StatelessWidget {
                   style: TextStyle(fontSize: 24, color: Colors.white),
                 ),
                 const SizedBox(height: 20),
-                CajaTexto(titulo: "Nombre de usuario"),
-                CajaTexto(titulo: "Cedula", tipo: TextInputType.number),
-                CajaTexto(titulo: "Numero de telefono", tipo: TextInputType.number),
-                CajaTexto(titulo: "Contraseña", oscuro: true),
+                const CajaTexto(titulo: "Nombre de usuario"),
+                const CajaTexto(titulo: "Cedula", tipo: TextInputType.number),
+                const CajaTexto(titulo: "Numero de telefono", tipo: TextInputType.number),
+                const CajaTexto(titulo: "Contraseña", oscuro: true),
                 const SizedBox(height: 20),
                 SizedBox(
                   width: 200,
