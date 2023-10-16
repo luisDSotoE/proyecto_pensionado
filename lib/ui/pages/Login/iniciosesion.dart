@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:proyecto_pension2/ui/pages/Login/opcionUsuario.dart';
+//import 'package:proyecto_pension2/ui/pages/Login/opcionUsuario.dart';
 import 'package:proyecto_pension2/ui/pages/Login/widgetCajaTexto.dart';
 
 
