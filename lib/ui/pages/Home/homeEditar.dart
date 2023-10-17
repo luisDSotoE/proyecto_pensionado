@@ -42,8 +42,6 @@ class HomeEditar extends StatelessWidget {
       child: ElevatedButton(
         onPressed: () {
           // Navegar a la pantalla de cambio de contraseña
-          // Aquí puedes agregar la lógica para la navegación a la pantalla de cambio de contraseña
-          // Navigator.of(context).push(...);
         },
         child: const Text('Guardar Cambios'),
       ),
