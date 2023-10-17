@@ -21,13 +21,21 @@ class _HomeState extends State<Home> {
 
   final ventanas = [
     const Center(child: Habitaciones()),
-    const Center(child: Text("CHATS", style: TextStyle(fontSize: 24),)),
-    const Center(child: Text("CONFIGURACION", style: TextStyle(fontSize: 24),)),
+    const Center(child: Text("BUSCAR", style: TextStyle(fontSize: 24),)),
   ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      extendBody: true,
+      extendBodyBehindAppBar: true,
+      appBar: AppBar(
+        backgroundColor: Colors.transparent, elevation: 0,
+        flexibleSpace: FlexibleSpaceBar(
+          centerTitle: true,
+          background: Center(child: Image.asset("assets/image/Logo.png")),
+          )
+      ),
       key: _scaffoldKey, // Agregado
       drawer: Drawer(
         child: ListView(
@@ -72,22 +80,20 @@ class _HomeState extends State<Home> {
           ],
         ),
       ),
-      body: ventanas[posicion],
+      body: Container(
+        decoration: const BoxDecoration(
+          image: DecorationImage(
+              image: AssetImage("assets/image/Home.jpg"), fit: BoxFit.cover)),
+        child: ventanas[posicion],
+        ),
       bottomNavigationBar: Container(
+        color: Colors.transparent,
         padding: const EdgeInsets.symmetric(vertical: 10),
         child: GNav(
           selectedIndex: posicion,
           onTabChange: (index) {
             setState(() {
-              if (index == 1) {
-                // Acción al hacer clic en "Buscar"
-                // ...
-                return;
-              }
               posicion = index;
-              if (posicion == 2) {
-                _scaffoldKey.currentState?.openDrawer(); // Abrir Drawer en la pestaña de Configuración
-              }
             });
           },
           color: Colors.blue,
@@ -106,12 +112,6 @@ class _HomeState extends State<Home> {
               iconActiveColor: Colors.white,
               textColor: Colors.white,
               text: "Buscar",
-            ),
-            ButtonIcons(
-              icon: Icons.settings_outlined,
-              iconActiveColor: Colors.white,
-              textColor: Colors.white,
-              text: "Configuración",
             ),
           ],
         ),
