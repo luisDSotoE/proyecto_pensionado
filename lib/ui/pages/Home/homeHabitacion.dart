@@ -16,7 +16,7 @@ class ListHabitaciones extends StatelessWidget {
     {
       'Titulo': "Habitacion 1",
       'Descripcion': "Habitacion con mirada hacia la ciudad",
-      'Mensualidad': 800.000,
+      'Mensualidad': 800.000,   
       'Direccion': 'Kr 20',
       'Imagen': "assets/image/Habitacion.jpg"
     },
