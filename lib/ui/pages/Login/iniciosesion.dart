@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-//import 'package:proyecto_pension2/ui/pages/Login/opcionUsuario.dart';
 import 'package:proyecto_pension2/ui/pages/Login/widgetCajaTexto.dart';
 
 
@@ -48,7 +47,7 @@ class LoginPage extends StatelessWidget {
                   TextButton(
                     onPressed: () {
                       // Navegar a la pantalla de menú de opciones de registro
-                      Get.toNamed("/registroUsuarioNormal"); // Reemplaza por la ruta correcta
+                      Get.toNamed("/registroUsuarioNormal");
                     },
                     style: ButtonStyle(
                       foregroundColor: MaterialStateProperty.all(Colors.white),

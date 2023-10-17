@@ -19,37 +19,31 @@ class RegistroUsuarioNormal extends StatelessWidget {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    // Image.asset('assets/logo.png', width: 100, height: 100),
-                    
                     SizedBox(
                       width: 200.0,
                       height: 200.0,
                       child: Image.asset("assets/image/Logo.png", width: 100, height: 100,),
-                    
                     ),
-                    
                     //const SizedBox(height: 20),
-                    
                     const Text(
                       "Registro Usuario",
                       style: TextStyle(fontSize: 24, color: Colors.white, fontWeight: FontWeight.bold),
                     ),
                     const SizedBox(height: 20),
                     
-                    // Campos de texto para el nombre de usuario y la contraseña
+                    // Campos de texto
                     const CajaTexto(titulo: "Nombre de usuario"),
                     const CajaTexto(titulo: "Cedula", tipo: TextInputType.number),
                     const CajaTexto(titulo: "Numero de telefono", tipo: TextInputType.number,),
                     const CajaTexto(titulo: "Contraseña", oscuro: true),
                       
                     const SizedBox(height: 20),
-                    
-                    // Botón de inicio de sesión
+
                     SizedBox(
                       width: 200,
                       child: ElevatedButton(
                         onPressed: () {
-                          // Aquí puedes agregar la lógica para el inicio de sesión
+                          //Logica
                         },
                         style: ButtonStyle(
                           backgroundColor: MaterialStateProperty.all(Colors.white)
