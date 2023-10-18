@@ -31,12 +31,14 @@ dependencies:
   cupertino_icons: ^1.0.2
   flutter:
     sdk: flutter
-
+    
   get: ^4.6.6
   google_nav_bar: ^5.0.6
   photo_view: ^0.14.0
   url_launcher: ^6.1.14
   image_picker: ^1.0.4
+  flutter_screenutil: ^5.9.0
+  
 
 dev_dependencies:
 

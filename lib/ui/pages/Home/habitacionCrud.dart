@@ -34,6 +34,7 @@ class Habitacion extends StatefulWidget {
   habitacionCrud createState() => habitacionCrud();
 }
 
+// ignore: camel_case_types
 class habitacionCrud extends State<Habitacion> {
   List<Cuarto> rooms = [
     Cuarto(
@@ -54,6 +55,8 @@ class habitacionCrud extends State<Habitacion> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: const Color.fromARGB(255, 122, 171, 212),
+        
         title: const Text('lista de habitaciones'),
       ),
       body: ListView.builder(
@@ -64,7 +67,7 @@ class habitacionCrud extends State<Habitacion> {
             title: Text(rooms[index].direccion),
             subtitle: Text('Mensualidad: \$${rooms[index].mensualidad.toStringAsFixed(2)}'),
             onTap: () {
-              // Navigate to a detail screen to view more information about the room
+             
               Navigator.push(
                 context,
                 MaterialPageRoute(
@@ -77,11 +80,11 @@ class habitacionCrud extends State<Habitacion> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          // Navigate to a screen to add a new room
+
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => AddRoomScreen(),
+              builder: (context) => const AddRoomScreen(),
             ),
           );
         },
@@ -99,25 +102,30 @@ class RoomDetailScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      
       appBar: AppBar(
         title: const Text('Detalles de la habitacion'),
+        backgroundColor: const Color.fromARGB(255, 122, 171, 212),
+        
       ),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+      body: Column(                    
         children: [
           Image.network(cuarto.imagen),
           Padding(
             padding: const EdgeInsets.all(16.0),
             child: Column(
+              
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text('Direccion: ${cuarto.direccion}'),
-                Text('Mensualidad: \$${cuarto.mensualidad.toStringAsFixed(2)}'),
-                Text('Description: ${cuarto.descripcion}'),
+                Text('DIRECCION: ${cuarto.direccion}',style: const TextStyle(fontSize: 15.0,fontWeight: FontWeight.bold,  ), ),
+                Text('MENSUALIDAD: \$${cuarto.mensualidad.toStringAsFixed(2)}',style: const TextStyle(fontSize: 15.0,fontWeight: FontWeight.bold ),),
+                Text('DESCRIPCION: ${cuarto.descripcion}',style: const TextStyle(fontSize: 15.0,fontWeight: FontWeight.bold ),),
               ],
             ),
           ),
+  
         ],
+      
       ),
     );
   }
@@ -129,8 +137,10 @@ class AddRoomScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+     
       appBar: AppBar(
         title: const Text('Agregar habitacion'),
+        backgroundColor: const Color.fromARGB(255, 122, 171, 212),
       ),
       body: const Center(
         child: Text('pantalla de habitacion'),

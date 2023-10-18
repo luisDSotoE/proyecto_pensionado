@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:photo_view/photo_view.dart';
 
 
+
 class Habitaciones extends StatelessWidget {
   const Habitaciones({super.key});
 
@@ -39,49 +40,48 @@ class ListHabitaciones extends StatelessWidget {
 
   ListHabitaciones({super.key});
 
-  @override
+@override
   Widget build(BuildContext context) {
     return ListView.builder(
       itemCount: products.length,
       itemBuilder: (BuildContext context, int index) {
         final product = products[index];
         return Card(
-              elevation: 5,
-              margin: const EdgeInsets.all(10),
-              child: Column(
-                children: <Widget>[
-                  GestureDetector(
-                    onTap: () {
-                      Navigator.push(context, MaterialPageRoute(builder: (context) {
-                      return Photo(product: product);
-                      }));
-                    },
-                    child: Image.asset(
-                      product['Imagen'],
-                      height: 150,
-                      width: 150,
-                      fit: BoxFit.cover,
-                    ),
-                  ),
-                  GestureDetector(
-                    onTap: () {
-                      //Abrir ventana para observar la habitacion bien
-                      Navigator.push(context, MaterialPageRoute(builder: (context) {
-                      return DetallesHabitacion(cuarto: product);
-                      }));
-                    },
-                    child: ListTile(
-                      title: Text(product['Titulo']),
-                      subtitle: Text(product['Descripcion']),
-                    ),
-                  ),
-                ],
-              ));
+          elevation: 5,
+          margin: const EdgeInsets.all(10),
+          child: Column(
+            children: <Widget>[
+              GestureDetector(
+                onTap: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (context) {
+                    return Photo(product: product);
+                  }));
+                },
+                child: Image.asset(
+                  product['Imagen'],
+                    width:  150,  
+                    height:  150, 
+                    fit: BoxFit.cover, 
+                ),
+              ),
+              GestureDetector(
+                onTap: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (context) {
+                    return DetallesHabitacion(cuarto: product);
+                  }));
+                },
+                child: ListTile(
+                  title: Text(product['Titulo']),
+                  subtitle: Text(product['Descripcion']),
+                ),
+              ),
+            ],
+          ),
+        );
       },
     );
   }
 }
-
 class Photo extends StatelessWidget {
   const Photo({super.key, required this.product});
 

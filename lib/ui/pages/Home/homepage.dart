@@ -6,8 +6,6 @@ import 'package:proyecto_pension2/ui/pages/Home/homeHabitacion.dart';
 import 'package:proyecto_pension2/ui/pages/Home/homeSoporte.dart';
 import 'package:proyecto_pension2/ui/pages/Login/iniciosesion.dart';
 
-
-
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
 
@@ -17,11 +15,11 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   int posicion = 0;
-  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>(); // Agregado
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   final ventanas = [
     const Center(child: Habitaciones()),
-    const Center(child: Text("BUSCAR", style: TextStyle(fontSize: 24),)),
+    const Center(child: Text("", style: TextStyle(fontSize: 24))),
   ];
 
   @override
@@ -30,24 +28,40 @@ class _HomeState extends State<Home> {
       extendBody: true,
       extendBodyBehindAppBar: true,
       appBar: AppBar(
-        backgroundColor: Colors.transparent, elevation: 0,
+       backgroundColor: Colors.transparent, elevation: 0,
         flexibleSpace: FlexibleSpaceBar(
           centerTitle: true,
           background: Center(child: Image.asset("assets/image/Logo.png")),
-          )
+        ),
       ),
-      key: _scaffoldKey, // Agregado
+      key: _scaffoldKey,
       drawer: Drawer(
         child: ListView(
           children: [
-            ListTile(
-              leading: const Icon(Icons.support),
-              title: const Text('Soporte técnico'),
-              onTap: () {Navigator.of(context).push(
-                  MaterialPageRoute(builder: (context) => SoporteTecnico()),
-                );
-              },
+            const UserAccountsDrawerHeader(
+              accountName: Text(
+    "Luis Soto",
+    style: TextStyle(color: Colors.black), 
+  ),
+  accountEmail: Text(
+    "ldosoto@unicesar.edu.co",
+    style: TextStyle(color: Colors.black), 
+  ),
+              currentAccountPicture: CircleAvatar(
+                backgroundImage: NetworkImage(
+                  "https://blog.hubspot.es/hs-fs/hubfs/ES%20Blog%20images/Los%2015%20logos%20m%C3%A1s%20creativos%20e%20inspiradores%20del%20mundo/logo_famoso_starbucks.jpg?width=650&name=logo_famoso_starbucks.jpg",
+                ),
+              ),
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: NetworkImage(
+                    "https://static.vecteezy.com/system/resources/previews/007/620/939/non_2x/blue-wave-abstract-background-web-background-blue-texture-banner-design-creative-cover-design-backdrop-minimal-background-illustration-vector.jpg",
+                  ),
+                  fit: BoxFit.fill,
+                ),
+              ),
             ),
+           
             ListTile(
               leading: const Icon(Icons.edit),
               title: const Text('Editar datos'),
@@ -63,7 +77,16 @@ class _HomeState extends State<Home> {
               onTap: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) =>  const Habitacion()),
+                  MaterialPageRoute(builder: (context) => const Habitacion()),
+                );
+              },
+            ),
+             ListTile(
+              leading: const Icon(Icons.support),
+              title: const Text('Soporte técnico'),
+              onTap: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(builder: (context) => SoporteTecnico()),
                 );
               },
             ),
@@ -82,10 +105,10 @@ class _HomeState extends State<Home> {
       ),
       body: Container(
         decoration: const BoxDecoration(
-          image: DecorationImage(
-              image: AssetImage("assets/image/Home.jpg"), fit: BoxFit.cover)),
+            image: DecorationImage(
+                image: AssetImage("assets/image/Home.jpg"), fit: BoxFit.cover)),
         child: ventanas[posicion],
-        ),
+      ),
       bottomNavigationBar: Container(
         color: Colors.transparent,
         padding: const EdgeInsets.symmetric(vertical: 10),

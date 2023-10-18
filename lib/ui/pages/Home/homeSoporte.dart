@@ -36,6 +36,7 @@ class SoporteTecnico extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: const Color.fromARGB(255, 122, 171, 212),
         title: const Text('Contacto de soporte'),
       ),
       body: ListView.builder(
