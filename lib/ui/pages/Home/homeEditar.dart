@@ -8,6 +8,7 @@ class HomeEditar extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Editar Datos Personales'),
+        backgroundColor: const Color.fromARGB(255, 122, 171, 212),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -37,14 +38,19 @@ class HomeEditar extends StatelessWidget {
   }
 
   Widget _buildChangePasswordButton(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(top: 20.0),
-      child: ElevatedButton(
-        onPressed: () {
-          // Navegar a la pantalla de cambio de contraseña
-        },
-        child: const Text('Guardar Cambios'),
+  return Padding(
+    padding: const EdgeInsets.only(top: 20.0),
+    child: ElevatedButton(
+      onPressed: () {
+        
+      },
+      child: const Text(
+        'Guardar Cambios',
+        style: TextStyle(
+          color: Colors.black, 
+        ),
       ),
-    );
-  }
+    ),
+  );
+}
 }

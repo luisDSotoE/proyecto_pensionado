@@ -31,7 +31,7 @@ class LoginPage extends StatelessWidget {
                 width: 200,
                 child: ElevatedButton(
                   onPressed: () {
-                    // Aquí puedes agregar la lógica para el inicio de sesión
+                    
                     Get.toNamed("/home");
                   },
                   style: ButtonStyle(
@@ -46,7 +46,7 @@ class LoginPage extends StatelessWidget {
                 children: [
                   TextButton(
                     onPressed: () {
-                      // Navegar a la pantalla de menú de opciones de registro
+                     
                       Get.toNamed("/registroUsuarioNormal");
                     },
                     style: ButtonStyle(

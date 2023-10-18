@@ -31,7 +31,7 @@ class RegistroUsuarioNormal extends StatelessWidget {
                     ),
                     const SizedBox(height: 20),
                     
-                    // Campos de texto
+                    
                     const CajaTexto(titulo: "Nombre de usuario"),
                     const CajaTexto(titulo: "Cedula", tipo: TextInputType.number),
                     const CajaTexto(titulo: "Numero de telefono", tipo: TextInputType.number,),

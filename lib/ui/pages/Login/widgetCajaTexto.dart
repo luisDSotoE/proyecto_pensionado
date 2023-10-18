@@ -6,13 +6,13 @@ class CajaTexto extends StatelessWidget {
   const CajaTexto({
     super.key, 
     required this.titulo, 
-    //required this.controlador,
+    
     this.oscuro = false,
     this.tipo = TextInputType.name
     });
 
   final String titulo;
-  //final TextEditingController controlador;
+ 
   final bool oscuro;
   final TextInputType tipo;
 

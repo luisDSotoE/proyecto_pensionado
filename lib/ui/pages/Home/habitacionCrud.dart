@@ -144,6 +144,7 @@ class AddRoomScreen extends StatelessWidget {
       ),
       body: const Center(
         child: Text('pantalla de habitacion'),
+        
       ),
     );
   }
