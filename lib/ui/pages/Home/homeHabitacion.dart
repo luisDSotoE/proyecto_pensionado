@@ -18,21 +18,21 @@ class ListHabitaciones extends StatelessWidget {
       'Titulo': "Habitacion 1",
       'Descripcion': "Habitacion con mirada hacia la ciudad",
       'Mensualidad': 800.000,   
-      'Direccion': 'Kr 20',
+      'Direccion': 'Kr 21',
       'Imagen': "assets/image/Habitacion.jpg"
     },
     {
       'Titulo': "Habitacion 2",
       'Descripcion': "Pension con bonita estructura",
-      'Mensualidad': 800.000,
+      'Mensualidad': 950.000,
       'Direccion': 'Kr 20',
       'Imagen': "assets/image/Casa.jpg"
     },
     {
       'Titulo': "Habitacion 3",
       'Descripcion': "Habitacion con mirada hacia la ciudad en el barrio x",
-      'Mensualidad': 800.000,
-      'Direccion': 'Kr 20',
+      'Mensualidad': 1200.000,
+      'Direccion': 'Kr 10',
       'Imagen': "assets/image/Habitacion.jpg"
     },
     
@@ -113,6 +113,7 @@ class DetallesHabitacion extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Detalles de la habitacion'),
+        backgroundColor: const Color.fromARGB(255, 122, 171, 212),
       ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
