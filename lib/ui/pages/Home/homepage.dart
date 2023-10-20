@@ -119,8 +119,8 @@ class _HomeState extends State<Home> {
               posicion = index;
             });
           },
-          color: Colors.blue,
-          tabBackgroundColor: Colors.blue,
+          color: Colors.yellow,
+          tabBackgroundColor: Colors.yellow,
           tabBorderRadius: 10,
           padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
           tabs: const [

@@ -16,7 +16,7 @@ class ListHabitaciones extends StatelessWidget {
   final List<Map<String, dynamic>> products = [
     {
       'Titulo': "Habitacion 1",
-      'Descripcion': "Habitacion con mirada hacia la ciudad",
+      'Descripcion': "Habitacion con mirada hacia la ciudad, con mira hacia la universidad X",
       'Mensualidad': 800.000,   
       'Direccion': 'Kr 21',
       'Imagen': "assets/image/Habitacion.jpg"
@@ -38,50 +38,75 @@ class ListHabitaciones extends StatelessWidget {
     
   ];
 
+  
+
   ListHabitaciones({super.key});
 
 @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-      itemCount: products.length,
-      itemBuilder: (BuildContext context, int index) {
-        final product = products[index];
-        return Card(
-          elevation: 5,
-          margin: const EdgeInsets.all(10),
-          child: Column(
-            children: <Widget>[
-              GestureDetector(
-                onTap: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) {
-                    return Photo(product: product);
-                  }));
-                },
-                child: Image.asset(
-                  product['Imagen'],
-                    width:  150,  
-                    height:  150, 
-                    fit: BoxFit.cover, 
+    return SizedBox(
+      width: MediaQuery.of(context).size.width,
+      child: ListView.builder(
+        itemCount: products.length,
+        itemBuilder: (BuildContext context, int index) {
+          final product = products[index];        
+          int limiteDescricion = 30;
+          String descr = product["Descripcion"];
+          String DescripcionRecortada = descr.length > limiteDescricion? 
+          descr.substring(0,limiteDescricion)+"..." : descr;
+          return Card(
+            color: Colors.white,
+              child: Padding(
+                padding: const EdgeInsets.all(5.0),
+                child: Row(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(10.0),
+                      child: GestureDetector(
+                        onTap: () {
+                          Navigator.push(context, MaterialPageRoute(builder: (context) {
+                          return Photo(product: product);
+                        }));
+                      },
+                        child: Image.asset(product['Imagen'],
+                          width:  100,  
+                          height:  100, 
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                      ),
+                      GestureDetector(
+                            onTap: () {
+                              Navigator.push(context, MaterialPageRoute(builder: (context) {
+                              return DetallesHabitacion(cuarto: product);
+                            }));
+                            },
+                            child: Wrap(
+                              children:[ 
+                                Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(product['Titulo']),
+                                  Container(
+                                  width: MediaQuery.of(context).size.width - 150, // Ancho máximo para el texto
+                                  child: Text(DescripcionRecortada),
+                                  ),
+                                  Text("\$"+product['Mensualidad'].toString()),
+                                  ],
+                              ),]
+                            ),
+                          ),
+                  ],
                 ),
               ),
-              GestureDetector(
-                onTap: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) {
-                    return DetallesHabitacion(cuarto: product);
-                  }));
-                },
-                child: ListTile(
-                  title: Text(product['Titulo']),
-                  subtitle: Text(product['Descripcion']),
-                ),
-              ),
-            ],
-          ),
-        );
-      },
+            );
+        },
+      ),
     );
   }
 }
+
+
 class Photo extends StatelessWidget {
   const Photo({super.key, required this.product});
 
