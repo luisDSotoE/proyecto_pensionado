@@ -86,12 +86,12 @@ class ListHabitaciones extends StatelessWidget {
                                 Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text(product['Titulo']),
+                                  Text(product['Titulo'], style: const TextStyle(fontWeight: FontWeight.bold),),
                                   Container(
                                   width: MediaQuery.of(context).size.width - 150, // Ancho máximo para el texto
                                   child: Text(DescripcionRecortada),
                                   ),
-                                  Text("\$"+product['Mensualidad'].toString()),
+                                  Text("\$${product['Mensualidad']}", style: const TextStyle(color: Colors.green, fontWeight: FontWeight.bold),),
                                   ],
                               ),]
                             ),

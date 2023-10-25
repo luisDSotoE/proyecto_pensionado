@@ -7,6 +7,7 @@ class RegistroUsuarioNormal extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     
+
     return Scaffold(
         extendBodyBehindAppBar: true,
         appBar: AppBar(backgroundColor: Colors.transparent, elevation: 0, ),
@@ -35,6 +36,7 @@ class RegistroUsuarioNormal extends StatelessWidget {
                     const CajaTexto(titulo: "Nombre de usuario"),
                     const CajaTexto(titulo: "Cedula", tipo: TextInputType.number),
                     const CajaTexto(titulo: "Numero de telefono", tipo: TextInputType.number,),
+                    const TipoUsuario(),
                     const CajaTexto(titulo: "Contraseña", oscuro: true),
                       
                     const SizedBox(height: 20),
@@ -62,3 +64,39 @@ class RegistroUsuarioNormal extends StatelessWidget {
   }
 }
 
+class TipoUsuario extends StatefulWidget {
+  const TipoUsuario({super.key,});
+
+  @override
+  State<TipoUsuario> createState() => _TipoUsuarioState();
+}
+
+class _TipoUsuarioState extends State<TipoUsuario> {
+  String valor = "Estudiante";
+  @override
+  Widget build(BuildContext context) {
+    //List<String> list = ["Estudiante", "Propietario"];
+    
+    return Container(
+      
+      padding: const EdgeInsets.all(10),
+      child: DropdownButton<String>(
+          value: valor,
+          icon: const Icon(Icons.arrow_drop_down,),
+          dropdownColor: Colors.black,
+          onChanged: (String? value) {
+            setState(() {
+              valor = value!;
+            });
+          },
+          items: <String>["Estudiante","Propietario"].map<DropdownMenuItem<String>>((String value){
+            return DropdownMenuItem<String>(
+              value: value,
+              child: Text(value, style: const TextStyle(color: Color.fromARGB(255, 9, 255, 0)),)
+              );
+          }).toList(),
+        ),
+    );
+    
+  }
+}
