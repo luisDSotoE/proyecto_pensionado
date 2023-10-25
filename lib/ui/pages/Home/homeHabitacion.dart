@@ -53,7 +53,7 @@ class ListHabitaciones extends StatelessWidget {
           int limiteDescricion = 30;
           String descr = product["Descripcion"];
           String DescripcionRecortada = descr.length > limiteDescricion? 
-          descr.substring(0,limiteDescricion)+"..." : descr;
+          "${descr.substring(0,limiteDescricion)}..." : descr;
           return Card(
             color: Colors.white,
               child: Padding(
@@ -87,11 +87,11 @@ class ListHabitaciones extends StatelessWidget {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(product['Titulo']),
-                                  Container(
+                                  SizedBox(
                                   width: MediaQuery.of(context).size.width - 150, // Ancho máximo para el texto
                                   child: Text(DescripcionRecortada),
                                   ),
-                                  Text("\$"+product['Mensualidad'].toString()),
+                                  Text("\$${product['Mensualidad']}"),
                                   ],
                               ),]
                             ),

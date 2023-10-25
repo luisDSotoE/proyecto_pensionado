@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "345656713607",
+    "project_id": "pension-abe39",
+    "storage_bucket": "pension-abe39.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:345656713607:android:e4c34e89fa992890e83322",
+        "android_client_info": {
+          "package_name": "com.example.proyecto_pension2"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBc4uXGW-5X_3x8OsWLBO_sHY5RoYx8-3k"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

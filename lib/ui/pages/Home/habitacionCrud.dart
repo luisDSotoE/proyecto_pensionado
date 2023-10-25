@@ -131,20 +131,59 @@ class RoomDetailScreen extends StatelessWidget {
   }
 }
 
+
 class AddRoomScreen extends StatelessWidget {
-  const AddRoomScreen({super.key});
+  const AddRoomScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-     
       appBar: AppBar(
-        title: const Text('Agregar habitacion'),
+        title: const Text('Agregar habitación'),
         backgroundColor: const Color.fromARGB(255, 122, 171, 212),
       ),
-      body: const Center(
-        child: Text('pantalla de habitacion'),
-        
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            const Text(
+              'Pantalla de habitación',
+              style: TextStyle(
+                fontSize: 24,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            TextFormField(
+              decoration: const InputDecoration(labelText: 'Dirección'),
+            ),
+            TextFormField(
+              decoration: const InputDecoration(labelText: 'Mensualidad'),
+            ),
+            TextFormField(
+              decoration: const InputDecoration(labelText: 'Descripción'),
+              maxLines: 3,
+            ),
+            const SizedBox(height: 18),
+            ElevatedButton(
+              onPressed: () {
+              },
+              style: ButtonStyle(
+                foregroundColor: MaterialStateProperty.all(Colors.black),
+              ),
+              child: const Text('Subir Fotos'),
+            ),
+            const SizedBox(height: 18),
+            ElevatedButton(
+              onPressed: () {
+              },
+              style: ButtonStyle(
+                foregroundColor: MaterialStateProperty.all(Colors.black),
+              ),
+              child: const Text('Registrar Habitación'),
+            ),
+          ],
+        ),
       ),
     );
   }
