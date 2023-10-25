@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:proyecto_pension2/ui/pages/Home/habitacionCrud.dart';
+import 'package:proyecto_pension2/ui/pages/Home/homeBuscador.dart';
 import 'package:proyecto_pension2/ui/pages/Home/homeEditar.dart';
 import 'package:proyecto_pension2/ui/pages/Home/homeHabitacion.dart';
 import 'package:proyecto_pension2/ui/pages/Home/homeSoporte.dart';
@@ -19,7 +20,7 @@ class _HomeState extends State<Home> {
 
   final ventanas = [
     const Center(child: Habitaciones()),
-    const Center(child: Text("", style: TextStyle(fontSize: 24))),
+    const Buscador(),
   ];
 
   @override
@@ -61,7 +62,6 @@ class _HomeState extends State<Home> {
                 ),
               ),
             ),
-           
             ListTile(
               leading: const Icon(Icons.edit),
               title: const Text('Editar datos'),
@@ -103,12 +103,7 @@ class _HomeState extends State<Home> {
           ],
         ),
       ),
-      body: Container(
-        decoration: const BoxDecoration(
-            image: DecorationImage(
-                image: AssetImage("assets/image/Home.jpg"), fit: BoxFit.cover)),
-        child: ventanas[posicion],
-      ),
+      body: Navegacion(ventanas: ventanas, posicion: posicion),
       bottomNavigationBar: Container(
         color: Colors.transparent,
         padding: const EdgeInsets.symmetric(vertical: 10),
@@ -139,6 +134,27 @@ class _HomeState extends State<Home> {
           ],
         ),
       ),
+    );
+  }
+}
+
+class Navegacion extends StatelessWidget {
+  const Navegacion({
+    super.key,
+    required this.ventanas,
+    required this.posicion,
+  });
+
+  final List<Widget> ventanas;
+  final int posicion;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: const BoxDecoration(
+          image: DecorationImage(
+              image: AssetImage("assets/image/Home.jpg"), fit: BoxFit.cover)),
+      child: ventanas[posicion],
     );
   }
 }

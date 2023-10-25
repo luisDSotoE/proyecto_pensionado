@@ -63,7 +63,7 @@ class habitacionCrud extends State<Habitacion> {
         itemCount: rooms.length,
         itemBuilder: (context, index) {
           return ListTile(
-            leading: Image.network(rooms[index].imagen),
+            leading: Image.network(rooms[index].imagen, width: 50, height: 50,),
             title: Text(rooms[index].direccion),
             subtitle: Text('Mensualidad: \$${rooms[index].mensualidad.toStringAsFixed(2)}'),
             onTap: () {
@@ -102,11 +102,9 @@ class RoomDetailScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      
       appBar: AppBar(
         title: const Text('Detalles de la habitacion'),
         backgroundColor: const Color.fromARGB(255, 122, 171, 212),
-        
       ),
       body: Column(                    
         children: [
@@ -114,7 +112,6 @@ class RoomDetailScreen extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.all(16.0),
             child: Column(
-              
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text('DIRECCION: ${cuarto.direccion}',style: const TextStyle(fontSize: 15.0,fontWeight: FontWeight.bold,  ), ),

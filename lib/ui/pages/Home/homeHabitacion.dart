@@ -52,8 +52,9 @@ class ListHabitaciones extends StatelessWidget {
           final product = products[index];        
           int limiteDescricion = 30;
           String descr = product["Descripcion"];
+          // ignore: non_constant_identifier_names
           String DescripcionRecortada = descr.length > limiteDescricion? 
-          descr.substring(0,limiteDescricion)+"..." : descr;
+          "${descr.substring(0,limiteDescricion)}..." : descr;
           return Card(
             color: Colors.white,
               child: Padding(
@@ -143,15 +144,18 @@ class DetallesHabitacion extends StatelessWidget {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Image.asset(cuarto['Imagen'], width: 200, height: 200,),
+          Image.asset(cuarto['Imagen'], 
+          width: MediaQuery.of(context).size.width,
+          height: MediaQuery.of(context).size.height*0.3,
+          ),
           Padding(
             padding: const EdgeInsets.all(16.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text('Direccion: ${cuarto['Direccion']}'),
-                Text('Mensualidad: \$${cuarto['Mensualidad']}'),
-                Text('Description: ${cuarto['Descripcion']}'),
+                Text('Direccion: ${cuarto['Direccion']}', style: const TextStyle(fontSize: 15.0,fontWeight: FontWeight.bold),),
+                Text('Mensualidad: \$${cuarto['Mensualidad']}', style: const TextStyle(fontSize: 15.0,fontWeight: FontWeight.bold),),
+                Text('Description: ${cuarto['Descripcion']}', style: const TextStyle(fontSize: 15.0,fontWeight: FontWeight.bold),),
               ],
             ),
           ),
