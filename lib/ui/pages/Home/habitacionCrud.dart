@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-
+import 'package:image_picker/image_picker.dart';
 
 
 class Cuarto {
@@ -57,7 +57,7 @@ class habitacionCrud extends State<Habitacion> {
       appBar: AppBar(
         backgroundColor: const Color.fromARGB(255, 122, 171, 212),
         
-        title: const Text('lista de habitaciones'),
+        title: const Text('Lista de habitaciones'),
       ),
       body: ListView.builder(
         itemCount: rooms.length,
@@ -134,15 +134,67 @@ class AddRoomScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-     
       appBar: AppBar(
         title: const Text('Agregar habitacion'),
         backgroundColor: const Color.fromARGB(255, 122, 171, 212),
       ),
-      body: const Center(
-        child: Text('pantalla de habitacion'),
-        
+      body: Container(
+        decoration: const BoxDecoration(),
+          child: Column(
+            children: [
+              IngresarDatos("Nombre:", TextInputType.name),
+              IngresarDatos("Direccion:", TextInputType.name),
+              IngresarDatos("Descripcion:", TextInputType.name),
+              IngresarDatos("Mensualidad:", TextInputType.number),
+              const SizedBox(height: 15,),
+              ElevatedButton.icon(
+                onPressed: (){
+                  fotos();
+                }, 
+                icon: const Icon(Icons.cloud_upload, color: Colors.white,),
+                label: const Text("Subir fotos", style: TextStyle(color: Colors.white),),
+                style: ButtonStyle(backgroundColor: MaterialStateProperty.all<Color>(Colors.blue)),
+                ),
+                const SizedBox(height: 25,),
+                SizedBox(
+                    width: 200,
+                    child: ElevatedButton(
+                      onPressed: () {
+                        //Logica
+                      },
+                      style: ButtonStyle(
+                        backgroundColor: MaterialStateProperty.all(Colors.yellow)
+                      ),
+                      child: const Text("Registrarse", style: TextStyle(color: Colors.black),),
+                    ),
+                  ),
+              
+
+            ],
+          ),
       ),
     );
+  }
+
+  // ignore: non_constant_identifier_names
+  Padding IngresarDatos(String text, TextInputType tipo) {
+    return Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: TextField(
+                keyboardType: tipo,
+                decoration: InputDecoration(
+                  labelText: text,
+                ),
+              ),
+            );
+  }
+}
+
+Future<void> fotos() async{
+  final picker = ImagePicker();
+  final pickedFile = await picker.pickImage(source: ImageSource.gallery);
+
+  if (pickedFile != null) {
+    
   }
 }
