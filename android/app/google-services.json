@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "13158230275",
+    "project_id": "flutterpensionado",
+    "storage_bucket": "flutterpensionado.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:13158230275:android:81fb04a5ee822ee5d82136",
+        "android_client_info": {
+          "package_name": "com.sotorobin.proyecto_pension2"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "13158230275-qppsl80vutan9adfp1gc8g6ig2mvssaf.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCDOCfjLwvhrtDYQuQ_vyTvI8gC58ybM3w"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "13158230275-qppsl80vutan9adfp1gc8g6ig2mvssaf.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

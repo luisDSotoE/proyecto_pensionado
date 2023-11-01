@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:photo_view/photo_view.dart';
-
-
+import 'package:proyecto_pension2/domain/controllers/habitacion_controller.dart';
 
 class Habitaciones extends StatelessWidget {
   const Habitaciones({super.key});
@@ -16,8 +16,9 @@ class ListHabitaciones extends StatelessWidget {
   final List<Map<String, dynamic>> products = [
     {
       'Titulo': "Habitacion 1",
-      'Descripcion': "Habitacion con mirada hacia la ciudad, con mira hacia la universidad X",
-      'Mensualidad': 800.000,   
+      'Descripcion':
+          "Habitacion con mirada hacia la ciudad, con mira hacia la universidad X",
+      'Mensualidad': 800.000,
       'Direccion': 'Kr 21',
       'Imagen': "assets/image/Habitacion.jpg"
     },
@@ -35,78 +36,71 @@ class ListHabitaciones extends StatelessWidget {
       'Direccion': 'Kr 10',
       'Imagen': "assets/image/Habitacion.jpg"
     },
-    
   ];
-
-  
 
   ListHabitaciones({super.key});
 
-@override
+  @override
   Widget build(BuildContext context) {
+    HabitacionController hc = Get.find();
+    hc.consultarHabitaciones();
+
     return SizedBox(
-      width: MediaQuery.of(context).size.width,
-      child: ListView.builder(
-        itemCount: products.length,
-        itemBuilder: (BuildContext context, int index) {
-          final product = products[index];        
-          int limiteDescricion = 30;
-          String descr = product["Descripcion"];
-          // ignore: non_constant_identifier_names
-          String DescripcionRecortada = descr.length > limiteDescricion? 
-          "${descr.substring(0,limiteDescricion)}..." : descr;
-          return Card(
-            color: Colors.white,
-              child: Padding(
-                padding: const EdgeInsets.all(5.0),
-                child: Row(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.all(10.0),
-                      child: GestureDetector(
-                        onTap: () {
-                          Navigator.push(context, MaterialPageRoute(builder: (context) {
-                          return Photo(product: product);
-                        }));
-                      },
-                        child: Image.asset(product['Imagen'],
-                          width:  100,  
-                          height:  100, 
-                          fit: BoxFit.cover,
-                        ),
-                      ),
-                      ),
-                      GestureDetector(
-                            onTap: () {
-                              Navigator.push(context, MaterialPageRoute(builder: (context) {
-                              return DetallesHabitacion(cuarto: product);
-                            }));
-                            },
-                            child: Wrap(
-                              children:[ 
-                                Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(product['Titulo'], style: const TextStyle(fontWeight: FontWeight.bold),),
-                                  Container(
-                                  width: MediaQuery.of(context).size.width - 150, // Ancho máximo para el texto
-                                  child: Text(DescripcionRecortada),
+        width: MediaQuery.of(context).size.width,
+        child: Padding(
+          padding: const EdgeInsets.all(10),
+          child: Obx(() {
+            if (hc.listahab?.isEmpty == true) {
+              return const Center(
+                child: Text("No existen habitaciones"),
+              );
+            } else {
+              return ListView.builder(
+                  itemCount: hc.listahab!.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    return Card(
+                      child: Row(
+                        children: [
+                          SizedBox(
+                            height: 150,
+                            width: 150,
+                            child: Image.asset('assets/image/Home.jpg'),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(16.0),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  ' ${hc.listahab![index].nombre}',
+                                  style: const TextStyle(
+                                    fontSize: 15.0,
+                                    fontWeight: FontWeight.bold,
                                   ),
-                                  Text("\$${product['Mensualidad']}", style: const TextStyle(color: Colors.green, fontWeight: FontWeight.bold),),
-                                  ],
-                              ),]
+                                ),
+                                Text(
+                                  hc.listahab![index].descripcion,
+                                  style: const TextStyle(fontSize: 15.0),
+                                ),
+                                Text(
+                                  '${hc.listahab![index].mensualidad}',
+                                  style: const TextStyle(
+                                      fontSize: 15.0,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.green),
+                                ),
+                              ],
                             ),
                           ),
-                  ],
-                ),
-              ),
-            );
-        },
-      ),
-    );
+                        ],
+                      ),
+                    );
+                  });
+            }
+          }),
+        ));
   }
 }
-
 
 class Photo extends StatelessWidget {
   const Photo({super.key, required this.product});
@@ -124,7 +118,6 @@ class Photo extends StatelessWidget {
         iconTheme: const IconThemeData(color: Colors.white),
       ),
       body: PhotoView(imageProvider: AssetImage(product['Imagen'])),
-      
     );
   }
 }
@@ -144,18 +137,31 @@ class DetallesHabitacion extends StatelessWidget {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Image.asset(cuarto['Imagen'], 
-          width: MediaQuery.of(context).size.width,
-          height: MediaQuery.of(context).size.height*0.3,
+          Image.asset(
+            cuarto['Imagen'],
+            width: MediaQuery.of(context).size.width,
+            height: MediaQuery.of(context).size.height * 0.3,
           ),
           Padding(
             padding: const EdgeInsets.all(16.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text('Direccion: ${cuarto['Direccion']}', style: const TextStyle(fontSize: 15.0,fontWeight: FontWeight.bold),),
-                Text('Mensualidad: \$${cuarto['Mensualidad']}', style: const TextStyle(fontSize: 15.0,fontWeight: FontWeight.bold),),
-                Text('Description: ${cuarto['Descripcion']}', style: const TextStyle(fontSize: 15.0,fontWeight: FontWeight.bold),),
+                Text(
+                  'Direccion: ${cuarto['Direccion']}',
+                  style: const TextStyle(
+                      fontSize: 15.0, fontWeight: FontWeight.bold),
+                ),
+                Text(
+                  'Mensualidad: \$${cuarto['Mensualidad']}',
+                  style: const TextStyle(
+                      fontSize: 15.0, fontWeight: FontWeight.bold),
+                ),
+                Text(
+                  'Description: ${cuarto['Descripcion']}',
+                  style: const TextStyle(
+                      fontSize: 15.0, fontWeight: FontWeight.bold),
+                ),
               ],
             ),
           ),
@@ -164,5 +170,3 @@ class DetallesHabitacion extends StatelessWidget {
     );
   }
 }
-
-

@@ -1,10 +1,38 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:proyecto_pension2/data/services/authenticacionServices.dart';
 import 'package:proyecto_pension2/ui/pages/Login/widgetCajaTexto.dart';
 
-
-class LoginPage extends StatelessWidget {
+class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
+
+  @override
+  State<LoginPage> createState() => _LoginPageState();
+}
+
+class _LoginPageState extends State<LoginPage> {
+  TextEditingController usuario = TextEditingController();
+  TextEditingController clave = TextEditingController();
+  var usuarios;
+  void ingreso() {
+    Peticioneslogin.ingresarEmail(usuario.text, clave.text).then((user) {
+      setState(() {
+        print(user);
+        if (user == '1' || user == '2') {
+          usuarios = 'Correo No Existe o Contraseña Invalida';
+        } else {
+          try {
+            usuarios = user.user.email;
+            print("has iniado correctamente");
+            Get.toNamed("/home");
+          } catch (e) {
+            e.printError();
+          }
+        }
+      });
+    }); // print(resul);
+    // print('OBTENER');
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -19,31 +47,52 @@ class LoginPage extends StatelessWidget {
     return Center(
       child: Container(
         decoration: const BoxDecoration(
-          image: DecorationImage(image: AssetImage("assets/image/Habitacion.jpg"), fit: BoxFit.cover),
+          image: DecorationImage(
+              image: AssetImage("assets/image/Habitacion.jpg"),
+              fit: BoxFit.cover),
         ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Image.asset("assets/image/Logo.png", width: 200, height: 200,),
+            Image.asset(
+              "assets/image/Logo.png",
+              width: 200,
+              height: 200,
+            ),
             const Text(
               "Iniciar Sesión",
-              style: TextStyle(fontSize: 24, color: Colors.white, fontWeight: FontWeight.bold),
+              style: TextStyle(
+                  fontSize: 24,
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 20),
-            const CajaTexto(titulo: "Nombre de usuario", oscuro: false),
-            const CajaTexto(titulo: "Contraseña", oscuro: true),
+            CajaTexto(
+              titulo: "Nombre de usuario",
+              oscuro: false,
+              controller: usuario,
+            ),
+            CajaTexto(
+              titulo: "Contraseña",
+              oscuro: true,
+              controller: clave,
+            ),
             const SizedBox(height: 20),
             SizedBox(
               width: 200,
               child: ElevatedButton(
                 onPressed: () {
-                  
-                  Get.toNamed("/home");
+                  ingreso();
+                  usuario.clear();
+                  clave.clear();
                 },
                 style: ButtonStyle(
                   backgroundColor: MaterialStateProperty.all(Colors.white),
                 ),
-                child: const Text("Iniciar Sesión", style: TextStyle(color: Colors.black),),
+                child: const Text(
+                  "Iniciar Sesión",
+                  style: TextStyle(color: Colors.black),
+                ),
               ),
             ),
             const SizedBox(height: 20),
@@ -52,7 +101,6 @@ class LoginPage extends StatelessWidget {
               children: [
                 TextButton(
                   onPressed: () {
-                   
                     Get.toNamed("/registroUsuarioNormal");
                   },
                   style: ButtonStyle(
