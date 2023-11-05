@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:proyecto_pension2/data/services/authenticacionServices.dart';
-import 'package:proyecto_pension2/ui/pages/Login/widgetCajaTexto.dart';
+import 'package:proyecto_pension2/ui/pages/Widgets/widgetCajaTexto.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -24,7 +24,7 @@ class _LoginPageState extends State<LoginPage> {
           try {
             usuarios = user.user.email;
             print("has iniado correctamente");
-            Get.toNamed("/home");
+            Get.offAndToNamed("/home");
           } catch (e) {
             e.printError();
           }

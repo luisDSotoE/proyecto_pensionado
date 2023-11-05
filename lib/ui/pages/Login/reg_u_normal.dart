@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:proyecto_pension2/data/services/authenticacionServices.dart';
+import 'package:proyecto_pension2/ui/pages/Widgets/widgetCajaTexto.dart';
 
 class RegistroUsuarioNormal extends StatefulWidget {
   const RegistroUsuarioNormal({super.key});
@@ -16,6 +17,7 @@ class _RegistroUsuarioNormalState extends State<RegistroUsuarioNormal> {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
 
+  // ignore: prefer_typing_uninitialized_variables
   var usuarior;
   void registro() {
     Peticioneslogin.crearRegistroEmail(
@@ -57,7 +59,7 @@ class _RegistroUsuarioNormalState extends State<RegistroUsuarioNormal> {
       child: SingleChildScrollView(
         child: Container(
           width: 300,
-          padding: const EdgeInsets.all(10),
+          padding: const EdgeInsets.all(30),
           child: Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -80,59 +82,12 @@ class _RegistroUsuarioNormalState extends State<RegistroUsuarioNormal> {
                       fontWeight: FontWeight.bold),
                 ),
                 const SizedBox(height: 20),
-                TextFormField(
-                  controller: nombreUserController,
-                  decoration: const InputDecoration(
-                      labelText: "Nombre de usuario",
-                      fillColor: Colors.white60,
-                      filled: true,
-                      labelStyle: TextStyle(
-                          color: Colors.black, fontStyle: FontStyle.italic)),
-                ),
-                TextFormField(
-                  controller: cedulaController,
-                  keyboardType: TextInputType.number,
-                  decoration: const InputDecoration(
-                      labelText: "Cedula",
-                      fillColor: Colors.white60,
-                      filled: true,
-                      labelStyle: TextStyle(
-                          color: Colors.black, fontStyle: FontStyle.italic)),
-                ),
-                TextFormField(
-                  controller: telefonoController,
-                  keyboardType: TextInputType.number,
-                  decoration: const InputDecoration(
-                      labelText: "Numero de telefono",
-                      fillColor: Colors.white60,
-                      filled: true,
-                      labelStyle: TextStyle(
-                        color: Colors.black,
-                        fontStyle: FontStyle.italic,
-                      )),
-                ),
+                CajaTexto(titulo: "Nombre de Usuario", controller: nombreUserController),
+                CajaTexto(titulo: "Cedula", controller: cedulaController, tipo: TextInputType.number),
+                CajaTexto(titulo: "Numero de Telefono", controller: telefonoController, tipo: TextInputType.phone),
                 const TipoUsuario(),
-                TextFormField(
-                  controller: emailController,
-                  decoration: const InputDecoration(
-                      labelText: "Correo Electrónico",
-                      fillColor: Colors.white60,
-                      filled: true,
-                      labelStyle: TextStyle(
-                          color: Colors.black, fontStyle: FontStyle.italic)),
-                ),
-                TextFormField(
-                  controller: passwordController,
-                  obscureText: true,
-                  decoration: const InputDecoration(
-                    labelText: "Contraseña",
-                    fillColor: Colors.white60,
-                    filled: true,
-                    labelStyle: TextStyle(
-                        color: Colors.black, fontStyle: FontStyle.italic),
-                  ),
-                ),
-                const SizedBox(height: 20),
+                CajaTexto(titulo: "Correo Electronico", controller: emailController, tipo: TextInputType.emailAddress,),
+                CajaTexto(titulo: "Contraseña", controller: passwordController, tipo: TextInputType.visiblePassword, oscuro: true),  
                 SizedBox(
                   width: 200,
                   child: ElevatedButton(
@@ -143,6 +98,7 @@ class _RegistroUsuarioNormalState extends State<RegistroUsuarioNormal> {
                       telefonoController.clear();
                       emailController.clear();
                       passwordController.clear();
+                      Get.offAllNamed("/login");
                     },
                     style: ButtonStyle(
                       backgroundColor: MaterialStateProperty.all(Colors.white),
@@ -152,21 +108,6 @@ class _RegistroUsuarioNormalState extends State<RegistroUsuarioNormal> {
                   ),
                 ),
                 const SizedBox(height: 20),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    TextButton(
-                      onPressed: () {
-                        Get.toNamed("/login");
-                      },
-                      style: ButtonStyle(
-                        foregroundColor:
-                            MaterialStateProperty.all(Colors.white),
-                      ),
-                      child: const Text("Registrarse"),
-                    ),
-                  ],
-                ),
               ],
             ),
           ),
@@ -190,25 +131,30 @@ class _TipoUsuarioState extends State<TipoUsuario> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(10),
+      padding: const EdgeInsets.all(8),
+      decoration: BoxDecoration(
+        color: Colors.white60,
+        borderRadius: BorderRadius.circular(50),
+      ),
       child: DropdownButton<String>(
         value: valor,
         icon: const Icon(
           Icons.arrow_drop_down,
         ),
-        dropdownColor: Colors.black,
+        dropdownColor: Colors.white60,
         onChanged: (String? value) {
           setState(() {
             valor = value!;
           });
         },
+        
         items: <String>["Estudiante", "Propietario"]
             .map<DropdownMenuItem<String>>((String value) {
           return DropdownMenuItem<String>(
               value: value,
               child: Text(
                 value,
-                style: const TextStyle(color: Color.fromARGB(255, 9, 255, 0)),
+                style: const TextStyle(color: Colors.black87, fontStyle: FontStyle.italic),
               ));
         }).toList(),
       ),

@@ -16,7 +16,6 @@ class CajaTexto extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      
       width: 300,
       padding: const EdgeInsets.all(10),
       child: TextFormField(
