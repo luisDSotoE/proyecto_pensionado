@@ -6,6 +6,7 @@ import 'package:proyecto_pension2/ui/pages/Home/homeEditar.dart';
 import 'package:proyecto_pension2/ui/pages/Home/homeHabitacion.dart';
 import 'package:proyecto_pension2/ui/pages/Home/homeSoporte.dart';
 import 'package:proyecto_pension2/ui/pages/Login/iniciosesion.dart';
+import 'package:proyecto_pension2/ui/pages/habitacion/listarHabitaciones.dart';
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
@@ -77,7 +78,7 @@ class _HomeState extends State<Home> {
               onTap: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => const Habitacion()),
+                  MaterialPageRoute(builder: (context) => const ListarHabitaciones()),
                 );
               },
             ),

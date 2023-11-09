@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:proyecto_pension2/domain/controllers/habitacion_controller.dart';
-import 'package:proyecto_pension2/ui/pages/Widgets/DetallesHabitaciones.dart';
-import 'package:proyecto_pension2/ui/pages/Widgets/VerFotosHabitaciones.dart';
-
+import 'package:proyecto_pension2/domain/models/habitacion.dart';
+import 'package:proyecto_pension2/ui/pages/habitacion/detallehabitacion.dart';
 
 class Habitaciones extends StatelessWidget {
   const Habitaciones({super.key});
@@ -15,7 +14,6 @@ class Habitaciones extends StatelessWidget {
 }
 
 class ListHabitaciones extends StatelessWidget {
-
   const ListHabitaciones({super.key});
 
   @override
@@ -37,9 +35,11 @@ class ListHabitaciones extends StatelessWidget {
                 child: ListView.builder(
                     itemCount: hc.listahab!.length,
                     itemBuilder: (BuildContext context, int index) {
-                    int limite = 30;
-                    String desc = hc.listahab![index].descripcion;
-                    String descripcionRecortada = desc.length > limite? "${desc.substring(0, limite)}..." : desc;
+                      int limite = 30;
+                      String desc = hc.listahab![index].descripcion;
+                      String descripcionRecortada = desc.length > limite
+                          ? "${desc.substring(0, limite)}..."
+                          : desc;
                       return Card(
                         child: Padding(
                           padding: const EdgeInsets.all(5.0),
@@ -49,27 +49,31 @@ class ListHabitaciones extends StatelessWidget {
                                 padding: const EdgeInsets.all(8.0),
                                 child: GestureDetector(
                                   onTap: () {
-                                    Navigator.push(context, MaterialPageRoute(builder: (context){
-                                      return VerFoto(product: habitacion(hc.listahab![index].nombre));
-                                    }));
+                                    // Navigator.push(context, MaterialPageRoute(builder: (context){
+                                    //   return VerFoto(product: habitacion(hc.listahab![index].nombre));
+                                    // }));
                                   },
-                                  child: Image.asset('assets/image/Home.jpg', 
-                                  width: 100,
-                                  height: 100,
-                                  fit: BoxFit.cover,
+                                  child: Image.network(
+                                    hc.listahab![index].imagen,
+                                    width: 100,
+                                    height: 100,
+                                    fit: BoxFit.cover,
                                   ),
                                 ),
                               ),
                               GestureDetector(
                                 onTap: () {
-                                  Navigator.push(context, MaterialPageRoute(builder: (context){
-                                    return DetallesHabitaciones(cuarto: hc.listahab![index].nombre);
+                                  Navigator.push(context,
+                                      MaterialPageRoute(builder: (context) {
+                                    return DetalleHabitacionScreen(
+                                      servicio: hc.listahab![index],
+                                    );
                                   }));
                                 },
-                                child: Wrap(
-                                  children: [
-                                    Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                child: Wrap(children: [
+                                  Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: [
                                       Text(
                                         ' ${hc.listahab![index].nombre}',
@@ -78,7 +82,9 @@ class ListHabitaciones extends StatelessWidget {
                                         ),
                                       ),
                                       Container(
-                                        width: MediaQuery.of(context).size.width*0.62,
+                                        width:
+                                            MediaQuery.of(context).size.width *
+                                                0.62,
                                         child: Text(
                                           descripcionRecortada,
                                           style: const TextStyle(),
@@ -92,8 +98,7 @@ class ListHabitaciones extends StatelessWidget {
                                       ),
                                     ],
                                   ),
-                                  ]
-                                ),
+                                ]),
                               ),
                             ],
                           ),
@@ -106,4 +111,3 @@ class ListHabitaciones extends StatelessWidget {
         ));
   }
 }
-

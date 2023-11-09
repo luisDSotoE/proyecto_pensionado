@@ -14,7 +14,7 @@ class HabitacionController extends GetxController {
     await HabitacionServices.updateHabitacion(id, datos);
   }
     Future<void> eliminarHabitacion(String id) async {
-    await HabitacionServices.deleteHabitacion(id);
+    await HabitacionServices.eliminarHabitacion(id);
     _habitacionFirestore.value?.removeWhere((habitacion) => habitacion.id == id);
   }
   
