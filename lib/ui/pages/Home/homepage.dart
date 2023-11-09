@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
-import 'package:proyecto_pension2/ui/pages/Home/habitacionCrud.dart';
+import 'package:proyecto_pension2/domain/controllers/controluser.dart';
 import 'package:proyecto_pension2/ui/pages/Home/homeBuscador.dart';
-import 'package:proyecto_pension2/ui/pages/Home/homeEditar.dart';
 import 'package:proyecto_pension2/ui/pages/Home/homeHabitacion.dart';
 import 'package:proyecto_pension2/ui/pages/Home/homeSoporte.dart';
+import 'package:proyecto_pension2/ui/pages/Home/perfil.dart';
 import 'package:proyecto_pension2/ui/pages/Login/iniciosesion.dart';
 import 'package:proyecto_pension2/ui/pages/habitacion/listarHabitaciones.dart';
 
@@ -16,6 +17,8 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  ControlUserAuth cua = Get.find(); // Obtener el controlador ControlUser
+
   int posicion = 0;
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
@@ -23,14 +26,22 @@ class _HomeState extends State<Home> {
     const Center(child: Habitaciones()),
     const Buscador(),
   ];
+  @override
+  void initState() {
+    super.initState();
+    cua.cargarNombreYFoto(); // Llama al método para cargar el nombre y la foto de perfil
+  }
 
   @override
   Widget build(BuildContext context) {
+    ControlUserAuth cua = Get.find(); // Obtener el controlador ControlUser
+
     return Scaffold(
       extendBody: true,
       extendBodyBehindAppBar: true,
       appBar: AppBar(
-       backgroundColor: Colors.transparent, elevation: 0,
+        backgroundColor: Colors.transparent,
+        elevation: 0,
         flexibleSpace: FlexibleSpaceBar(
           centerTitle: true,
           background: Center(child: Image.asset("assets/image/Logo.png")),
@@ -38,70 +49,78 @@ class _HomeState extends State<Home> {
       ),
       key: _scaffoldKey,
       drawer: Drawer(
-        child: ListView(
-          children: [
-            const UserAccountsDrawerHeader(
-              accountName: Text(
-    "Luis Soto",
-    style: TextStyle(color: Colors.black), 
-  ),
-  accountEmail: Text(
-    "ldosoto@unicesar.edu.co",
-    style: TextStyle(color: Colors.black), 
-  ),
-              currentAccountPicture: CircleAvatar(
-                backgroundImage: NetworkImage(
-                  "https://blog.hubspot.es/hs-fs/hubfs/ES%20Blog%20images/Los%2015%20logos%20m%C3%A1s%20creativos%20e%20inspiradores%20del%20mundo/logo_famoso_starbucks.jpg?width=650&name=logo_famoso_starbucks.jpg",
-                ),
-              ),
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                  image: NetworkImage(
-                    "https://static.vecteezy.com/system/resources/previews/007/620/939/non_2x/blue-wave-abstract-background-web-background-blue-texture-banner-design-creative-cover-design-backdrop-minimal-background-illustration-vector.jpg",
+        child: Obx(
+          () {
+            final correo = cua.userValido?.user!.email ?? '';
+            final nombre = cua.nombre ?? '';
+            final fotoPerfil = cua.fotoPerfil ?? '';
+
+            return ListView(
+              children: [
+                UserAccountsDrawerHeader(
+                  accountName: Text(
+                    nombre,
+                    style: const TextStyle(color: Colors.black),
                   ),
-                  fit: BoxFit.fill,
+                  accountEmail: Text(
+                    correo,
+                    style: const TextStyle(color: Colors.black),
+                  ),
+                  currentAccountPicture: CircleAvatar(
+                    backgroundImage: NetworkImage(fotoPerfil),
+                  ),
+                  decoration: const BoxDecoration(
+                    image: DecorationImage(
+                      image: NetworkImage(
+                        "https://static.vecteezy.com/system/resources/previews/007/620/939/non_2x/blue-wave-abstract-background-web-background-blue-texture-banner-design-creative-cover-design-backdrop-minimal-background-illustration-vector.jpg",
+                      ),
+                      fit: BoxFit.fill,
+                    ),
+                  ),
                 ),
-              ),
-            ),
-            ListTile(
-              leading: const Icon(Icons.edit),
-              title: const Text('Editar datos'),
-              onTap: () {
-                Navigator.of(context).push(
-                  MaterialPageRoute(builder: (context) => const HomeEditar()),
-                );
-              },
-            ),
-            ListTile(
-              leading: const Icon(Icons.hotel),
-              title: const Text('Habitación'),
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const ListarHabitaciones()),
-                );
-              },
-            ),
-             ListTile(
-              leading: const Icon(Icons.support),
-              title: const Text('Soporte técnico'),
-              onTap: () {
-                Navigator.of(context).push(
-                  MaterialPageRoute(builder: (context) => SoporteTecnico()),
-                );
-              },
-            ),
-            ListTile(
-              leading: const Icon(Icons.exit_to_app),
-              title: const Text('Cerrar sesión'),
-              onTap: () {
-                Navigator.of(context).pushAndRemoveUntil(
-                  MaterialPageRoute(builder: (context) => const LoginPage()),
-                  (Route<dynamic> route) => false,
-                );
-              },
-            ),
-          ],
+                ListTile(
+                  leading: const Icon(Icons.edit),
+                  title: const Text('Editar datos'),
+                  onTap: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(builder: (context) => const Perfil()),
+                    );
+                  },
+                ),
+                ListTile(
+                  leading: const Icon(Icons.hotel),
+                  title: const Text('Habitación'),
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const ListarHabitaciones()),
+                    );
+                  },
+                ),
+                ListTile(
+                  leading: const Icon(Icons.support),
+                  title: const Text('Soporte técnico'),
+                  onTap: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(builder: (context) => SoporteTecnico()),
+                    );
+                  },
+                ),
+                ListTile(
+                  leading: const Icon(Icons.exit_to_app),
+                  title: const Text('Cerrar sesión'),
+                  onTap: () {
+                    cua.cerrarSesion();
+                    Navigator.of(context).pushAndRemoveUntil(
+                      MaterialPageRoute(builder: (context) => LoginPage()),
+                      (Route<dynamic> route) => false,
+                    );
+                  },
+                ),
+              ],
+            );
+          },
         ),
       ),
       body: Navegacion(ventanas: ventanas, posicion: posicion),

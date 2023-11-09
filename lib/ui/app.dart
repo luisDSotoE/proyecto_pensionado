@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:proyecto_pension2/ui/pages/Home/Homepage.dart';
+import 'package:proyecto_pension2/ui/pages/Home/perfil.dart';
 import 'package:proyecto_pension2/ui/pages/Login/iniciosesion.dart';
 import 'package:proyecto_pension2/ui/pages/Login/reg_u_normal.dart';
 import 'package:proyecto_pension2/ui/pages/habitacion/agregarhabitacion.dart';
@@ -14,13 +15,14 @@ class Myapp extends StatelessWidget {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(useMaterial3: true),
-      home: const LoginPage(),
+      home: LoginPage(),
       routes: {
-        "/registroUsuarioNormal": (context) => const RegistroUsuarioNormal(),
+        "/registroUsuarioNormal": (context) => RegistroUsuarioNormal(),
         "/home": (context) => const Home(),
-        "/login": (context) => const LoginPage(),
+        "/login": (context) => LoginPage(),
         '/editarhabitacion': (context) => const Editaragregarhabiatcion(),
         '/listarhabitaciones': (context) => const ListarHabitaciones(),
+        '/perfil': (context) => const Perfil()
       },
     );
   }
