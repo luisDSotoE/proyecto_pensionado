@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:proyecto_pension2/domain/models/habitacion.dart';
+import 'package:proyecto_pension2/ui/pages/Widgets/VerFotosHabitaciones.dart';
 
 class DetalleHabitacionScreen extends StatelessWidget {
   final Habitacion servicio;
@@ -15,12 +16,19 @@ class DetalleHabitacionScreen extends StatelessWidget {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            ServicioCoverWidget(coverUrl: servicio.imagen),
+            GestureDetector(
+              onTap: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context){
+                  return VerFoto(nombre: servicio.nombre, imagen: servicio.imagen,);
+                }));
+              },
+              child: ServicioCoverWidget(coverUrl: servicio.imagen)
+              ),
             ServicioInfoWidget(
                 nombre: "Nombre: ${servicio.nombre}",
-                descripcion: "descripción: ${servicio.descripcion.toString()}",
+                descripcion: "Descripción: ${servicio.descripcion.toString()}",
                 direccion: "Dirección: ${servicio.direccion}",
-                mensualidad: "Mensualidad: ${servicio.mensualidad}",
+                mensualidad: "Mensualidad: \$${servicio.mensualidad}",
                ),
           ],
         ),
@@ -91,7 +99,7 @@ class ServicioInfoWidget extends StatelessWidget {
             ),
           ),
           Text(
-            "Costo por servicio: \$$mensualidad",
+            mensualidad,
             style: const TextStyle(
               fontSize: 16,
             ),

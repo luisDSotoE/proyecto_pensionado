@@ -7,6 +7,7 @@ import 'package:proyecto_pension2/ui/pages/Home/homeHabitacion.dart';
 import 'package:proyecto_pension2/ui/pages/Home/homeSoporte.dart';
 import 'package:proyecto_pension2/ui/pages/Home/perfil.dart';
 import 'package:proyecto_pension2/ui/pages/Login/iniciosesion.dart';
+import 'package:proyecto_pension2/ui/pages/Widgets/VerFotosHabitaciones.dart';
 import 'package:proyecto_pension2/ui/pages/habitacion/listarHabitaciones.dart';
 
 class Home extends StatefulWidget {
@@ -54,7 +55,6 @@ class _HomeState extends State<Home> {
             final correo = cua.userValido?.user!.email ?? '';
             final nombre = cua.nombre ?? '';
             final fotoPerfil = cua.fotoPerfil ?? '';
-
             return ListView(
               children: [
                 UserAccountsDrawerHeader(
@@ -66,8 +66,15 @@ class _HomeState extends State<Home> {
                     correo,
                     style: const TextStyle(color: Colors.black),
                   ),
-                  currentAccountPicture: CircleAvatar(
-                    backgroundImage: NetworkImage(fotoPerfil),
+                  currentAccountPicture: GestureDetector(
+                    onTap: () {
+                      Navigator.push(context, MaterialPageRoute(builder: (context){
+                        return VerFoto(nombre: nombre, imagen: fotoPerfil,);
+                      }));
+                    },
+                    child: CircleAvatar(
+                      backgroundImage: NetworkImage(fotoPerfil),
+                    ),
                   ),
                   decoration: const BoxDecoration(
                     image: DecorationImage(
@@ -194,3 +201,4 @@ class ButtonIcons extends GButton {
           text: text,
         );
 }
+

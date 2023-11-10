@@ -1,10 +1,11 @@
+import 'dart:ffi';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:proyecto_pension2/data/services/habitacionServices.dart';
 import 'package:proyecto_pension2/domain/controllers/habitacion_controller.dart';
 import 'package:proyecto_pension2/domain/models/habitacion.dart';
-import 'package:proyecto_pension2/ui/widgets/textinput.dart';
+import 'package:proyecto_pension2/ui/pages/Widgets/textinput.dart';
 
 class Editaragregarhabiatcion extends StatelessWidget {
   const Editaragregarhabiatcion({super.key});
@@ -39,6 +40,9 @@ class _EditServicioFormState extends State<EditServicioForm> {
   final mensualidadController = TextEditingController();
   // bool isDisponible = false;
   String? image;
+  String textoBoton = "Subir foto";
+  bool estado = false;
+  
 
   bool savingServicio = false;
 
@@ -51,6 +55,9 @@ class _EditServicioFormState extends State<EditServicioForm> {
       direccionController.text = widget.servicio!.direccion;
       descripcionController.text = widget.servicio!.descripcion;
       mensualidadController.text = widget.servicio!.mensualidad.toString();
+      if (widget.servicio!.imagen.contains('http')) {
+      estado = true;
+    }
     }
   }
 
@@ -90,19 +97,22 @@ class _EditServicioFormState extends State<EditServicioForm> {
                     FilePickerResult? result =
                         await FilePicker.platform.pickFiles();
                     if (result != null) {
-                      setState(() => image = result.files.single.path);
+                      setState(() {
+                        image = result.files.single.path;
+                        estado=true;
+                      });
                     }
                   } catch (e) {
                     e.printError();
                   }
                 },
-                icon: const Icon(
-                  Icons.cloud_upload,
+                icon: Icon(
+                  estado?Icons.check:Icons.cloud_upload,
                   color: Colors.white,
                 ),
-                label: const Text(
-                  "Subir fotos",
-                  style: TextStyle(color: Colors.white),
+                label: Text(
+                  estado? "Foto Subida": "Subir Foto",
+                  style: const TextStyle(color: Colors.white),
                 ),
                 style: ButtonStyle(
                     backgroundColor:

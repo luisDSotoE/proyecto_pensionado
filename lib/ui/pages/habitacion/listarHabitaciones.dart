@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:proyecto_pension2/domain/controllers/habitacion_controller.dart';
 import 'package:proyecto_pension2/domain/models/habitacion.dart';
 import 'package:proyecto_pension2/ui/pages/habitacion/detallehabitacion.dart';
+import 'package:proyecto_pension2/ui/pages/Home/homeHabitacion.dart';
 
 class ListarHabitaciones extends StatelessWidget {
   const ListarHabitaciones({super.key});
@@ -42,8 +43,8 @@ class ListarHabitaciones extends StatelessWidget {
                   child: Row(
                     children: [
                       SizedBox(
-                        height: 150,
-                        width: 150,
+                        height: 120,
+                        width: 120,
                         child: getImageWidget(sc.listahab![posicion].imagen),
                       ),
                       const SizedBox(width: 10),
@@ -61,7 +62,7 @@ class ListarHabitaciones extends StatelessWidget {
                             ),
                             Align(
                               alignment: Alignment.centerLeft,
-                              child: Text(sc.listahab![posicion].descripcion),
+                              child: Text(DescripcionRecortada(sc.listahab![posicion].descripcion)),
                             ),
                             Align(
                               alignment: Alignment.centerLeft,
