@@ -39,9 +39,9 @@ class _HomeState extends State<Home> {
 
     return Scaffold(
       extendBody: true,
-      extendBodyBehindAppBar: true,
+      extendBodyBehindAppBar: false,
       appBar: AppBar(
-        backgroundColor: Colors.transparent,
+        backgroundColor: const Color.fromARGB(255, 167, 192, 204),
         elevation: 0,
         flexibleSpace: FlexibleSpaceBar(
           centerTitle: true,

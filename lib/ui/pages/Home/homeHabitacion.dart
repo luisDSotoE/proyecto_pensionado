@@ -4,23 +4,69 @@ import 'package:proyecto_pension2/domain/controllers/habitacion_controller.dart'
 import 'package:proyecto_pension2/domain/models/habitacion.dart';
 import 'package:proyecto_pension2/ui/pages/Widgets/VerFotosHabitaciones.dart';
 import 'package:proyecto_pension2/ui/pages/habitacion/detallehabitacion.dart';
+import 'package:proyecto_pension2/ui/pages/Home/homeBuscador.dart';
 
 class Habitaciones extends StatelessWidget {
   const Habitaciones({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return const ListHabitaciones();
+    HabitacionController hc = Get.find();
+    hc.consultarHabitaciones();
+    return Column(
+      children: [
+        Padding(
+          padding: const EdgeInsets.only(top: 20, left: 20, right: 20),
+          child: Container(
+            alignment: Alignment.center,
+            padding: const EdgeInsets.only(
+              left: 8.0,
+              right: 8.0,
+            ),
+            decoration: BoxDecoration(
+                color: Colors.white, borderRadius: BorderRadius.circular(12.0)),
+            child: TextField(
+              onTap: (){
+                showSearch(context: context, delegate: SearchHabitacionDelegate(hc));
+              },
+              decoration: const InputDecoration(
+                  prefixIcon: Icon(
+                    Icons.search,
+                    size: 30,
+                  ),
+                  border: InputBorder.none,
+                  hintStyle: TextStyle(color: Colors.black, fontSize: 15),
+                  hintText: "Buscar"),
+            ),
+          ),
+        ),
+        Expanded(child: ListHabitaciones(hc: hc,))
+      ],
+    );
   }
 }
 
 class ListHabitaciones extends StatelessWidget {
-  const ListHabitaciones({super.key});
+  ListHabitaciones({super.key, required this.hc});
+
+  
+  HabitacionController hc; 
+  @override
+  Widget build(BuildContext context) {
+    return Cartas(hc: hc);
+  }
+}
+
+class Cartas extends StatelessWidget {
+  const Cartas({
+    super.key,
+    required this.hc,
+  });
+
+  final HabitacionController hc;
 
   @override
   Widget build(BuildContext context) {
-    HabitacionController hc = Get.find();
-    hc.consultarHabitaciones();
     return SizedBox(
         width: MediaQuery.of(context).size.width,
         child: Padding(
@@ -45,8 +91,12 @@ class ListHabitaciones extends StatelessWidget {
                                 padding: const EdgeInsets.all(8.0),
                                 child: GestureDetector(
                                   onTap: () {
-                                    Navigator.push(context, MaterialPageRoute(builder: (context){
-                                       return VerFoto(nombre: hc.listahab![index].nombre, imagen: hc.listahab![index].imagen,);
+                                    Navigator.push(context,
+                                        MaterialPageRoute(builder: (context) {
+                                      return VerFoto(
+                                        nombre: hc.listahab![index].nombre,
+                                        imagen: hc.listahab![index].imagen,
+                                      );
                                     }));
                                   },
                                   child: Image.network(
@@ -77,12 +127,13 @@ class ListHabitaciones extends StatelessWidget {
                                           fontWeight: FontWeight.bold,
                                         ),
                                       ),
-                                      Container(
+                                      SizedBox(
                                         width:
                                             MediaQuery.of(context).size.width *
                                                 0.62,
                                         child: Text(
-                                          DescripcionRecortada(hc.listahab![index].descripcion),
+                                          DescripcionRecortada(
+                                              hc.listahab![index].descripcion),
                                           style: const TextStyle(),
                                         ),
                                       ),
@@ -108,32 +159,9 @@ class ListHabitaciones extends StatelessWidget {
   }
 }
 
-String DescripcionRecortada(String desc){
+String DescripcionRecortada(String desc) {
   int limite = 30;
-  String descripcionRecortada = desc.length > limite
-  ? "${desc.substring(0, limite)}..."
-  : desc;
+  String descripcionRecortada =
+      desc.length > limite ? "${desc.substring(0, limite)}..." : desc;
   return descripcionRecortada;
 }
-
-/* Map<String, dynamic> habitacion(String cuarto){
-   Map<String, dynamic> h = {};
-   HabitacionController hc = Get.find();
-   hc.consultarHabitaciones();
-   String direccion, descripcion, imagen;
-   double mensualidad;
-     for (int i = 0; i < hc.listahab!.length; i++) {
-       if (hc.listahab![i].id == cuarto) {
-         direccion = hc.listahab![i].direccion;
-         mensualidad = hc.listahab![i].mensualidad;
-         descripcion = hc.listahab![i].descripcion;
-         imagen = hc.listahab![i].imagen;
-         h["Nombre"] =  hc.listahab![i].nombre;
-         h["Direccion"] = direccion;
-         h["Descripcion"] = descripcion;
-         h["Mensualidad"] = mensualidad;
-         h["Imagen"] = imagen;
-       }
-     }
-     return h;
-} */
