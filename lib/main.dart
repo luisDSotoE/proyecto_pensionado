@@ -9,8 +9,8 @@ import 'package:proyecto_pension2/ui/app.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  Get.put(HabitacionController());
-  Get.put(ControlUserPerfil());
   Get.put(ControlUserAuth());
-  runApp(const Myapp());
+  Get.put(ControlUserPerfil());
+  Get.put(HabitacionController());
+  runApp( Myapp());
 }

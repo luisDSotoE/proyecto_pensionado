@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:proyecto_pension2/domain/controllers/habitacion_controller.dart';
-import 'package:proyecto_pension2/domain/models/habitacion.dart';
 import 'package:proyecto_pension2/ui/pages/Widgets/VerFotosHabitaciones.dart';
 import 'package:proyecto_pension2/ui/pages/habitacion/detallehabitacion.dart';
 import 'package:proyecto_pension2/ui/pages/Home/homeBuscador.dart';
@@ -46,6 +45,7 @@ class Habitaciones extends StatelessWidget {
   }
 }
 
+// ignore: must_be_immutable
 class ListHabitaciones extends StatelessWidget {
   ListHabitaciones({super.key, required this.hc});
 

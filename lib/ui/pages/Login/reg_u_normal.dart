@@ -6,18 +6,28 @@ import 'package:proyecto_pension2/domain/controllers/controlperfil.dart';
 import 'package:proyecto_pension2/domain/controllers/controluser.dart';
 import 'package:proyecto_pension2/ui/pages/Widgets/widgetCajaTexto.dart';
 
-class RegistroUsuarioNormal extends StatelessWidget {
+class RegistroUsuarioNormal extends StatefulWidget {
   RegistroUsuarioNormal({super.key});
 
+  @override
+  State<RegistroUsuarioNormal> createState() => _RegistroUsuarioNormalState();
+}
+
+class _RegistroUsuarioNormalState extends State<RegistroUsuarioNormal> {
   final TextEditingController nombreUserController = TextEditingController();
   final TextEditingController cedulaController = TextEditingController();
   final TextEditingController telefonoController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
+
+  List<String> tiporoles = ['Estudiante', 'Admin'];
+  String? selectedRol;
+
   @override
   Widget build(BuildContext context) {
     ControlUserPerfil cup = Get.find();
     ControlUserAuth cua = Get.find();
+
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: AppBar(
@@ -68,7 +78,28 @@ class RegistroUsuarioNormal extends StatelessWidget {
                       titulo: "Numero de Telefono",
                       controller: telefonoController,
                       tipo: TextInputType.phone),
-                  const TipoUsuario(),
+                  DropdownButtonFormField<String>(
+                    value: selectedRol,
+                    onChanged: (newValue) {
+                      setState(() {
+                        selectedRol = newValue;
+                      });
+                    },
+                    items: tiporoles.map((String value) {
+                      return DropdownMenuItem<String>(
+                        value: value,
+                        child: Text(value),
+                      );
+                    }).toList(),
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      labelText: 'Tipo de Usuario',
+                      filled: true,
+                      fillColor: Colors.white60,
+                    ),
+                  ),
                   CajaTexto(
                     titulo: "Correo Electronico",
                     controller: emailController,
@@ -103,10 +134,13 @@ class RegistroUsuarioNormal extends StatelessWidget {
                             reverseAnimationCurve: Curves.easeInBack,
                           );
                         } else {
+                          var tiporol = selectedRol ?? 'Estudiante';
                           var datos = {
                             'nombre': nombreUserController.text,
                             'cedula': cedulaController.text,
                             'telefono': telefonoController.text,
+                            'user': tiporol.toString(),
+                            'correo': emailController.text
                           };
 
                           guardarDatosAdicionalesEnFirestore(
@@ -123,6 +157,11 @@ class RegistroUsuarioNormal extends StatelessWidget {
                     child: const Text('Registrarse'),
                   ),
                   const SizedBox(height: 20),
+                  ElevatedButton(
+                      onPressed: () {
+                        Get.offAndToNamed('/login');
+                      },
+                      child: const Text('Iniciar Sesion'))
                 ],
               ),
             ),
@@ -138,49 +177,4 @@ Future<void> guardarDatosAdicionalesEnFirestore(
   CollectionReference usuariosCollection =
       FirebaseFirestore.instance.collection('perfiles');
   await usuariosCollection.doc(user.uid).set(datos);
-}
-
-class TipoUsuario extends StatefulWidget {
-  const TipoUsuario({
-    super.key,
-  });
-
-  @override
-  State<TipoUsuario> createState() => _TipoUsuarioState();
-}
-
-class _TipoUsuarioState extends State<TipoUsuario> {
-  String valor = "Estudiante";
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(8),
-      decoration: BoxDecoration(
-        color: Colors.white60,
-        borderRadius: BorderRadius.circular(50),
-      ),
-      child: DropdownButton<String>(
-        value: valor,
-        icon: const Icon(
-          Icons.arrow_drop_down,
-        ),
-        dropdownColor: Colors.white60,
-        onChanged: (String? value) {
-          setState(() {
-            valor = value!;
-          });
-        },
-        items: <String>["Estudiante", "Propietario"]
-            .map<DropdownMenuItem<String>>((String value) {
-          return DropdownMenuItem<String>(
-              value: value,
-              child: Text(
-                value,
-                style: const TextStyle(
-                    color: Colors.black87, fontStyle: FontStyle.italic),
-              ));
-        }).toList(),
-      ),
-    );
-  }
 }

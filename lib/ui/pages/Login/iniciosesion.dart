@@ -72,6 +72,7 @@ class LoginPage extends StatelessWidget {
                         );
                       } else {
                         Get.offAllNamed('/home');
+                       
                       }
                     });
                   },

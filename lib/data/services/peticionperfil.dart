@@ -6,6 +6,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:proyecto_pension2/domain/controllers/controluser.dart';
+import 'package:proyecto_pension2/domain/models/user.dart';
 
 class Peticiones {
   static final ControlUserAuth controlua = Get.find();
@@ -51,8 +52,6 @@ class Peticiones {
     return null;
   }
 
-  
-
   static Future<void> actualizarcatalogo(
       String id, Map<String, dynamic> catalogo) async {
     await _db.collection('perfiles').doc(id).update(catalogo).catchError((e) {
@@ -78,7 +77,18 @@ class Peticiones {
     return imageUrl.toString();
   }
 
-   static Future<String?> uploadPerfilCover(
+  static Future<List<UserData>> listauser(uid) async {
+    QuerySnapshot querySnapshot =
+        await _db.collection("perfiles").where('id', isEqualTo: uid).get();
+    List<UserData> lista = [];
+    for (var doc in querySnapshot.docs) {
+      Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
+      lista.add(UserData.fromMap(doc.id, data));
+    }
+    return lista;
+  }
+
+  static Future<String?> uploadPerfilCover(
       String imagePath, String newPerfilFoto) async {
     try {
       File image = File(imagePath);

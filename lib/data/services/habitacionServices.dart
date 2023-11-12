@@ -100,4 +100,10 @@ class HabitacionServices {
  static Future<void> eliminarHabitacion(String id) async {
     await _db.collection('habitaciones').doc(id).delete().catchError((e) {});
   }
+
+  Future<String> obtenerDireccionDesdeFirestore() async {
+  DocumentSnapshot snapshot = await FirebaseFirestore.instance.collection('direcciones').doc('mi_direccion').get();
+  String direccion = snapshot.get('direccion');
+  return direccion;
+}
 }

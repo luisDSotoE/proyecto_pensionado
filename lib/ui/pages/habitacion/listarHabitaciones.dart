@@ -62,7 +62,8 @@ class ListarHabitaciones extends StatelessWidget {
                             ),
                             Align(
                               alignment: Alignment.centerLeft,
-                              child: Text(DescripcionRecortada(sc.listahab![posicion].descripcion)),
+                              child: Text(DescripcionRecortada(
+                                  sc.listahab![posicion].descripcion)),
                             ),
                             Align(
                               alignment: Alignment.centerLeft,

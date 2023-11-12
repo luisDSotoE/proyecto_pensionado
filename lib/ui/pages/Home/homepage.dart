@@ -2,12 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:proyecto_pension2/domain/controllers/controluser.dart';
+import 'package:proyecto_pension2/domain/controllers/habitacion_controller.dart';
 import 'package:proyecto_pension2/ui/pages/Home/homeBuscador.dart';
 import 'package:proyecto_pension2/ui/pages/Home/homeHabitacion.dart';
 import 'package:proyecto_pension2/ui/pages/Home/homeSoporte.dart';
 import 'package:proyecto_pension2/ui/pages/Home/perfil.dart';
-import 'package:proyecto_pension2/ui/pages/Login/iniciosesion.dart';
 import 'package:proyecto_pension2/ui/pages/Widgets/VerFotosHabitaciones.dart';
+import 'package:proyecto_pension2/ui/pages/habitacion/detallehabitacion.dart';
 import 'package:proyecto_pension2/ui/pages/habitacion/listarHabitaciones.dart';
 
 class Home extends StatefulWidget {
@@ -17,27 +18,209 @@ class Home extends StatefulWidget {
   State<Home> createState() => _HomeState();
 }
 
-class _HomeState extends State<Home> {
-  ControlUserAuth cua = Get.find(); // Obtener el controlador ControlUser
+class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
+  ControlUserAuth cua = Get.find();
 
   int posicion = 0;
-  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+  late final GlobalKey<ScaffoldState> _scaffoldKey;
 
   final ventanas = [
     const Center(child: Habitaciones()),
     const Buscador(),
   ];
+
   @override
   void initState() {
     super.initState();
-    cua.cargarNombreYFoto(); // Llama al método para cargar el nombre y la foto de perfil
+    _scaffoldKey = GlobalKey<ScaffoldState>();
+    cua.cargarNombreYFoto();
+  }
+
+  Widget buildClienteDrawer() {
+    HabitacionController sc = Get.find();
+    sc.consultarHabitaciones();
+
+    return Drawer(
+      child: Obx(
+        () {
+          final correo = cua.email ?? '';
+          final nombre = cua.nombre ?? '';
+          final fotoPerfil = cua.fotoPerfil ?? '';
+
+          return Column(
+            children: [
+              UserAccountsDrawerHeader(
+                accountName: Text(
+                  nombre,
+                  style: const TextStyle(color: Colors.black),
+                ),
+                accountEmail: Text(
+                  correo,
+                  style: const TextStyle(color: Colors.black),
+                ),
+                currentAccountPicture: GestureDetector(
+                  onTap: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) {
+                      return VerFoto(
+                        nombre: nombre,
+                        imagen: fotoPerfil,
+                      );
+                    }));
+                  },
+                  child: CircleAvatar(
+                    backgroundImage: NetworkImage(fotoPerfil),
+                  ),
+                ),
+                decoration: const BoxDecoration(
+                  image: DecorationImage(
+                    image: NetworkImage(
+                      "https://static.vecteezy.com/system/resources/previews/007/620/939/non_2x/blue-wave-abstract-background-web-background-blue-texture-banner-design-creative-cover-design-backdrop-minimal-background-illustration-vector.jpg",
+                    ),
+                    fit: BoxFit.fill,
+                  ),
+                ),
+              ),
+              ListTile(
+                leading: const Icon(Icons.edit),
+                title: const Text('Editar datos'),
+                onTap: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(builder: (context) => const Perfil()),
+                  );
+                },
+              ),
+              ListTile(
+                leading: const Icon(Icons.hotel),
+                title: const Text('Listar Habitaciones'),
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => DetalleHabitacionScreen(
+                              servicio: sc.listahab![0],
+                            )),
+                  );
+                },
+              ),
+              ListTile(
+                leading: const Icon(Icons.contact_page_outlined),
+                title: const Text('Soporte Tecnico'),
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => SoporteTecnico()),
+                  );
+                },
+              ),
+              ListTile(
+                leading: const Icon(Icons.exit_to_app),
+                title: const Text('Cerrar sesión'),
+                onTap: () {
+                  cua.cerrarSesion();
+                  Get.offAllNamed('/login');
+                },
+              ),
+            ],
+          );
+        },
+      ),
+    );
+  }
+
+  Widget buildAdminDrawer() {
+    ControlUserAuth cua = Get.find();
+    cua.cargarNombreYFoto();
+    return Drawer(
+      child: Obx(
+        () {
+          final correo = cua.email ?? '';
+          final nombre = cua.nombre ?? '';
+          final fotoPerfil = cua.fotoPerfil ?? '';
+
+          return ListView(
+            children: [
+              UserAccountsDrawerHeader(
+                accountName: Text(
+                  nombre,
+                  style: const TextStyle(color: Colors.black),
+                ),
+                accountEmail: Text(
+                  correo,
+                  style: const TextStyle(color: Colors.black),
+                ),
+                currentAccountPicture: GestureDetector(
+                  onTap: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) {
+                      return VerFoto(
+                        nombre: nombre,
+                        imagen: fotoPerfil,
+                      );
+                    }));
+                  },
+                  child: CircleAvatar(
+                    backgroundImage: NetworkImage(fotoPerfil),
+                  ),
+                ),
+                decoration: const BoxDecoration(
+                  image: DecorationImage(
+                    image: NetworkImage(
+                      "https://static.vecteezy.com/system/resources/previews/007/620/939/non_2x/blue-wave-abstract-background-web-background-blue-texture-banner-design-creative-cover-design-backdrop-minimal-background-illustration-vector.jpg",
+                    ),
+                    fit: BoxFit.fill,
+                  ),
+                ),
+              ),
+              ListTile(
+                leading: const Icon(Icons.edit),
+                title: const Text('Editar datos'),
+                onTap: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(builder: (context) => const Perfil()),
+                  );
+                },
+              ),
+              ListTile(
+                leading: const Icon(Icons.hotel),
+                title: const Text('Habitación'),
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const ListarHabitaciones()),
+                  );
+                },
+              ),
+              ListTile(
+                leading: const Icon(Icons.contact_page_outlined),
+                title: const Text('Soporte Tecnico'),
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => SoporteTecnico()),
+                  );
+                },
+              ),
+              ListTile(
+                leading: const Icon(Icons.exit_to_app),
+                title: const Text('Cerrar sesión'),
+                onTap: () {
+                  cua.cerrarSesion();
+                  Get.offAllNamed('/login');
+                },
+              ),
+            ],
+          );
+        },
+      ),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
-    ControlUserAuth cua = Get.find(); // Obtener el controlador ControlUser
-
     return Scaffold(
+      key: _scaffoldKey,
       extendBody: true,
       extendBodyBehindAppBar: false,
       appBar: AppBar(
@@ -47,130 +230,28 @@ class _HomeState extends State<Home> {
           centerTitle: true,
           background: Center(child: Image.asset("assets/image/Logo.png")),
         ),
-      ),
-      key: _scaffoldKey,
-      drawer: Drawer(
-        child: Obx(
-          () {
-            final correo = cua.userValido?.user!.email ?? '';
-            final nombre = cua.nombre ?? '';
-            final fotoPerfil = cua.fotoPerfil ?? '';
-            return ListView(
-              children: [
-                UserAccountsDrawerHeader(
-                  accountName: Text(
-                    nombre,
-                    style: const TextStyle(color: Colors.black),
-                  ),
-                  accountEmail: Text(
-                    correo,
-                    style: const TextStyle(color: Colors.black),
-                  ),
-                  currentAccountPicture: GestureDetector(
-                    onTap: () {
-                      Navigator.push(context, MaterialPageRoute(builder: (context){
-                        return VerFoto(nombre: nombre, imagen: fotoPerfil,);
-                      }));
-                    },
-                    child: CircleAvatar(
-                      backgroundImage: NetworkImage(fotoPerfil),
-                    ),
-                  ),
-                  decoration: const BoxDecoration(
-                    image: DecorationImage(
-                      image: NetworkImage(
-                        "https://static.vecteezy.com/system/resources/previews/007/620/939/non_2x/blue-wave-abstract-background-web-background-blue-texture-banner-design-creative-cover-design-backdrop-minimal-background-illustration-vector.jpg",
-                      ),
-                      fit: BoxFit.fill,
-                    ),
-                  ),
-                ),
-                ListTile(
-                  leading: const Icon(Icons.edit),
-                  title: const Text('Editar datos'),
-                  onTap: () {
-                    Navigator.of(context).push(
-                      MaterialPageRoute(builder: (context) => const Perfil()),
-                    );
-                  },
-                ),
-                ListTile(
-                  leading: const Icon(Icons.hotel),
-                  title: const Text('Habitación'),
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const ListarHabitaciones()),
-                    );
-                  },
-                ),
-                ListTile(
-                  leading: const Icon(Icons.support),
-                  title: const Text('Soporte técnico'),
-                  onTap: () {
-                    Navigator.of(context).push(
-                      MaterialPageRoute(builder: (context) => SoporteTecnico()),
-                    );
-                  },
-                ),
-                ListTile(
-                  leading: const Icon(Icons.exit_to_app),
-                  title: const Text('Cerrar sesión'),
-                  onTap: () {
-                    cua.cerrarSesion();
-                    Navigator.of(context).pushAndRemoveUntil(
-                      MaterialPageRoute(builder: (context) => LoginPage()),
-                      (Route<dynamic> route) => false,
-                    );
-                  },
-                ),
-              ],
-            );
-          },
-        ),
-      ),
-      body: Navegacion(ventanas: ventanas, posicion: posicion),
-      bottomNavigationBar: Container(
-        color: Colors.transparent,
-        padding: const EdgeInsets.symmetric(vertical: 10),
-        child: GNav(
-          selectedIndex: posicion,
-          onTabChange: (index) {
+        leading: IconButton(
+          icon: const Icon(Icons.menu),
+          onPressed: () {
+            _scaffoldKey.currentState?.openDrawer();
             setState(() {
-              posicion = index;
+              cua.cargarNombreYFoto();
             });
           },
-          color: Colors.yellow,
-          tabBackgroundColor: Colors.yellow,
-          tabBorderRadius: 10,
-          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-          tabs: const [
-            ButtonIcons(
-              icon: Icons.home,
-              iconActiveColor: Colors.white,
-              textColor: Colors.white,
-              text: "Inicio",
-            ),
-            ButtonIcons(
-              icon: Icons.search,
-              iconActiveColor: Colors.white,
-              textColor: Colors.white,
-              text: "Buscar",
-            ),
-          ],
         ),
       ),
+      drawer: cua.rol == 'Admin' ? buildAdminDrawer() : buildClienteDrawer(),
+      body: Navegacion(ventanas: ventanas, posicion: posicion),
     );
   }
 }
 
 class Navegacion extends StatelessWidget {
   const Navegacion({
-    super.key,
+    Key? key,
     required this.ventanas,
     required this.posicion,
-  });
+  }) : super(key: key);
 
   final List<Widget> ventanas;
   final int posicion;
@@ -179,8 +260,11 @@ class Navegacion extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: const BoxDecoration(
-          image: DecorationImage(
-              image: AssetImage("assets/image/Home.jpg"), fit: BoxFit.cover)),
+        image: DecorationImage(
+          image: AssetImage("assets/image/Home.jpg"),
+          fit: BoxFit.cover,
+        ),
+      ),
       child: ventanas[posicion],
     );
   }
@@ -201,4 +285,3 @@ class ButtonIcons extends GButton {
           text: text,
         );
 }
-

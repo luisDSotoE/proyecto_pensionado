@@ -1,4 +1,3 @@
-import 'dart:ffi';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -6,6 +5,7 @@ import 'package:proyecto_pension2/data/services/habitacionServices.dart';
 import 'package:proyecto_pension2/domain/controllers/habitacion_controller.dart';
 import 'package:proyecto_pension2/domain/models/habitacion.dart';
 import 'package:proyecto_pension2/ui/pages/Widgets/textinput.dart';
+import 'package:webview_flutter/webview_flutter.dart';
 
 class Editaragregarhabiatcion extends StatelessWidget {
   const Editaragregarhabiatcion({super.key});
@@ -19,7 +19,13 @@ class Editaragregarhabiatcion extends StatelessWidget {
             Text(servicio != null ? 'Editar Habitación' : 'Agregar Habitación'),
         centerTitle: true,
       ),
-      body: EditServicioForm(servicio: servicio),
+      body: Column(
+        children: [
+          Expanded(
+            child: EditServicioForm(servicio: servicio),
+          ),
+        ],
+      ),
     );
   }
 }
@@ -42,7 +48,6 @@ class _EditServicioFormState extends State<EditServicioForm> {
   String? image;
   String textoBoton = "Subir foto";
   bool estado = false;
-  
 
   bool savingServicio = false;
 
@@ -56,8 +61,8 @@ class _EditServicioFormState extends State<EditServicioForm> {
       descripcionController.text = widget.servicio!.descripcion;
       mensualidadController.text = widget.servicio!.mensualidad.toString();
       if (widget.servicio!.imagen.contains('http')) {
-      estado = true;
-    }
+        estado = true;
+      }
     }
   }
 
@@ -99,7 +104,7 @@ class _EditServicioFormState extends State<EditServicioForm> {
                     if (result != null) {
                       setState(() {
                         image = result.files.single.path;
-                        estado=true;
+                        estado = true;
                       });
                     }
                   } catch (e) {
@@ -107,11 +112,11 @@ class _EditServicioFormState extends State<EditServicioForm> {
                   }
                 },
                 icon: Icon(
-                  estado?Icons.check:Icons.cloud_upload,
+                  estado ? Icons.check : Icons.cloud_upload,
                   color: Colors.white,
                 ),
                 label: Text(
-                  estado? "Foto Subida": "Subir Foto",
+                  estado ? "Foto Subida" : "Subir Foto",
                   style: const TextStyle(color: Colors.white),
                 ),
                 style: ButtonStyle(
@@ -182,3 +187,4 @@ class _EditServicioFormState extends State<EditServicioForm> {
     Get.offAllNamed('/listarhabitaciones');
   }
 }
+
