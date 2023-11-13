@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:proyecto_pension2/domain/controllers/controluser.dart';
 import 'package:proyecto_pension2/domain/controllers/habitacion_controller.dart';
 import 'package:proyecto_pension2/domain/models/habitacion.dart';
 import 'package:proyecto_pension2/ui/pages/habitacion/detallehabitacion.dart';
@@ -11,7 +12,14 @@ class ListarHabitaciones extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     HabitacionController sc = Get.find();
-    sc.consultarHabitaciones();
+    ControlUserAuth controlUserAuth = Get.find();
+    String? uidUsuarioAutenticado = controlUserAuth.userValido?.user?.uid;
+    if (uidUsuarioAutenticado != null) {
+      sc.consultarHabitaciones(uidUsuarioAutenticado);
+    } else {
+      // Manejar el caso en el que no hay un usuario autenticado
+      print("No hay usuario autenticado");
+    }
     return Scaffold(
       appBar: AppBar(
         title: const Text("Lista de Habitaciones"),
@@ -62,7 +70,8 @@ class ListarHabitaciones extends StatelessWidget {
                             ),
                             Align(
                               alignment: Alignment.centerLeft,
-                              child: Text(DescripcionRecortada(sc.listahab![posicion].descripcion)),
+                              child: Text(DescripcionRecortada(
+                                  sc.listahab![posicion].descripcion)),
                             ),
                             Align(
                               alignment: Alignment.centerLeft,
@@ -142,7 +151,10 @@ class ListarHabitaciones extends StatelessWidget {
               onPressed: () {
                 sc.eliminarHabitacion(sc.listahab![posicion].id);
                 Navigator.of(context).pop();
-                sc.consultarHabitaciones();
+                ControlUserAuth controlUserAuth = Get.find();
+                String? uidUsuarioAutenticado =
+                    controlUserAuth.userValido?.user?.uid;
+                sc.consultarHabitaciones(uidUsuarioAutenticado);
               },
               child: const Text("Eliminar"),
             ),

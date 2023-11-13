@@ -16,6 +16,8 @@ class _PerfilState extends State<Perfil> {
   final controlNombre = TextEditingController();
   final controlApellido = TextEditingController();
   final controlProfesion = TextEditingController();
+  final controlCorreo = TextEditingController();
+  final controlUser = TextEditingController();
   final controlCiudad = TextEditingController();
   final controlDireccion = TextEditingController();
   final controlCelular = TextEditingController();
@@ -58,6 +60,8 @@ class _PerfilState extends State<Perfil> {
       controlNombre.text = perfil!['nombre'] ?? '';
       controlApellido.text = perfil!['apellido'] ?? '';
       controlProfesion.text = perfil!['profesion'] ?? '';
+      controlCorreo.text = perfil!['correo'] ?? '';
+      controlUser.text = perfil!['user'] ?? '';
       controlCiudad.text = perfil!['ciudad'] ?? '';
       controlDireccion.text = perfil!['direccion'] ?? '';
       controlCelular.text = perfil!['telefono'] ?? '';
@@ -83,6 +87,8 @@ class _PerfilState extends State<Perfil> {
         'nombre': controlNombre.text,
         'apellido': controlApellido.text,
         'profesion': controlProfesion.text,
+        'correo': controlCorreo.text,
+        'user': controlUser.text,
         'ciudad': controlCiudad.text,
         'direccion': controlDireccion.text,
         'telefono': controlCelular.text,
@@ -134,6 +140,20 @@ class _PerfilState extends State<Perfil> {
               TextField(
                 controller: controlProfesion,
                 decoration: const InputDecoration(labelText: "Profesion"),
+              ),
+              TextField(
+                controller: controlCorreo,
+                decoration: const InputDecoration(
+                  labelText: "Correo",
+                ),
+                enabled: false,
+                style: const TextStyle(color: Colors.black),
+              ),
+              TextField(
+                controller: controlUser,
+                decoration: const InputDecoration(labelText: "User"),
+                enabled: false,
+                style: const TextStyle(color: Colors.black),
               ),
               TextField(
                 controller: controlCiudad,

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:proyecto_pension2/domain/controllers/controluser.dart';
+import 'package:proyecto_pension2/domain/controllers/habitacion_controller.dart';
 import 'package:proyecto_pension2/ui/pages/Widgets/widgetCajaTexto.dart';
 
 // ignore: must_be_immutable
@@ -14,6 +15,7 @@ class LoginPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     ControlUserAuth cua = Get.find();
+
     return Scaffold(
       backgroundColor: Colors.blue,
       body: Center(
@@ -71,6 +73,14 @@ class LoginPage extends StatelessWidget {
                           reverseAnimationCurve: Curves.easeInBack,
                         );
                       } else {
+                        final ControlUserAuth cua = Get.find();
+                        final HabitacionController hc = Get.find();
+                        
+                        if (cua.rol == 'Admin') {
+                          hc.consultarHabitaciones(cua.userValido?.user?.uid);
+                        } else {
+                          hc.consultarHabitacionesgenerales();
+                        }
                         Get.offAllNamed('/home');
                       }
                     });

@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:proyecto_pension2/data/services/peticionUser.dart';
+import 'package:proyecto_pension2/data/services/peticionperfil.dart';
 
 class ControlUserAuth extends GetxController {
   final _response = Rxn();
@@ -11,6 +12,9 @@ class ControlUserAuth extends GetxController {
   final _mensaje = "".obs;
   final Rxn<String> _nombre = Rxn<String>();
   final Rxn<String> _fotoPerfil = Rxn<String>();
+  final Rxn<String> _rol = Rxn<String>();
+  final Rxn<String> _email = Rxn<String>();
+  String? _uidUsuarioAutenticado;
 
   final Rxn<UserCredential> _usuario = Rxn<UserCredential>();
 
@@ -54,6 +58,20 @@ class ControlUserAuth extends GetxController {
     print(_emailLocal.value);
   }
 
+  // Future<void> cargarNombreYFoto() async {
+  //   final userId = _usuario.value?.user?.uid;
+  //   if (userId != null) {
+  //     final userDoc = await FirebaseFirestore.instance
+  //         .collection('perfiles')
+  //         .doc(userId)
+  //         .get();
+  //     if (userDoc.exists) {
+  //       final data = userDoc.data() as Map<String, dynamic>;
+  //       _nombre.value = data['nombre'];
+  //       _fotoPerfil.value = data['foto'];
+  //     }
+  //   }
+  // }
   Future<void> cargarNombreYFoto() async {
     final userId = _usuario.value?.user?.uid;
     if (userId != null) {
@@ -63,19 +81,26 @@ class ControlUserAuth extends GetxController {
           .get();
       if (userDoc.exists) {
         final data = userDoc.data() as Map<String, dynamic>;
-        _nombre.value = data['nombre'] as String;
-        _fotoPerfil.value = data['foto'] as String;
+        _nombre.value = data['nombre'];
+        _email.value = data['correo'];
+        _fotoPerfil.value = data['foto'];
+        _rol.value = data['user'];
+        _uidUsuarioAutenticado = userId;
       }
     }
   }
 
   String? get nombre => _nombre.value;
   String? get fotoPerfil => _fotoPerfil.value;
+  String? get rol => _rol.value;
+  String? get email => _email.value;
 
   dynamic get passwdLocal => _passwdLocal.value;
   dynamic get emailLocal => _emailLocal.value;
   dynamic get estadoUser => _response.value;
   String get mensajesUser => _mensaje.value;
+  String? get uidUsuarioAutenticado => _uidUsuarioAutenticado;
+
   UserCredential? get userValido => _usuario.value;
 
   Future<void> cerrarSesion() async {
@@ -83,5 +108,13 @@ class ControlUserAuth extends GetxController {
     _usuario.value = null;
     GetStorage().remove('email');
     GetStorage().remove('passwd');
+  }
+
+  Future<void> consultarUsuario(String uid) async {
+    try {
+      final listaUsuarios = await Peticiones.listauser(uid);
+    } catch (e) {
+      print('Error al consultar el usuario: $e');
+    }
   }
 }

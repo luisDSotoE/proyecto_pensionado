@@ -1,8 +1,8 @@
-import 'dart:ffi';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:proyecto_pension2/data/services/habitacionServices.dart';
+import 'package:proyecto_pension2/domain/controllers/controluser.dart';
 import 'package:proyecto_pension2/domain/controllers/habitacion_controller.dart';
 import 'package:proyecto_pension2/domain/models/habitacion.dart';
 import 'package:proyecto_pension2/ui/pages/Widgets/textinput.dart';
@@ -19,7 +19,13 @@ class Editaragregarhabiatcion extends StatelessWidget {
             Text(servicio != null ? 'Editar Habitación' : 'Agregar Habitación'),
         centerTitle: true,
       ),
-      body: EditServicioForm(servicio: servicio),
+      body: Column(
+        children: [
+          Expanded(
+            child: EditServicioForm(servicio: servicio),
+          ),
+        ],
+      ),
     );
   }
 }
@@ -42,7 +48,6 @@ class _EditServicioFormState extends State<EditServicioForm> {
   String? image;
   String textoBoton = "Subir foto";
   bool estado = false;
-  
 
   bool savingServicio = false;
 
@@ -56,8 +61,8 @@ class _EditServicioFormState extends State<EditServicioForm> {
       descripcionController.text = widget.servicio!.descripcion;
       mensualidadController.text = widget.servicio!.mensualidad.toString();
       if (widget.servicio!.imagen.contains('http')) {
-      estado = true;
-    }
+        estado = true;
+      }
     }
   }
 
@@ -99,7 +104,7 @@ class _EditServicioFormState extends State<EditServicioForm> {
                     if (result != null) {
                       setState(() {
                         image = result.files.single.path;
-                        estado=true;
+                        estado = true;
                       });
                     }
                   } catch (e) {
@@ -107,11 +112,11 @@ class _EditServicioFormState extends State<EditServicioForm> {
                   }
                 },
                 icon: Icon(
-                  estado?Icons.check:Icons.cloud_upload,
+                  estado ? Icons.check : Icons.cloud_upload,
                   color: Colors.white,
                 ),
                 label: Text(
-                  estado? "Foto Subida": "Subir Foto",
+                  estado ? "Foto Subida" : "Subir Foto",
                   style: const TextStyle(color: Colors.white),
                 ),
                 style: ButtonStyle(
@@ -143,14 +148,17 @@ class _EditServicioFormState extends State<EditServicioForm> {
   }
 
   void guardarHabitacion(BuildContext context) async {
+    ControlUserAuth controlUserAuth = Get.find();
+
     var nombre = nombreController.text;
     var direccion = direccionController.text;
     var descripcion = descripcionController.text;
     var mensualidad = double.parse(mensualidadController.text);
+    
 
     if (widget.servicio == null) {
       String newServicioId = await HabitacionServices()
-          .guardarHabitacion(nombre, direccion, descripcion, mensualidad);
+          .guardarHabitacion(nombre, direccion, descripcion, mensualidad, );
       if (image != null) {
         String? imageUrl = await HabitacionServices()
             .uploadHabitacionCover(image!, newServicioId);
@@ -158,15 +166,17 @@ class _EditServicioFormState extends State<EditServicioForm> {
           await HabitacionServices()
               .updateCoverHabitacion(newServicioId, imageUrl);
           HabitacionController sc = Get.find();
-          await sc.consultarHabitaciones();
+          await sc.consultarHabitaciones(controlUserAuth.uidUsuarioAutenticado);
         }
       }
     } else {
+      ControlUserAuth controlUserAuth = Get.find();
       await HabitacionServices.actualizarHabitacion(widget.servicio!.id, {
         "nombre": nombre,
         "descripcion": descripcion,
         "direccion": direccion,
         "mensualidad": mensualidad,
+        'user': controlUserAuth.uidUsuarioAutenticado
       });
       if (image != null) {
         String? imageUrl = await HabitacionServices()
@@ -175,7 +185,9 @@ class _EditServicioFormState extends State<EditServicioForm> {
           await HabitacionServices()
               .updateCoverHabitacion(widget.servicio!.id, imageUrl);
           HabitacionController sc = Get.find();
-          await sc.consultarHabitaciones();
+          ControlUserAuth controlUserAuth = Get.find();
+
+          await sc.consultarHabitaciones(controlUserAuth.uidUsuarioAutenticado);
         }
       }
     }

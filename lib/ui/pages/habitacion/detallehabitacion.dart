@@ -1,11 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:proyecto_pension2/domain/models/habitacion.dart';
 import 'package:proyecto_pension2/ui/pages/Widgets/VerFotosHabitaciones.dart';
+import 'package:url_launcher/url_launcher.dart';
+import 'package:webview_flutter/webview_flutter.dart';
 
-class DetalleHabitacionScreen extends StatelessWidget {
+class DetalleHabitacionScreen extends StatefulWidget {
   final Habitacion servicio;
 
-  const DetalleHabitacionScreen({super.key, required this.servicio});
+  const DetalleHabitacionScreen({Key? key, required this.servicio})
+      : super(key: key);
+
+  @override
+  _DetalleHabitacionScreenState createState() =>
+      _DetalleHabitacionScreenState();
+}
+
+class _DetalleHabitacionScreenState extends State<DetalleHabitacionScreen> {
+  bool _mapaCargado = false;
+
+  @override
+  void dispose() {
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -18,28 +34,78 @@ class DetalleHabitacionScreen extends StatelessWidget {
           children: [
             GestureDetector(
               onTap: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context){
-                  return VerFoto(nombre: servicio.nombre, imagen: servicio.imagen,);
+                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  return VerFoto(
+                    nombre: widget.servicio.nombre,
+                    imagen: widget.servicio.imagen,
+                  );
                 }));
               },
-              child: ServicioCoverWidget(coverUrl: servicio.imagen)
-              ),
+              child: ServicioCoverWidget(coverUrl: widget.servicio.imagen),
+            ),
             ServicioInfoWidget(
-                nombre: "Nombre: ${servicio.nombre}",
-                descripcion: "Descripción: ${servicio.descripcion.toString()}",
-                direccion: "Dirección: ${servicio.direccion}",
-                mensualidad: "Mensualidad: \$${servicio.mensualidad}",
-               ),
+              nombre: "Nombre: ${widget.servicio.nombre}",
+              descripcion: "Descripción: ${widget.servicio.descripcion}",
+              direccion: "Dirección: ${widget.servicio.direccion}",
+              mensualidad: "Mensualidad: \$${widget.servicio.mensualidad}",
+            ),
+            ElevatedButton(
+              onPressed: () {
+                print(
+                    'Dirección a abrir en Google Maps: ${widget.servicio.direccion}');
+                _abrirDireccionEnGoogleMaps(widget.servicio.direccion);
+              },
+              child: const Text('Abrir en Google Maps'),
+            ),
+            _mapaCargado
+                ? SizedBox(
+                    width: MediaQuery.of(context).size.width,
+                    height: MediaQuery.of(context).size.height * 0.8,
+                    child: WebView(
+                      initialUrl:
+                          'https://www.google.com/maps?q=${widget.servicio.direccion},Valledupar',
+                      javascriptMode: JavascriptMode.unrestricted,
+                    ),
+                  )
+                : Container(),
           ],
         ),
       ),
     );
   }
+
+  void _abrirDireccionEnGoogleMaps(String direccion) async {
+    String googleMapsUrl =
+        'https://www.google.com/maps/search/?api=1&query=$direccion';
+    try {
+      if (await canLaunch(googleMapsUrl)) {
+        await launch(googleMapsUrl);
+      } else {
+        throw 'No se pudo abrir Google Maps';
+      }
+    } catch (error) {
+      print('Error al abrir Google Maps: $error');
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _cargarMapa();
+  }
+
+  void _cargarMapa() {
+    // Lógica para cargar el mapa
+    print('Mapa cargado con la dirección: ${widget.servicio.direccion}');
+    setState(() {
+      _mapaCargado = true;
+    });
+  }
 }
 
 class ServicioCoverWidget extends StatelessWidget {
   final String coverUrl;
-  const ServicioCoverWidget({super.key, required this.coverUrl});
+  const ServicioCoverWidget({Key? key, required this.coverUrl});
 
   @override
   Widget build(BuildContext context) {
@@ -99,31 +165,20 @@ class ServicioInfoWidget extends StatelessWidget {
             ),
           ),
           Text(
-            mensualidad,
+            direccion,
             style: const TextStyle(
               fontSize: 16,
             ),
           ),
+          Text(
+            mensualidad,
+            style: const TextStyle(
+              fontSize: 16,
+            ),
+            textAlign: TextAlign.start,
+          ),
         ],
       ),
     );
-  }
-}
-
-class ImageWidget extends StatelessWidget {
-  final String imagen;
-
-  const ImageWidget({
-    Key? key,
-    required this.imagen,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    if (imagen.startsWith("http")) {
-      return Image.network(imagen, height: 150, width: 150);
-    } else {
-      return Image.asset(imagen, height: 150, width: 150);
-    }
   }
 }

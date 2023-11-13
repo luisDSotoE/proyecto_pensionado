@@ -1,18 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:proyecto_pension2/domain/controllers/controluser.dart';
 import 'package:proyecto_pension2/domain/controllers/habitacion_controller.dart';
-import 'package:proyecto_pension2/domain/models/habitacion.dart';
 import 'package:proyecto_pension2/ui/pages/Widgets/VerFotosHabitaciones.dart';
 import 'package:proyecto_pension2/ui/pages/habitacion/detallehabitacion.dart';
 import 'package:proyecto_pension2/ui/pages/Home/homeBuscador.dart';
 
-class Habitaciones extends StatelessWidget {
+class Habitaciones extends StatefulWidget {
   const Habitaciones({super.key});
 
   @override
+  State<Habitaciones> createState() => _HabitacionesState();
+}
+
+class _HabitacionesState extends State<Habitaciones> {
+  @override
   Widget build(BuildContext context) {
-    HabitacionController hc = Get.find();
-    hc.consultarHabitaciones();
+    final ControlUserAuth controlUserAuth = Get.find();
+    final HabitacionController hc = Get.find();
+    if (controlUserAuth.rol == 'Admin') {
+      hc.consultarHabitaciones(controlUserAuth.userValido?.user?.uid);
+    } else {
+      hc.consultarHabitacionesgenerales();
+    }
     return Column(
       children: [
         Padding(
@@ -26,8 +36,9 @@ class Habitaciones extends StatelessWidget {
             decoration: BoxDecoration(
                 color: Colors.white, borderRadius: BorderRadius.circular(12.0)),
             child: TextField(
-              onTap: (){
-                showSearch(context: context, delegate: SearchHabitacionDelegate(hc));
+              onTap: () {
+                showSearch(
+                    context: context, delegate: SearchHabitacionDelegate(hc));
               },
               decoration: const InputDecoration(
                   prefixIcon: Icon(
@@ -40,17 +51,20 @@ class Habitaciones extends StatelessWidget {
             ),
           ),
         ),
-        Expanded(child: ListHabitaciones(hc: hc,))
+        Expanded(
+            child: ListHabitaciones(
+          hc: hc,
+        ))
       ],
     );
   }
 }
 
+// ignore: must_be_immutable
 class ListHabitaciones extends StatelessWidget {
   ListHabitaciones({super.key, required this.hc});
 
-  
-  HabitacionController hc; 
+  HabitacionController hc;
   @override
   Widget build(BuildContext context) {
     return Cartas(hc: hc);
