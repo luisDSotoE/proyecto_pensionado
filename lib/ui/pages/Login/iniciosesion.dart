@@ -82,6 +82,7 @@ class LoginPage extends StatelessWidget {
                           hc.consultarHabitacionesgenerales();
                         }
                         Get.offAllNamed('/home');
+                       
                       }
                     });
                   },

@@ -9,10 +9,13 @@ import 'package:proyecto_pension2/ui/pages/habitacion/agregarhabitacion.dart';
 import 'package:proyecto_pension2/ui/pages/habitacion/listarHabitaciones.dart';
 
 class Myapp extends StatelessWidget {
-  const Myapp({super.key});
+  
+   Myapp({super.key});
 
   @override
   Widget build(BuildContext context) {
+      HabitacionController hc = Get.find();
+    hc.consultarHabitaciones();
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(useMaterial3: true),

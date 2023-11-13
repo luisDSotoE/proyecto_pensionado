@@ -24,7 +24,6 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
   int posicion = 0;
   late final GlobalKey<ScaffoldState> _scaffoldKey;
 
-
   final ventanas = [
     const Center(child: Habitaciones()),
     const Buscador(),
