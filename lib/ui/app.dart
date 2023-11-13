@@ -10,7 +10,7 @@ import 'package:proyecto_pension2/ui/pages/habitacion/listarHabitaciones.dart';
 
 class Myapp extends StatelessWidget {
   
-   Myapp({super.key});
+   const Myapp({super.key});
 
   @override
   Widget build(BuildContext context) {
