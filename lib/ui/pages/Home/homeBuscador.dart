@@ -8,7 +8,7 @@ import 'package:proyecto_pension2/ui/pages/Widgets/VerFotosHabitaciones.dart';
 import 'package:proyecto_pension2/ui/pages/habitacion/detallehabitacion.dart';
 
 //INTENTO FALLIDO DE HACER FUNCIONAR EL BUSCADOR :'(
-// UPDATE: AHORA SI FUNCIONA (DE UNA MANERA MALA, PERO FUNCIONA :) ) 
+// UPDATE: AHORA SI FUNCIONA (DE UNA MANERA MALA, PERO FUNCIONA :) )
 class SearchHabitacionDelegate extends SearchDelegate<dynamic> {
   final HabitacionController hc;
   List<Habitacion> _filter = [];
@@ -40,7 +40,9 @@ class SearchHabitacionDelegate extends SearchDelegate<dynamic> {
   @override
   Widget buildResults(BuildContext context) {
     // TODO: implement buildResults
-    return CartasBusqueda(filter: _filter,);
+    return CartasBusqueda(
+      filter: _filter,
+    );
   }
 
   @override

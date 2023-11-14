@@ -17,7 +17,7 @@ class Myapp extends StatelessWidget {
       theme: ThemeData(useMaterial3: true),
       home: LoginPage(),
       routes: {
-        "/registroUsuarioNormal": (context) => RegistroUsuarioNormal(),
+        "/registroUsuarioNormal": (context) => const RegistroUsuarioNormal(),
         "/home": (context) => const Home(),
         "/login": (context) => LoginPage(),
         '/editarhabitacion': (context) => const Editaragregarhabiatcion(),

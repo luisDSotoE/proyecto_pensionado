@@ -12,6 +12,7 @@ class DetalleHabitacionScreen extends StatefulWidget {
       : super(key: key);
 
   @override
+  // ignore: library_private_types_in_public_api
   _DetalleHabitacionScreenState createState() =>
       _DetalleHabitacionScreenState();
 }
@@ -52,16 +53,22 @@ class _DetalleHabitacionScreenState extends State<DetalleHabitacionScreen> {
               celular: "# Contacto: ${widget.servicio.celular}",
             ),
             ElevatedButton.icon(
-            onPressed: (){
-              ContactoWhatsApp(widget.servicio.celular);
-            },
-            style: ButtonStyle(
-              backgroundColor: MaterialStateProperty.all<Color>(Colors.green),
-              iconColor: MaterialStateProperty.all<Color>(Colors.white),
-            ), 
-            icon: const Icon(Icons.perm_phone_msg_sharp), 
-            label: const Text("Ir a Whatsaps", style: TextStyle(color: Colors.white),)),
-            const SizedBox(height: 20,),
+                onPressed: () {
+                  ContactoWhatsApp(widget.servicio.celular);
+                },
+                style: ButtonStyle(
+                  backgroundColor:
+                      MaterialStateProperty.all<Color>(Colors.green),
+                  iconColor: MaterialStateProperty.all<Color>(Colors.white),
+                ),
+                icon: const Icon(Icons.perm_phone_msg_sharp),
+                label: const Text(
+                  "Ir a Whatsaps",
+                  style: TextStyle(color: Colors.white),
+                )),
+            const SizedBox(
+              height: 20,
+            ),
             ElevatedButton.icon(
               onPressed: () {
                 print(
@@ -69,13 +76,18 @@ class _DetalleHabitacionScreenState extends State<DetalleHabitacionScreen> {
                 _abrirDireccionEnGoogleMaps(widget.servicio.direccion);
               },
               style: ButtonStyle(
-              backgroundColor: MaterialStateProperty.all<Color>(Colors.blue),
-              iconColor: MaterialStateProperty.all<Color>(Colors.white),
-              ), 
+                backgroundColor: MaterialStateProperty.all<Color>(Colors.blue),
+                iconColor: MaterialStateProperty.all<Color>(Colors.white),
+              ),
               icon: const Icon(Icons.map),
-              label: const Text('Abrir en Google Maps', style: TextStyle(color: Colors.white),),
+              label: const Text(
+                'Abrir en Google Maps',
+                style: TextStyle(color: Colors.white),
+              ),
             ),
-            const SizedBox(height: 20,),
+            const SizedBox(
+              height: 20,
+            ),
             _mapaCargado
                 ? SizedBox(
                     width: MediaQuery.of(context).size.width,
@@ -124,6 +136,7 @@ class _DetalleHabitacionScreenState extends State<DetalleHabitacionScreen> {
 
 class ServicioCoverWidget extends StatelessWidget {
   final String coverUrl;
+  // ignore: use_key_in_widget_constructors
   const ServicioCoverWidget({Key? key, required this.coverUrl});
 
   @override
@@ -157,14 +170,14 @@ class ServicioInfoWidget extends StatelessWidget {
   final String mensualidad;
   final String celular;
 
-  const ServicioInfoWidget({
-    Key? key,
-    required this.nombre,
-    required this.descripcion,
-    required this.direccion,
-    required this.mensualidad,
-    required this.celular
-  }) : super(key: key);
+  const ServicioInfoWidget(
+      {Key? key,
+      required this.nombre,
+      required this.descripcion,
+      required this.direccion,
+      required this.mensualidad,
+      required this.celular})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -184,6 +197,7 @@ class ServicioInfoWidget extends StatelessWidget {
             style: const TextStyle(
               fontSize: 16,
             ),
+            textAlign: TextAlign.center,
           ),
           Text(
             direccion,

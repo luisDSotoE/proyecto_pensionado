@@ -6,8 +6,8 @@ import 'package:proyecto_pension2/data/services/peticionperfil.dart';
 import 'package:proyecto_pension2/domain/controllers/controluser.dart';
 import 'package:proyecto_pension2/domain/controllers/habitacion_controller.dart';
 import 'package:proyecto_pension2/domain/models/habitacion.dart';
+import 'package:proyecto_pension2/ui/pages/Login/iniciosesion.dart';
 import 'package:proyecto_pension2/ui/pages/Widgets/textinput.dart';
-
 
 class Editaragregarhabiatcion extends StatelessWidget {
   const Editaragregarhabiatcion({super.key});
@@ -55,7 +55,7 @@ class _EditServicioFormState extends State<EditServicioForm> {
 
   bool savingServicio = false;
 
-  Future<void> cargarTelefono() async{
+  Future<void> cargarTelefono() async {
     final cua = Get.find<ControlUserAuth>();
     var perfil = await Peticiones.obtenerPerfil(cua.userValido!.user!.uid);
     celularController.text = perfil!["celular"];
@@ -144,16 +144,30 @@ class _EditServicioFormState extends State<EditServicioForm> {
               ),
               SizedBox(
                 width: 200,
-                child: ElevatedButton(
+                child: ElevatedButton.icon(
                   onPressed: () {
-                    guardarHabitacion(context);
-                    nombreController.clear();
-                    direccionController.clear();
-                    descripcionController.clear();
-                    mensualidadController.clear();
-                    Navigator.pop(context);
+                    if ((nombreController.text == "") ||
+                        (direccionController.text == "") ||
+                        (descripcionController.text == "") ||
+                        (mensualidadController.text == "") ||
+                        (celularController.text == "") ||
+                        (estado == false)) {
+                      MensajeError(
+                          "¡ADVERTENCIA!", "No se aceptan campos vacios");
+                    } else {
+                      guardarHabitacion(context);
+                      nombreController.clear();
+                      direccionController.clear();
+                      descripcionController.clear();
+                      mensualidadController.clear();
+                      Navigator.pop(context);
+                    }
                   },
-                  child: const Text("Guardar"),
+                  icon: const Icon(Icons.save, color: Colors.white,),
+                  label: const Text("Guardar",style: TextStyle(color: Colors.white),),
+                  style: ButtonStyle(
+                    backgroundColor:
+                        MaterialStateProperty.all<Color>(Colors.blue)),
                 ),
               ),
             ],
@@ -171,11 +185,10 @@ class _EditServicioFormState extends State<EditServicioForm> {
     var descripcion = descripcionController.text;
     var mensualidad = double.parse(mensualidadController.text);
     var celular = celularController.text;
-    
 
     if (widget.servicio == null) {
-      String newServicioId = await HabitacionServices()
-          .guardarHabitacion(nombre, direccion, descripcion, mensualidad, celular);
+      String newServicioId = await HabitacionServices().guardarHabitacion(
+          nombre, direccion, descripcion, mensualidad, celular);
       if (image != null) {
         String? imageUrl = await HabitacionServices()
             .uploadHabitacionCover(image!, newServicioId);
@@ -212,4 +225,3 @@ class _EditServicioFormState extends State<EditServicioForm> {
     Get.offAllNamed('/listarhabitaciones');
   }
 }
-

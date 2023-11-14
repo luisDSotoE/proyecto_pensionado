@@ -58,7 +58,8 @@ class LoginPage extends StatelessWidget {
                   onPressed: () {
                     cua.ingresarUser(usuario.text, clave.text).then((value) {
                       if (cua.userValido == null) {
-                        Get.snackbar(
+                        MensajeError("¡ERROR!", "Usuario invalido");
+                        /* Get.snackbar(
                           'Error',
                           'Usuario invalido',
                           snackPosition: SnackPosition.TOP,
@@ -71,18 +72,17 @@ class LoginPage extends StatelessWidget {
                           dismissDirection: DismissDirection.vertical,
                           forwardAnimationCurve: Curves.easeOutBack,
                           reverseAnimationCurve: Curves.easeInBack,
-                        );
+                        ); */
                       } else {
                         final ControlUserAuth cua = Get.find();
                         final HabitacionController hc = Get.find();
-                        
+
                         if (cua.rol == 'Admin') {
                           hc.consultarHabitaciones(cua.userValido?.user?.uid);
                         } else {
                           hc.consultarHabitacionesgenerales();
                         }
                         Get.offAllNamed('/home');
-                       
                       }
                     });
                   },
@@ -116,4 +116,22 @@ class LoginPage extends StatelessWidget {
       ),
     );
   }
+}
+
+// ignore: non_constant_identifier_names
+SnackbarController MensajeError(String titulo, String mensaje) {
+  return Get.snackbar(
+    titulo,
+    mensaje,
+    snackPosition: SnackPosition.TOP,
+    backgroundColor: Colors.red,
+    colorText: Colors.white,
+    borderRadius: 10,
+    margin: const EdgeInsets.all(10),
+    duration: const Duration(seconds: 3),
+    isDismissible: true,
+    dismissDirection: DismissDirection.vertical,
+    forwardAnimationCurve: Curves.easeOutBack,
+    reverseAnimationCurve: Curves.easeInBack,
+  );
 }

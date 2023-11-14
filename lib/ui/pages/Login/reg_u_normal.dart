@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:proyecto_pension2/domain/controllers/controlperfil.dart';
 import 'package:proyecto_pension2/domain/controllers/controluser.dart';
 import 'package:proyecto_pension2/ui/pages/Widgets/widgetCajaTexto.dart';
+import 'package:proyecto_pension2/ui/pages/Login/iniciosesion.dart';
 
 class RegistroUsuarioNormal extends StatefulWidget {
   const RegistroUsuarioNormal({super.key});
@@ -78,26 +79,29 @@ class _RegistroUsuarioNormalState extends State<RegistroUsuarioNormal> {
                       titulo: "Numero de Telefono",
                       controller: telefonoController,
                       tipo: TextInputType.phone),
-                  DropdownButtonFormField<String>(
-                    value: selectedRol,
-                    onChanged: (newValue) {
-                      setState(() {
-                        selectedRol = newValue;
-                      });
-                    },
-                    items: tiporoles.map((String value) {
-                      return DropdownMenuItem<String>(
-                        value: value,
-                        child: Text(value),
-                      );
-                    }).toList(),
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10),
+                  SizedBox(
+                    width: 300,
+                    child: DropdownButtonFormField<String>(
+                      value: selectedRol,
+                      onChanged: (newValue) {
+                        setState(() {
+                          selectedRol = newValue;
+                        });
+                      },
+                      items: tiporoles.map((String value) {
+                        return DropdownMenuItem<String>(
+                          value: value,
+                          child: Text(value),
+                        );
+                      }).toList(),
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        labelText: 'Tipo de Usuario',
+                        filled: true,
+                        fillColor: Colors.white60,
                       ),
-                      labelText: 'Tipo de Usuario',
-                      filled: true,
-                      fillColor: Colors.white60,
                     ),
                   ),
                   CajaTexto(
@@ -110,6 +114,7 @@ class _RegistroUsuarioNormalState extends State<RegistroUsuarioNormal> {
                       controller: passwordController,
                       tipo: TextInputType.visiblePassword,
                       oscuro: true),
+                  const SizedBox(height: 40),
                   ElevatedButton(
                     onPressed: () {
                       cua
@@ -119,7 +124,8 @@ class _RegistroUsuarioNormalState extends State<RegistroUsuarioNormal> {
                       )
                           .then((value) {
                         if (cua.userValido == null) {
-                          Get.snackbar(
+                          MensajeError("¡ERROR!", "Registro invalido");
+                          /* Get.snackbar(
                             'Error',
                             'Error al registrarse',
                             snackPosition: SnackPosition.TOP,
@@ -132,7 +138,7 @@ class _RegistroUsuarioNormalState extends State<RegistroUsuarioNormal> {
                             dismissDirection: DismissDirection.vertical,
                             forwardAnimationCurve: Curves.easeOutBack,
                             reverseAnimationCurve: Curves.easeInBack,
-                          );
+                          ); */
                         } else {
                           var tiporol = selectedRol ?? 'Estudiante';
                           var datos = {
@@ -156,12 +162,12 @@ class _RegistroUsuarioNormalState extends State<RegistroUsuarioNormal> {
                     },
                     child: const Text('Registrarse'),
                   ),
-                  const SizedBox(height: 20),
-                  ElevatedButton(
+                  
+                  /* ElevatedButton(
                       onPressed: () {
                         Get.offAndToNamed('/login');
                       },
-                      child: const Text('Iniciar Sesion'))
+                      child: const Text('Iniciar Sesion')) */
                 ],
               ),
             ),
