@@ -20,6 +20,7 @@ class ListarHabitaciones extends StatelessWidget {
       // Manejar el caso en el que no hay un usuario autenticado
       print("No hay usuario autenticado");
     }
+    //sc.consultarHabitacionesgenerales();
     return Scaffold(
       appBar: AppBar(
         title: const Text("Lista de Habitaciones"),

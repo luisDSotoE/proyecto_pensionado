@@ -97,7 +97,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                   );
                 },
               ),
-              ListTile(
+              /* ListTile(
                 leading: const Icon(Icons.hotel),
                 title: const Text('Listar Habitaciones'),
                 onTap: () {
@@ -109,7 +109,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                             )),
                   );
                 },
-              ),
+              ), */
               ListTile(
                 leading: const Icon(Icons.contact_page_outlined),
                 title: const Text('Soporte Tecnico'),
@@ -140,11 +140,12 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
     cua.cargarNombreYFoto();
     final ControlUserAuth controlUserAuth = Get.find();
     final HabitacionController hc = Get.find();
-    if (controlUserAuth.rol == 'Admin') {
+    /* if (controlUserAuth.rol == 'Admin') {
       hc.consultarHabitaciones(controlUserAuth.userValido?.user?.uid);
     } else {
       hc.consultarHabitacionesgenerales();
-    }
+    } */
+    hc.consultarHabitacionesgenerales();
     return Drawer(
       child: Obx(
         () {

@@ -5,6 +5,7 @@ class Habitacion {
   final String descripcion;
   final double mensualidad;
   final String imagen;
+  final String celular;
 
 
   Habitacion(  {
@@ -13,7 +14,8 @@ class Habitacion {
     required this.descripcion,
     required this.mensualidad,
     required this.direccion,
-    required this.imagen
+    required this.imagen,
+    required this.celular
   });
 
   factory Habitacion.desdeDoc(
@@ -25,6 +27,7 @@ class Habitacion {
       direccion: json["direccion"] ?? 'N/A',
       mensualidad: (json["mensualidad"] as num?)?.toDouble() ?? 0.0,
       imagen: json["imagenes"] ?? 'assets/image/sin_imagen.jpg',
+      celular: json["celular"] ?? ''
     );
   }
 

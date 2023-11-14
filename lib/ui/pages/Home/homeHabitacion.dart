@@ -16,13 +16,9 @@ class Habitaciones extends StatefulWidget {
 class _HabitacionesState extends State<Habitaciones> {
   @override
   Widget build(BuildContext context) {
-    final ControlUserAuth controlUserAuth = Get.find();
+    //final ControlUserAuth controlUserAuth = Get.find();
     final HabitacionController hc = Get.find();
-    if (controlUserAuth.rol == 'Admin') {
-      hc.consultarHabitaciones(controlUserAuth.userValido?.user?.uid);
-    } else {
-      hc.consultarHabitacionesgenerales();
-    }
+    hc.consultarHabitacionesgenerales();
     return Column(
       children: [
         Padding(

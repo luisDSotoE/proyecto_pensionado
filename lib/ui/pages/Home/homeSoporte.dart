@@ -45,7 +45,7 @@ class SoporteTecnico extends StatelessWidget {
           return ListTile(
             title: Text(soporte[index].nombre),
             onTap: () {
-              _launchWhatsApp(soporte[index].numero);
+              ContactoWhatsApp(soporte[index].numero);
             },
           );
         },
@@ -53,8 +53,11 @@ class SoporteTecnico extends StatelessWidget {
     );
   }
 
-  void _launchWhatsApp(String phoneNumber) async {
-    String url = "https://wa.me/$phoneNumber";
+}
+
+// ignore: non_constant_identifier_names
+void ContactoWhatsApp(String phoneNumber) async {
+    String url = "https://wa.me/${"+57$phoneNumber"}";
     // ignore: deprecated_member_use
     if (await canLaunch(url)) {
       // ignore: deprecated_member_use
@@ -63,4 +66,3 @@ class SoporteTecnico extends StatelessWidget {
       throw 'Could not launch $url';
     }
   }
-}

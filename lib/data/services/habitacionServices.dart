@@ -19,14 +19,15 @@ class HabitacionServices {
           toFirestore: (serv, _) => serv.toJson());
 
   Future<String> guardarHabitacion(String nombre, String direccion,
-      String descripcion, double mensualidad) async {
+      String descripcion, double mensualidad, String celular) async {
     var reference = FirebaseFirestore.instance.collection("habitaciones");
     var result = await reference.add({
       'nombre': nombre,
       'descripcion': descripcion,
       'direccion': direccion,
       'mensualidad': mensualidad,
-      'user': controlUserAuth.uidUsuarioAutenticado
+      'user': controlUserAuth.uidUsuarioAutenticado,
+      'celular': celular
     });
     return Future.value(result.id);
   }

@@ -12,5 +12,6 @@ void main() async {
   Get.put(ControlUserAuth());
   Get.put(ControlUserPerfil());
   Get.put(HabitacionController());
-  runApp( Myapp());
+  runApp(const Myapp());
 }
+ 

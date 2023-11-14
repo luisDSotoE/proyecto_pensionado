@@ -3,6 +3,7 @@ import 'package:proyecto_pension2/domain/models/habitacion.dart';
 import 'package:proyecto_pension2/ui/pages/Widgets/VerFotosHabitaciones.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:webview_flutter/webview_flutter.dart';
+import 'package:proyecto_pension2/ui/pages/Home/homeSoporte.dart';
 
 class DetalleHabitacionScreen extends StatefulWidget {
   final Habitacion servicio;
@@ -48,15 +49,33 @@ class _DetalleHabitacionScreenState extends State<DetalleHabitacionScreen> {
               descripcion: "Descripción: ${widget.servicio.descripcion}",
               direccion: "Dirección: ${widget.servicio.direccion}",
               mensualidad: "Mensualidad: \$${widget.servicio.mensualidad}",
+              celular: "# Contacto: ${widget.servicio.celular}",
             ),
-            ElevatedButton(
+            ElevatedButton.icon(
+            onPressed: (){
+              ContactoWhatsApp(widget.servicio.celular);
+            },
+            style: ButtonStyle(
+              backgroundColor: MaterialStateProperty.all<Color>(Colors.green),
+              iconColor: MaterialStateProperty.all<Color>(Colors.white),
+            ), 
+            icon: const Icon(Icons.perm_phone_msg_sharp), 
+            label: const Text("Ir a Whatsaps", style: TextStyle(color: Colors.white),)),
+            const SizedBox(height: 20,),
+            ElevatedButton.icon(
               onPressed: () {
                 print(
                     'Dirección a abrir en Google Maps: ${widget.servicio.direccion}');
                 _abrirDireccionEnGoogleMaps(widget.servicio.direccion);
               },
-              child: const Text('Abrir en Google Maps'),
+              style: ButtonStyle(
+              backgroundColor: MaterialStateProperty.all<Color>(Colors.blue),
+              iconColor: MaterialStateProperty.all<Color>(Colors.white),
+              ), 
+              icon: const Icon(Icons.map),
+              label: const Text('Abrir en Google Maps', style: TextStyle(color: Colors.white),),
             ),
+            const SizedBox(height: 20,),
             _mapaCargado
                 ? SizedBox(
                     width: MediaQuery.of(context).size.width,
@@ -136,6 +155,7 @@ class ServicioInfoWidget extends StatelessWidget {
   final String descripcion;
   final String direccion;
   final String mensualidad;
+  final String celular;
 
   const ServicioInfoWidget({
     Key? key,
@@ -143,6 +163,7 @@ class ServicioInfoWidget extends StatelessWidget {
     required this.descripcion,
     required this.direccion,
     required this.mensualidad,
+    required this.celular
   }) : super(key: key);
 
   @override
@@ -172,6 +193,13 @@ class ServicioInfoWidget extends StatelessWidget {
           ),
           Text(
             mensualidad,
+            style: const TextStyle(
+              fontSize: 16,
+            ),
+            textAlign: TextAlign.start,
+          ),
+          Text(
+            celular,
             style: const TextStyle(
               fontSize: 16,
             ),

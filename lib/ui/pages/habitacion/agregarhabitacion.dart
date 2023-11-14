@@ -2,6 +2,7 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:proyecto_pension2/data/services/habitacionServices.dart';
+import 'package:proyecto_pension2/data/services/peticionperfil.dart';
 import 'package:proyecto_pension2/domain/controllers/controluser.dart';
 import 'package:proyecto_pension2/domain/controllers/habitacion_controller.dart';
 import 'package:proyecto_pension2/domain/models/habitacion.dart';
@@ -45,6 +46,8 @@ class _EditServicioFormState extends State<EditServicioForm> {
   final direccionController = TextEditingController();
   final descripcionController = TextEditingController();
   final mensualidadController = TextEditingController();
+  final celularController = TextEditingController();
+
   // bool isDisponible = false;
   String? image;
   String textoBoton = "Subir foto";
@@ -52,15 +55,23 @@ class _EditServicioFormState extends State<EditServicioForm> {
 
   bool savingServicio = false;
 
+  Future<void> cargarTelefono() async{
+    final cua = Get.find<ControlUserAuth>();
+    var perfil = await Peticiones.obtenerPerfil(cua.userValido!.user!.uid);
+    celularController.text = perfil!["celular"];
+  }
+
   @override
   void initState() {
     super.initState();
 
+    cargarTelefono();
     if (widget.servicio != null) {
       nombreController.text = widget.servicio!.nombre;
       direccionController.text = widget.servicio!.direccion;
       descripcionController.text = widget.servicio!.descripcion;
       mensualidadController.text = widget.servicio!.mensualidad.toString();
+      celularController.text = widget.servicio!.celular;
       if (widget.servicio!.imagen.contains('http')) {
         estado = true;
       }
@@ -94,6 +105,10 @@ class _EditServicioFormState extends State<EditServicioForm> {
                   controller: mensualidadController,
                   tipo: const TextInputType.numberWithOptions(decimal: true),
                   texto: 'Mensualidad'),
+              IngresarDatos(
+                  controller: celularController,
+                  tipo: TextInputType.number,
+                  texto: '# Contacto'),
               const SizedBox(
                 height: 15,
               ),
@@ -155,11 +170,12 @@ class _EditServicioFormState extends State<EditServicioForm> {
     var direccion = direccionController.text;
     var descripcion = descripcionController.text;
     var mensualidad = double.parse(mensualidadController.text);
+    var celular = celularController.text;
     
 
     if (widget.servicio == null) {
       String newServicioId = await HabitacionServices()
-          .guardarHabitacion(nombre, direccion, descripcion, mensualidad, );
+          .guardarHabitacion(nombre, direccion, descripcion, mensualidad, celular);
       if (image != null) {
         String? imageUrl = await HabitacionServices()
             .uploadHabitacionCover(image!, newServicioId);
@@ -177,6 +193,7 @@ class _EditServicioFormState extends State<EditServicioForm> {
         "descripcion": descripcion,
         "direccion": direccion,
         "mensualidad": mensualidad,
+        "celular": celular,
         'user': controlUserAuth.uidUsuarioAutenticado
       });
       if (image != null) {
