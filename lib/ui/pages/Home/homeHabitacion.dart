@@ -21,37 +21,51 @@ class _HabitacionesState extends State<Habitaciones> {
     hc.consultarHabitacionesgenerales();
     return Column(
       children: [
-        Padding(
-          padding: const EdgeInsets.only(top: 20, left: 20, right: 20),
-          child: Container(
-            alignment: Alignment.center,
-            padding: const EdgeInsets.only(
-              left: 8.0,
-              right: 8.0,
-            ),
-            decoration: BoxDecoration(
-                color: Colors.white, borderRadius: BorderRadius.circular(12.0)),
-            child: TextField(
-              onTap: () {
-                showSearch(
-                    context: context, delegate: SearchHabitacionDelegate(hc));
-              },
-              decoration: const InputDecoration(
-                  prefixIcon: Icon(
-                    Icons.search,
-                    size: 30,
-                  ),
-                  border: InputBorder.none,
-                  hintStyle: TextStyle(color: Colors.black, fontSize: 15),
-                  hintText: "Buscar"),
-            ),
-          ),
-        ),
+        BarraDeBusqueda(hc: hc),
         Expanded(
             child: ListHabitaciones(
           hc: hc,
         ))
       ],
+    );
+  }
+}
+
+class BarraDeBusqueda extends StatelessWidget {
+  const BarraDeBusqueda({
+    super.key,
+    required this.hc,
+  });
+
+  final HabitacionController hc;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(top: 20, left: 20, right: 20),
+      child: Container(
+        alignment: Alignment.center,
+        padding: const EdgeInsets.only(
+          left: 8.0,
+          right: 8.0,
+        ),
+        decoration: BoxDecoration(
+            color: Colors.white, borderRadius: BorderRadius.circular(12.0)),
+        child: TextField(
+          onTap: () {
+            showSearch(
+                context: context, delegate: SearchHabitacionDelegate(hc));
+          },
+          decoration: const InputDecoration(
+              prefixIcon: Icon(
+                Icons.search,
+                size: 30,
+              ),
+              border: InputBorder.none,
+              hintStyle: TextStyle(color: Colors.black, fontSize: 15),
+              hintText: "Buscar"),
+        ),
+      ),
     );
   }
 }
@@ -169,6 +183,7 @@ class Cartas extends StatelessWidget {
   }
 }
 
+// ignore: non_constant_identifier_names
 String DescripcionRecortada(String desc) {
   int limite = 30;
   String descripcionRecortada =

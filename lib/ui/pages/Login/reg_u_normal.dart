@@ -7,7 +7,7 @@ import 'package:proyecto_pension2/domain/controllers/controluser.dart';
 import 'package:proyecto_pension2/ui/pages/Widgets/widgetCajaTexto.dart';
 
 class RegistroUsuarioNormal extends StatefulWidget {
-  RegistroUsuarioNormal({super.key});
+  const RegistroUsuarioNormal({super.key});
 
   @override
   State<RegistroUsuarioNormal> createState() => _RegistroUsuarioNormalState();
