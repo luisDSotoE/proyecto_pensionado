@@ -36,19 +36,30 @@ class SoporteTecnico extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: const Color.fromARGB(255, 122, 171, 212),
+        backgroundColor: const Color.fromARGB(255, 99, 152, 196),
         title: const Text('Contacto de soporte'),
       ),
-      body: ListView.builder(
-        itemCount: soporte.length,
-        itemBuilder: (context, index) {
-          return ListTile(
-            title: Text(soporte[index].nombre),
-            onTap: () {
-              ContactoWhatsApp(soporte[index].numero);
-            },
-          );
-        },
+      body: Container(
+        decoration:const  BoxDecoration(
+          color: Color.fromARGB(255, 122, 171, 212)
+        ),
+        child: ListView.builder(
+          itemCount: soporte.length,
+          itemBuilder: (context, index) {
+            return ListTile(
+              title: Row(
+                children: [
+                  const Icon(Icons.contact_support_outlined),
+                  const SizedBox(width: 10,),
+                  Text(soporte[index].nombre),
+                ],
+              ),
+              onTap: () {
+                ContactoWhatsApp(soporte[index].numero);
+              },
+            );
+          },
+        ),
       ),
     );
   }

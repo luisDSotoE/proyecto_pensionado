@@ -107,7 +107,7 @@ class _PerfilState extends State<Perfil> {
         title: const Text("Completar Perfil"),
       ),
       body: Container(
-        padding: const EdgeInsets.all(10.0),
+        padding: const EdgeInsets.all(20.0),
         child: Center(
           child: ListView(
             children: <Widget>[
@@ -167,8 +167,12 @@ class _PerfilState extends State<Perfil> {
                 controller: controlCelular,
                 decoration: const InputDecoration(labelText: "Celular"),
               ),
-              ElevatedButton(
-                child: const Text("Actualizar Perfil"),
+              const SizedBox(height: 30,),
+              ElevatedButton.icon(
+                style: const ButtonStyle(
+                  backgroundColor: MaterialStatePropertyAll<Color>(Colors.yellow),),
+                icon: const Icon(Icons.perm_identity_sharp, color: Colors.white,),
+                label: const Text("Actualizar Perfil",style: TextStyle(color: Colors.white),),
                 onPressed: () async {
                   await _subirImagen();
                   ControlUserAuth aut = Get.find();

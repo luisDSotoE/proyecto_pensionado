@@ -8,6 +8,7 @@ import 'package:proyecto_pension2/domain/controllers/habitacion_controller.dart'
 import 'package:proyecto_pension2/domain/models/habitacion.dart';
 import 'package:proyecto_pension2/ui/pages/Login/iniciosesion.dart';
 import 'package:proyecto_pension2/ui/pages/Widgets/textinput.dart';
+import 'package:proyecto_pension2/ui/pages/Widgets/widgetCajaTexto.dart';
 
 class Editaragregarhabiatcion extends StatelessWidget {
   const Editaragregarhabiatcion({super.key});
@@ -17,7 +18,7 @@ class Editaragregarhabiatcion extends StatelessWidget {
     final Habitacion? servicio = Get.arguments as Habitacion?;
     return Scaffold(
       //extendBody: true,
-      extendBodyBehindAppBar: false,
+      extendBodyBehindAppBar: true,
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         title:
@@ -26,15 +27,14 @@ class Editaragregarhabiatcion extends StatelessWidget {
       ),
       body: Container(
         decoration: const BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage("assets/image/HabitacionRegistrar.jpg"),
-            fit: BoxFit.cover)
-        ),
+            image: DecorationImage(
+                image: AssetImage("assets/image/HabitacionRegistrar.jpg"),
+                fit: BoxFit.cover)),
         child: Column(
           children: [
-            Expanded(
-              child: EditServicioForm(servicio: servicio),
-            ),
+            EditServicioForm(
+              servicio: servicio,
+            )
           ],
         ),
       ),
@@ -93,94 +93,103 @@ class _EditServicioFormState extends State<EditServicioForm> {
     if (savingServicio) {
       return const Center(child: CircularProgressIndicator());
     }
-    return Scaffold(
-      body: SingleChildScrollView(
-        child: Container(
-          decoration: const BoxDecoration(),
-          child: Column(
-            children: [
-              IngresarDatos(
-                  controller: nombreController,
-                  tipo: TextInputType.text,
-                  texto: 'Nombre'),
-              IngresarDatos(
-                  controller: direccionController,
-                  tipo: TextInputType.text,
-                  texto: 'Direccion'),
-              IngresarDatos(
-                  controller: descripcionController,
-                  tipo: TextInputType.text,
-                  texto: 'Descripción'),
-              IngresarDatos(
-                  controller: mensualidadController,
-                  tipo: const TextInputType.numberWithOptions(decimal: true),
-                  texto: 'Mensualidad'),
-              IngresarDatos(
-                  controller: celularController,
-                  tipo: TextInputType.number,
-                  texto: '# Contacto'),
-              const SizedBox(
-                height: 15,
-              ),
-              ElevatedButton.icon(
-                onPressed: () async {
-                  try {
-                    FilePickerResult? result =
-                        await FilePicker.platform.pickFiles();
-                    if (result != null) {
-                      setState(() {
-                        image = result.files.single.path;
-                        estado = true;
-                      });
-                    }
-                  } catch (e) {
-                    e.printError();
-                  }
-                },
-                icon: Icon(
-                  estado ? Icons.check : Icons.cloud_upload,
-                  color: Colors.white,
+    return Expanded(
+      child: SingleChildScrollView(
+        child: Center(
+          child: Padding(
+            padding: EdgeInsets.symmetric(
+            vertical: MediaQuery.of(context).size.height * 0.20),
+            child: Column(
+              children: [
+                CajaTexto(
+                    controller: nombreController,
+                    tipo: TextInputType.text,
+                    titulo: 'Nombre'),
+                CajaTexto(
+                    controller: direccionController,
+                    tipo: TextInputType.text,
+                    titulo: 'Direccion'),
+                CajaTexto(
+                    controller: descripcionController,
+                    tipo: TextInputType.text,
+                    titulo: 'Descripción'),
+                CajaTexto(
+                    controller: mensualidadController,
+                    tipo: const TextInputType.numberWithOptions(decimal: true),
+                    titulo: 'Mensualidad'),
+                CajaTexto(
+                    controller: celularController,
+                    tipo: TextInputType.number,
+                    titulo: '# Contacto'),
+                const SizedBox(
+                  height: 15,
                 ),
-                label: Text(
-                  estado ? "Foto Subida" : "Subir Foto",
-                  style: const TextStyle(color: Colors.white),
-                ),
-                style: ButtonStyle(
-                    backgroundColor:
-                        MaterialStateProperty.all<Color>(Colors.blue)),
-              ),
-              const SizedBox(
-                height: 25,
-              ),
-              SizedBox(
-                width: 200,
-                child: ElevatedButton.icon(
-                  onPressed: () {
-                    if ((nombreController.text == "") ||
-                        (direccionController.text == "") ||
-                        (descripcionController.text == "") ||
-                        (mensualidadController.text == "") ||
-                        (celularController.text == "") ||
-                        (estado == false)) {
-                      MensajeError(
-                          "¡ADVERTENCIA!", "No se aceptan campos vacios");
-                    } else {
-                      guardarHabitacion(context);
-                      nombreController.clear();
-                      direccionController.clear();
-                      descripcionController.clear();
-                      mensualidadController.clear();
-                      Navigator.pop(context);
+                ElevatedButton.icon(
+                  onPressed: () async {
+                    try {
+                      FilePickerResult? result =
+                          await FilePicker.platform.pickFiles();
+                      if (result != null) {
+                        setState(() {
+                          image = result.files.single.path;
+                          estado = true;
+                        });
+                      }
+                    } catch (e) {
+                      e.printError();
                     }
                   },
-                  icon: const Icon(Icons.save, color: Colors.white,),
-                  label: const Text("Guardar",style: TextStyle(color: Colors.white),),
+                  icon: Icon(
+                    estado ? Icons.check : Icons.cloud_upload,
+                    color: Colors.white,
+                  ),
+                  label: Text(
+                    estado ? "Foto Subida" : "Subir Foto",
+                    style: const TextStyle(color: Colors.white),
+                  ),
                   style: ButtonStyle(
-                    backgroundColor:
-                        MaterialStateProperty.all<Color>(Colors.blue)),
+                      backgroundColor:
+                          MaterialStateProperty.all<Color>(Colors.blue)),
                 ),
-              ),
-            ],
+                const SizedBox(
+                  height: 35,
+                ),
+                SizedBox(
+                  width: 200,
+                  child: ElevatedButton.icon(
+                    onPressed: () {
+                      if ((nombreController.text == "") ||
+                          (direccionController.text == "") ||
+                          (descripcionController.text == "") ||
+                          (mensualidadController.text == "") ||
+                          (celularController.text == "") ||
+                          (estado == false)) {
+                        MensajeError(
+                            "¡ADVERTENCIA!", "No se aceptan campos vacios");
+                      } else {
+                        guardarHabitacion(context);
+                        nombreController.clear();
+                        direccionController.clear();
+                        descripcionController.clear();
+                        mensualidadController.clear();
+                        Navigator.pop(context);
+                      }
+                    },
+                    icon: const Icon(
+                      Icons.save,
+                      color: Colors.white,
+                    ),
+                    label: const Text(
+                      "Guardar",
+                      style: TextStyle(color: Colors.white),
+                    ),
+                    style: ButtonStyle(
+                        backgroundColor:
+                            MaterialStateProperty.all<Color>(Colors.yellow)),
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),
