@@ -16,17 +16,27 @@ class Editaragregarhabiatcion extends StatelessWidget {
   Widget build(BuildContext context) {
     final Habitacion? servicio = Get.arguments as Habitacion?;
     return Scaffold(
+      //extendBody: true,
+      extendBodyBehindAppBar: false,
       appBar: AppBar(
+        backgroundColor: Colors.transparent,
         title:
             Text(servicio != null ? 'Editar Habitación' : 'Agregar Habitación'),
         centerTitle: true,
       ),
-      body: Column(
-        children: [
-          Expanded(
-            child: EditServicioForm(servicio: servicio),
-          ),
-        ],
+      body: Container(
+        decoration: const BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage("assets/image/HabitacionRegistrar.jpg"),
+            fit: BoxFit.cover)
+        ),
+        child: Column(
+          children: [
+            Expanded(
+              child: EditServicioForm(servicio: servicio),
+            ),
+          ],
+        ),
       ),
     );
   }

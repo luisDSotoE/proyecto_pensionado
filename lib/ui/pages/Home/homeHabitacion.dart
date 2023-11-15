@@ -107,6 +107,7 @@ class Cartas extends StatelessWidget {
                     itemCount: hc.listahab!.length,
                     itemBuilder: (BuildContext context, int index) {
                       return Card(
+                        color: Colors.white70,
                         child: Padding(
                           padding: const EdgeInsets.all(5.0),
                           child: Row(

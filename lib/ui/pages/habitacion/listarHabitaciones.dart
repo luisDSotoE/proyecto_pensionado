@@ -22,7 +22,10 @@ class ListarHabitaciones extends StatelessWidget {
     }
     //sc.consultarHabitacionesgenerales();
     return Scaffold(
+      //extendBody: true,
+      extendBodyBehindAppBar: true,
       appBar: AppBar(
+        backgroundColor: Colors.transparent,
         title: const Text("Lista de Habitaciones"),
         centerTitle: true,
         leading: IconButton(
@@ -32,90 +35,101 @@ class ListarHabitaciones extends StatelessWidget {
           },
         ),
       ),
-      body: Obx(() {
-        final List<Habitacion>? _servicios = sc.listahab;
-        if (sc.listahab?.isEmpty == true) {
-          return const Center(
-            child: Text("No existen Habitaciones registradas"),
-          );
-        } else {
-          return ListView.builder(
-            itemCount: sc.listahab!.length,
-            itemBuilder: (context, posicion) {
-              final servicio = _servicios![posicion];
-
-              return Card(
-                child: InkWell(
-                  onTap: () {
-                    _openHabitacionDetails(context, servicio);
-                  },
-                  child: Row(
-                    children: [
-                      SizedBox(
-                        height: 120,
-                        width: 120,
-                        child: getImageWidget(sc.listahab![posicion].imagen),
-                      ),
-                      const SizedBox(width: 10),
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Align(
-                              alignment: Alignment.centerLeft,
-                              child: Text(sc.listahab![posicion].nombre),
-                            ),
-                            Align(
-                              alignment: Alignment.centerLeft,
-                              child: Text(sc.listahab![posicion].direccion),
-                            ),
-                            Align(
-                              alignment: Alignment.centerLeft,
-                              child: Text(DescripcionRecortada(
-                                  sc.listahab![posicion].descripcion)),
-                            ),
-                            Align(
-                              alignment: Alignment.centerLeft,
-                              child: Text(sc.listahab![posicion].mensualidad
-                                  .toStringAsFixed(2)),
-                            ),
-                          ],
-                        ),
-                      ),
-                      Column(
+      body: Container(
+        decoration: const BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage("assets/image/EntradaHabitacion2jpg.jpg"),
+            fit: BoxFit.cover),
+        ),
+        child: Obx(() {
+          final List<Habitacion>? _servicios = sc.listahab;
+          if (sc.listahab?.isEmpty == true) {
+            return const Center(
+              child: Text("No existen Habitaciones registradas"),
+            );
+          } else {
+            return ListView.builder(
+              itemCount: sc.listahab!.length,
+              itemBuilder: (context, posicion) {
+                final servicio = _servicios![posicion];
+                return Padding(
+                  padding: const EdgeInsets.symmetric(vertical:5.0),
+                  child: Card(
+                    color: Colors.white70,
+                    child: InkWell(
+                      onTap: () {
+                        _openHabitacionDetails(context, servicio);
+                      },
+                      child: Row(
                         children: [
-                          IconButton(
-                            icon: const Icon(
-                              Icons.edit_note_outlined,
-                              size: 30,
-                              color: Colors.indigo,
-                            ),
-                            onPressed: () {
-                              Get.toNamed('/editarhabitacion',
-                                  arguments: sc.listahab![posicion]);
-                            },
+                          SizedBox(
+                            height: 120,
+                            width: 120,
+                            child: getImageWidget(sc.listahab![posicion].imagen),
                           ),
-                          IconButton(
-                            icon: const Icon(
-                              Icons.delete_outline_rounded,
-                              size: 30,
-                              color: Colors.red,
+                          const SizedBox(width: 10),
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Align(
+                                  alignment: Alignment.centerLeft,
+                                  child: Text(sc.listahab![posicion].nombre),
+                                ),
+                                Align(
+                                  alignment: Alignment.centerLeft,
+                                  child: Text(sc.listahab![posicion].direccion),
+                                ),
+                                Align(
+                                  alignment: Alignment.centerLeft,
+                                  child: Text(DescripcionRecortada(
+                                      sc.listahab![posicion].descripcion)),
+                                ),
+                                Align(
+                                  alignment: Alignment.centerLeft,
+                                  child: Text(sc.listahab![posicion].mensualidad
+                                      .toStringAsFixed(2)),
+                                ),
+                              ],
                             ),
-                            onPressed: () {
-                              _showConfirmationDialog(context, sc, posicion);
-                            },
+                          ),
+                          Column(
+                            children: [
+                              IconButton(
+                                icon: const Icon(
+                                  Icons.edit_note_outlined,
+                                  size: 30,
+                                  color: Colors.indigo,
+                                ),
+                                onPressed: () {
+                                  Get.toNamed('/editarhabitacion',
+                                      arguments: sc.listahab![posicion]);
+                                },
+                              ),
+                              IconButton(
+                                icon: const Icon(
+                                  Icons.delete_outline_rounded,
+                                  size: 30,
+                                  color: Colors.red,
+                                ),
+                                onPressed: () {
+                                  _showConfirmationDialog(context, sc, posicion);
+                                },
+                              ),
+                            ],
                           ),
                         ],
                       ),
-                    ],
+                    ),
                   ),
-                ),
-              );
-            },
-          );
-        }
-      }),
+                );
+              },
+            );
+          }
+        }),
+      ),
       floatingActionButton: FloatingActionButton(
+        backgroundColor: Colors.white54,
         onPressed: () {
           Get.toNamed('/editarhabitacion');
         },
@@ -126,7 +140,7 @@ class ListarHabitaciones extends StatelessWidget {
 
   getImageWidget(String imagen) {
     if (imagen.startsWith("http")) {
-      return Image.network(imagen, height: 150, width: 150);
+      return Image.network(imagen, height: 100, width: 100, fit: BoxFit.cover,);
     } else {
       return Image.asset(imagen, height: 150, width: 150);
     }
