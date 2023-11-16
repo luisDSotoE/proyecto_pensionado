@@ -45,7 +45,7 @@ class ListarHabitaciones extends StatelessWidget {
           final List<Habitacion>? _servicios = sc.listahab;
           if (sc.listahab?.isEmpty == true) {
             return const Center(
-              child: Text("No existen Habitaciones registradas"),
+              child: Text("No existen Habitaciones registradas", style: TextStyle(color: Colors.white),),
             );
           } else {
             return ListView.builder(

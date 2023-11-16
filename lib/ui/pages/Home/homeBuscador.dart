@@ -1,14 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:proyecto_pension2/domain/models/habitacion.dart';
 import 'package:proyecto_pension2/domain/controllers/habitacion_controller.dart';
 import 'package:proyecto_pension2/ui/pages/Home/homeHabitacion.dart';
 import 'package:proyecto_pension2/ui/pages/Widgets/VerFotosHabitaciones.dart';
 import 'package:proyecto_pension2/ui/pages/habitacion/detallehabitacion.dart';
 
-//INTENTO FALLIDO DE HACER FUNCIONAR EL BUSCADOR :'(
-// UPDATE: AHORA SI FUNCIONA (DE UNA MANERA MALA, PERO FUNCIONA :) )
 class SearchHabitacionDelegate extends SearchDelegate<dynamic> {
   final HabitacionController hc;
   List<Habitacion> _filter = [];

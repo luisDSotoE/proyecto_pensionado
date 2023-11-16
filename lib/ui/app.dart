@@ -22,7 +22,6 @@ class Myapp extends StatelessWidget {
         "/login": (context) => LoginPage(),
         '/editarhabitacion': (context) => const Editaragregarhabiatcion(),
         '/listarhabitaciones': (context) => const ListarHabitaciones(),
-        // '/detallehabitacion': (context) => DetalleHabitacionScreen(servicio: hc.los),
         '/perfil': (context) => const Perfil(),
       },
     );

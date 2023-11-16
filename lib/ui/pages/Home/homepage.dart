@@ -1,14 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-//import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:proyecto_pension2/domain/controllers/controluser.dart';
 import 'package:proyecto_pension2/domain/controllers/habitacion_controller.dart';
-//import 'package:proyecto_pension2/ui/pages/Home/homeBuscador.dart';
 import 'package:proyecto_pension2/ui/pages/Home/homeHabitacion.dart';
 import 'package:proyecto_pension2/ui/pages/Home/homeSoporte.dart';
 import 'package:proyecto_pension2/ui/pages/Home/perfil.dart';
 import 'package:proyecto_pension2/ui/pages/Widgets/VerFotosHabitaciones.dart';
-//import 'package:proyecto_pension2/ui/pages/habitacion/detallehabitacion.dart';
 import 'package:proyecto_pension2/ui/pages/habitacion/listarHabitaciones.dart';
 
 class Home extends StatefulWidget {
@@ -21,13 +18,8 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
   ControlUserAuth cua = Get.find();
 
-  //int posicion = 0;
   late final GlobalKey<ScaffoldState> _scaffoldKey;
-/* 
-  final ventanas = [
-    const Center(child: Habitaciones()),
-    const Buscador(),
-  ]; */
+
 
   @override
   void initState() {
@@ -198,7 +190,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
               ),
               ListTile(
                 leading: const Icon(Icons.hotel),
-                title: const Text('Habitación'),
+                title: const Text('Mis Habitaciones'),
                 onTap: () {
                   Navigator.push(
                     context,

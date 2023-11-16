@@ -147,7 +147,7 @@ class Cartas extends StatelessWidget {
                                         CrossAxisAlignment.start,
                                     children: [
                                       Text(
-                                        ' ${hc.listahab![index].nombre}',
+                                        DescripcionRecortada(hc.listahab![index].nombre),
                                         style: const TextStyle(
                                           fontWeight: FontWeight.bold,
                                         ),

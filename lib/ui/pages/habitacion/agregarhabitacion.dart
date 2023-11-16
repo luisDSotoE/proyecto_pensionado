@@ -132,6 +132,12 @@ class _EditServicioFormState extends State<EditServicioForm> {
                         setState(() {
                           image = result.files.single.path;
                           estado = true;
+                          print("url : $image");
+                          if ((image?.contains("jpg") == false)&&(image?.contains("png") == false))
+                          {
+                            MensajeError("¡ERROR!", "Formato de imagen incorrecto");
+                            estado = false;
+                          }
                         });
                       }
                     } catch (e) {

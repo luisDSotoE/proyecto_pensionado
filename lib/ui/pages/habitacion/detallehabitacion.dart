@@ -30,76 +30,80 @@ class _DetalleHabitacionScreenState extends State<DetalleHabitacionScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Detalle Habitación'),
+        backgroundColor: Colors.blueAccent.shade100,
       ),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            GestureDetector(
-              onTap: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) {
-                  return VerFoto(
-                    nombre: widget.servicio.nombre,
-                    imagen: widget.servicio.imagen,
-                  );
-                }));
-              },
-              child: ServicioCoverWidget(coverUrl: widget.servicio.imagen),
-            ),
-            ServicioInfoWidget(
-              nombre: "Nombre: ${widget.servicio.nombre}",
-              descripcion: "Descripción: ${widget.servicio.descripcion}",
-              direccion: "Dirección: ${widget.servicio.direccion}",
-              mensualidad: "Mensualidad: \$${widget.servicio.mensualidad}",
-              celular: "# Contacto: ${widget.servicio.celular}",
-            ),
-            ElevatedButton.icon(
+      body: Container(
+        decoration: BoxDecoration(color: Colors.blue.shade50),
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              GestureDetector(
+                onTap: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (context) {
+                    return VerFoto(
+                      nombre: widget.servicio.nombre,
+                      imagen: widget.servicio.imagen,
+                    );
+                  }));
+                },
+                child: ServicioCoverWidget(coverUrl: widget.servicio.imagen),
+              ),
+              ServicioInfoWidget(
+                nombre: "Nombre: ${widget.servicio.nombre}",
+                descripcion: "Descripción: ${widget.servicio.descripcion}",
+                direccion: "Dirección: ${widget.servicio.direccion}",
+                mensualidad: "Mensualidad: \$${widget.servicio.mensualidad}",
+                celular: "# Contacto: ${widget.servicio.celular}",
+              ),
+              ElevatedButton.icon(
+                  onPressed: () {
+                    ContactoWhatsApp(widget.servicio.celular);
+                  },
+                  style: ButtonStyle(
+                    backgroundColor:
+                        MaterialStateProperty.all<Color>(Colors.green),
+                    iconColor: MaterialStateProperty.all<Color>(Colors.white),
+                  ),
+                  icon: const Icon(Icons.perm_phone_msg_sharp),
+                  label: const Text(
+                    "Ir a Whatsaps",
+                    style: TextStyle(color: Colors.white),
+                  )),
+              const SizedBox(
+                height: 20,
+              ),
+              ElevatedButton.icon(
                 onPressed: () {
-                  ContactoWhatsApp(widget.servicio.celular);
+                  print(
+                      'Dirección a abrir en Google Maps: ${widget.servicio.direccion}');
+                  _abrirDireccionEnGoogleMaps(widget.servicio.direccion);
                 },
                 style: ButtonStyle(
-                  backgroundColor:
-                      MaterialStateProperty.all<Color>(Colors.green),
+                  backgroundColor: MaterialStateProperty.all<Color>(Colors.blue),
                   iconColor: MaterialStateProperty.all<Color>(Colors.white),
                 ),
-                icon: const Icon(Icons.perm_phone_msg_sharp),
+                icon: const Icon(Icons.map),
                 label: const Text(
-                  "Ir a Whatsaps",
+                  'Abrir en Google Maps',
                   style: TextStyle(color: Colors.white),
-                )),
-            const SizedBox(
-              height: 20,
-            ),
-            ElevatedButton.icon(
-              onPressed: () {
-                print(
-                    'Dirección a abrir en Google Maps: ${widget.servicio.direccion}');
-                _abrirDireccionEnGoogleMaps(widget.servicio.direccion);
-              },
-              style: ButtonStyle(
-                backgroundColor: MaterialStateProperty.all<Color>(Colors.blue),
-                iconColor: MaterialStateProperty.all<Color>(Colors.white),
+                ),
               ),
-              icon: const Icon(Icons.map),
-              label: const Text(
-                'Abrir en Google Maps',
-                style: TextStyle(color: Colors.white),
+              const SizedBox(
+                height: 20,
               ),
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-            _mapaCargado
-                ? SizedBox(
-                    width: MediaQuery.of(context).size.width,
-                    height: MediaQuery.of(context).size.height * 0.8,
-                    child: WebView(
-                      initialUrl:
-                          'https://www.google.com/maps?q=${widget.servicio.direccion},Valledupar',
-                      javascriptMode: JavascriptMode.unrestricted,
-                    ),
-                  )
-                : Container(),
-          ],
+              _mapaCargado
+                  ? SizedBox(
+                      width: MediaQuery.of(context).size.width,
+                      height: MediaQuery.of(context).size.height * 0.8,
+                      child: WebView(
+                        initialUrl:
+                            'https://www.google.com/maps?q=${widget.servicio.direccion},Valledupar',
+                        javascriptMode: JavascriptMode.unrestricted,
+                      ),
+                    )
+                  : Container(),
+            ],
+          ),
         ),
       ),
     );
@@ -191,6 +195,7 @@ class ServicioInfoWidget extends StatelessWidget {
               fontSize: 18,
               fontWeight: FontWeight.bold,
             ),
+            textAlign: TextAlign.center,
           ),
           Text(
             descripcion,
@@ -204,20 +209,21 @@ class ServicioInfoWidget extends StatelessWidget {
             style: const TextStyle(
               fontSize: 16,
             ),
+            textAlign: TextAlign.center,
           ),
           Text(
             mensualidad,
             style: const TextStyle(
               fontSize: 16,
             ),
-            textAlign: TextAlign.start,
+            textAlign: TextAlign.center,
           ),
           Text(
             celular,
             style: const TextStyle(
               fontSize: 16,
             ),
-            textAlign: TextAlign.start,
+            textAlign: TextAlign.center,
           ),
         ],
       ),

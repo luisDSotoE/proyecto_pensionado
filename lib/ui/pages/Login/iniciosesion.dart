@@ -61,20 +61,6 @@ class LoginPage extends StatelessWidget {
                       cua.ingresarUser(usuario.text, clave.text).then((value) {
                         if (cua.userValido == null) {
                           MensajeError("¡ERROR!", "Usuario invalido");
-                          /* Get.snackbar(
-                            'Error',
-                            'Usuario invalido',
-                            snackPosition: SnackPosition.TOP,
-                            backgroundColor: Colors.red,
-                            colorText: Colors.white,
-                            borderRadius: 10,
-                            margin: const EdgeInsets.all(10),
-                            duration: const Duration(seconds: 3),
-                            isDismissible: true,
-                            dismissDirection: DismissDirection.vertical,
-                            forwardAnimationCurve: Curves.easeOutBack,
-                            reverseAnimationCurve: Curves.easeInBack,
-                          ); */
                         } else {
                           final ControlUserAuth cua = Get.find();
                           final HabitacionController hc = Get.find();

@@ -125,20 +125,6 @@ class _RegistroUsuarioNormalState extends State<RegistroUsuarioNormal> {
                           .then((value) {
                         if (cua.userValido == null) {
                           MensajeError("¡ERROR!", "Registro invalido");
-                          /* Get.snackbar(
-                            'Error',
-                            'Error al registrarse',
-                            snackPosition: SnackPosition.TOP,
-                            backgroundColor: Colors.red,
-                            colorText: Colors.white,
-                            borderRadius: 10,
-                            margin: const EdgeInsets.all(10),
-                            duration: const Duration(seconds: 3),
-                            isDismissible: true,
-                            dismissDirection: DismissDirection.vertical,
-                            forwardAnimationCurve: Curves.easeOutBack,
-                            reverseAnimationCurve: Curves.easeInBack,
-                          ); */
                         } else {
                           var tiporol = selectedRol ?? 'Estudiante';
                           var datos = {
@@ -160,14 +146,8 @@ class _RegistroUsuarioNormalState extends State<RegistroUsuarioNormal> {
                         }
                       });
                     },
-                    child: const Text('Registrarse'),
+                    child: const Text('Registrarse', style: TextStyle(color: Colors.black),),
                   ),
-                  
-                  /* ElevatedButton(
-                      onPressed: () {
-                        Get.offAndToNamed('/login');
-                      },
-                      child: const Text('Iniciar Sesion')) */
                 ],
               ),
             ),

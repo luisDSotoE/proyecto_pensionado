@@ -105,8 +105,10 @@ class _PerfilState extends State<Perfil> {
     return Scaffold(
       appBar: AppBar(
         title: const Text("Completar Perfil"),
+        backgroundColor: Colors.green.shade300,
       ),
       body: Container(
+        decoration: BoxDecoration(color: Colors.green.shade100),
         padding: const EdgeInsets.all(20.0),
         child: Center(
           child: ListView(
@@ -167,10 +169,10 @@ class _PerfilState extends State<Perfil> {
                 controller: controlCelular,
                 decoration: const InputDecoration(labelText: "Celular"),
               ),
-              const SizedBox(height: 30,),
+              const SizedBox(height: 50,),
               ElevatedButton.icon(
                 style: const ButtonStyle(
-                  backgroundColor: MaterialStatePropertyAll<Color>(Colors.blue),),
+                  backgroundColor: MaterialStatePropertyAll<Color>(Colors.green),),
                 icon: const Icon(Icons.perm_identity_sharp, color: Colors.white,),
                 label: const Text("Actualizar Perfil",style: TextStyle(color: Colors.white),),
                 onPressed: () async {
