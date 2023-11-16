@@ -170,7 +170,7 @@ class _PerfilState extends State<Perfil> {
               const SizedBox(height: 30,),
               ElevatedButton.icon(
                 style: const ButtonStyle(
-                  backgroundColor: MaterialStatePropertyAll<Color>(Colors.yellow),),
+                  backgroundColor: MaterialStatePropertyAll<Color>(Colors.blue),),
                 icon: const Icon(Icons.perm_identity_sharp, color: Colors.white,),
                 label: const Text("Actualizar Perfil",style: TextStyle(color: Colors.white),),
                 onPressed: () async {

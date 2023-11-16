@@ -155,7 +155,7 @@ class Cartas extends StatelessWidget {
                                       SizedBox(
                                         width:
                                             MediaQuery.of(context).size.width *
-                                                0.62,
+                                                0.55,
                                         child: Text(
                                           DescripcionRecortada(
                                               hc.listahab![index].descripcion),

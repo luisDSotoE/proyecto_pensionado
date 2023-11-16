@@ -80,7 +80,7 @@ class _RegistroUsuarioNormalState extends State<RegistroUsuarioNormal> {
                       controller: telefonoController,
                       tipo: TextInputType.phone),
                   SizedBox(
-                    width: 300,
+                    width: 200,
                     child: DropdownButtonFormField<String>(
                       value: selectedRol,
                       onChanged: (newValue) {

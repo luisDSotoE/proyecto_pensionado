@@ -97,8 +97,7 @@ class _EditServicioFormState extends State<EditServicioForm> {
       child: SingleChildScrollView(
         child: Center(
           child: Padding(
-            padding: EdgeInsets.symmetric(
-            vertical: MediaQuery.of(context).size.height * 0.20),
+            padding: EdgeInsets.only(top: MediaQuery.of(context).size.height*0.22),
             child: Column(
               children: [
                 CajaTexto(
