@@ -7,7 +7,6 @@ import 'package:proyecto_pension2/domain/controllers/controluser.dart';
 import 'package:proyecto_pension2/domain/controllers/habitacion_controller.dart';
 import 'package:proyecto_pension2/domain/models/habitacion.dart';
 import 'package:proyecto_pension2/ui/pages/Login/iniciosesion.dart';
-import 'package:proyecto_pension2/ui/pages/Widgets/textinput.dart';
 import 'package:proyecto_pension2/ui/pages/Widgets/widgetCajaTexto.dart';
 
 class Editaragregarhabiatcion extends StatelessWidget {
@@ -26,10 +25,13 @@ class Editaragregarhabiatcion extends StatelessWidget {
         centerTitle: true,
       ),
       body: Container(
-        decoration: const BoxDecoration(
+        decoration: BoxDecoration(
             image: DecorationImage(
-                image: AssetImage("assets/image/HabitacionRegistrar.jpg"),
-                fit: BoxFit.cover)),
+              opacity: 0.6,
+                image: const AssetImage("assets/image/HabitacionRegistrar.jpg"),
+                fit: BoxFit.cover,
+                colorFilter: ColorFilter.mode(Colors.black.withOpacity(1), BlendMode.dstATop)
+                )),
         child: Column(
           children: [
             EditServicioForm(

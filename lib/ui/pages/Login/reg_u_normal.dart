@@ -38,9 +38,13 @@ class _RegistroUsuarioNormalState extends State<RegistroUsuarioNormal> {
       body: Container(
         height: MediaQuery.of(context).size.height,
         width: MediaQuery.of(context).size.width,
-        decoration: const BoxDecoration(
+        decoration: BoxDecoration(
           image: DecorationImage(
-              image: AssetImage("assets/image/Casa.jpg"), fit: BoxFit.cover),
+            opacity: 0.7,
+              image: const AssetImage("assets/image/Casa.jpg"), 
+              fit: BoxFit.cover,
+              colorFilter: ColorFilter.mode(Colors.black.withOpacity(1), BlendMode.dstATop)
+              ),
         ),
         child: SingleChildScrollView(
           child: Container(

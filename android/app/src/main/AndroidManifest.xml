@@ -3,7 +3,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
-        android:label="proyecto_pension2"
+        android:label="Mi Pension"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

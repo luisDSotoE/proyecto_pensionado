@@ -17,13 +17,16 @@ class LoginPage extends StatelessWidget {
     ControlUserAuth cua = Get.find();
 
     return Scaffold(
-      backgroundColor: Colors.blue,
+      //backgroundColor: Colors.blue,
       body: Container(
         height: MediaQuery.of(context).size.height,
-        decoration: const BoxDecoration(
+        decoration: BoxDecoration(
             image: DecorationImage(
-                image: AssetImage("assets/image/Habitacion.jpg"),
-                fit: BoxFit.cover),
+              opacity: 0.8,
+                image: const AssetImage("assets/image/Habitacion.jpg"),
+                fit: BoxFit.cover,
+                colorFilter: ColorFilter.mode(Colors.black.withOpacity(1), BlendMode.dstATop)
+                ),
         ),
         child: Center(
           child: SingleChildScrollView(

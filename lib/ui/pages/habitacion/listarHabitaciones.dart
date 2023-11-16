@@ -36,10 +36,13 @@ class ListarHabitaciones extends StatelessWidget {
         ),
       ),
       body: Container(
-        decoration: const BoxDecoration(
+        decoration: BoxDecoration(
           image: DecorationImage(
-            image: AssetImage("assets/image/EntradaHabitacion2jpg.jpg"),
-            fit: BoxFit.cover),
+            opacity: 0.6,
+            image: const AssetImage("assets/image/EntradaHabitacion2jpg.jpg"),
+            fit: BoxFit.cover,
+            colorFilter: ColorFilter.mode(Colors.black.withOpacity(1), BlendMode.dstATop)
+            ),
         ),
         child: Obx(() {
           final List<Habitacion>? _servicios = sc.listahab;
